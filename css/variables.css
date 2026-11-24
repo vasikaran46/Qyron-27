@@ -1,0 +1,54 @@
+:root {
+  /* Dystopian Post-Apocalyptic Radioactive Palette */
+  --bg-void: #050706;          /* Void Black */
+  --bg-surface: #0B100C;       /* Dark Charcoal */
+  --panel: #101812;            /* Dark Forest */
+  --panel-raised: #17221A;     /* Military Green */
+  --steel: #1c2820;
+  --steel-border: rgba(57, 255, 20, 0.18);
+  --line: rgba(57, 255, 20, 0.15);
+
+  --doom-green: #39FF14;       /* Radioactive Neon Green */
+  --doom-green-glow: rgba(57, 255, 20, 0.45);
+  --doom-green-deep: #1f8a4c;
+  --toxic-lime: #A3FF00;       /* Toxic Lime */
+  --toxic-lime-glow: rgba(163, 255, 0, 0.4);
+  --moss-green: #557D45;       /* Muted Moss Green */
+  --cloak-green: #0a3a22;
+  --gold: #e5c17c;
+  --gold-glow: rgba(229, 193, 124, 0.38);
+  --silver: #9BA89D;           /* Ash Grey */
+  --quantum: #39FF14;          /* Radioactive Green */
+  --quantum-glow: rgba(57, 255, 20, 0.35);
+
+  --text: #F0F5EF;             /* Off White */
+  --text-muted: #9BA89D;       /* Ash Grey */
+  --text-dim: #607268;
+
+  /* Typography: Orbitron, Rajdhani, Space Mono, Inter */
+  --font-display: 'Orbitron', -apple-system, sans-serif;
+  --display: 'Orbitron', -apple-system, sans-serif;
+  --orbitron: 'Orbitron', -apple-system, sans-serif;
+
+  --font-heading: 'Rajdhani', sans-serif;
+  --rajdhani: 'Rajdhani', sans-serif;
+
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --inter: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --font-mono: 'Space Mono', 'Courier New', monospace;
+  --mono: 'Space Mono', 'Courier New', monospace;
+  --space-mono: 'Space Mono', 'Courier New', monospace;
+
+  /* Aliases for compatibility */
+  --term-green: var(--doom-green);
+  --term-gold: var(--toxic-lime);
+  --term-cyan: var(--doom-green);
+  --term-steel: var(--text-muted);
+
+  --hud-height: 38px;
+  --navbar-height: 74px;
+
+  color-scheme: dark;
+}

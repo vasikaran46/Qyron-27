@@ -1,0 +1,11 @@
+venv
+.env
+.git
+.vscode
+__pycache__
+*.pyc
+*.pyo
+.pytest_cache
+tools/test_smtp.py
+uploads/ppt/*
+!uploads/ppt/.gitkeep

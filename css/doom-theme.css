@@ -1,0 +1,532 @@
+/* ============================================================
+   QYRON'27 — DOOMSDAY UI DESIGN THEME (POST-APOCALYPTIC SCI-FI)
+   A dark, radioactive-green dystopian visual atmosphere.
+   ============================================================ */
+
+/* Custom Radioactive Neon Green with Golden Logo Cursor */
+html, body {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpolygon points='0,0 0,20 6,15 11,26 15,24 10,13 18,13' fill='%2339FF14' stroke='%23050706' stroke-width='1.5'/%3E%3Ccircle cx='18' cy='18' r='5' fill='%23050706' stroke='%23e5c17c' stroke-width='1.5'/%3E%3Cpolygon points='18,14 21,17 18,21 15,17' fill='%23e5c17c'/%3E%3C/svg%3E"), auto;
+}
+
+a, button, input, select, textarea, label, summary, [data-egg], [data-open], .pointer, .faq-trigger, .singularity-core {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='%2339FF14' stroke-width='1.5' stroke-dasharray='4 2'/%3E%3Cpolygon points='16,10 20,15 18,21 14,21 12,15' fill='%23e5c17c' stroke='%23050706' stroke-width='1'/%3E%3Cline x1='14' y1='15' x2='15' y2='15' stroke='%23050706' stroke-width='1'/%3E%3Cline x1='17' y1='15' x2='18' y2='15' stroke='%23050706' stroke-width='1'/%3E%3C/svg%3E"), pointer;
+}
+
+/* Interactive Floating Custom Cursor Follower */
+.doom-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10001;
+  box-shadow: 0 0 10px var(--gold);
+  transition: transform 0.05s linear;
+}
+
+.doom-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 38px;
+  height: 38px;
+  margin: -19px 0 0 -19px;
+  border: 1.5px solid var(--doom-green);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  box-shadow: 0 0 18px rgba(57, 255, 20, 0.45), inset 0 0 10px rgba(57, 255, 20, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.12s ease-out, border-color 0.2s, box-shadow 0.2s;
+}
+
+.hud-tick {
+  position: absolute;
+  background: var(--doom-green);
+}
+
+.tick-top { top: -4px; width: 2px; height: 5px; }
+.tick-bottom { bottom: -4px; width: 2px; height: 5px; }
+.tick-left { left: -4px; width: 5px; height: 2px; }
+.tick-right { right: -4px; width: 5px; height: 2px; }
+
+.cursor-gold-logo {
+  width: 14px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cursor-gold-logo svg {
+  width: 100%;
+  height: 100%;
+}
+
+.doom-cursor-ring.is-hovered {
+  border-color: var(--toxic-lime);
+  box-shadow: 0 0 26px rgba(163, 255, 0, 0.7), inset 0 0 14px rgba(57, 255, 20, 0.3);
+}
+
+.doom-cursor-ring.is-clicking {
+  transform: scale(0.75) !important;
+  border-color: #fff;
+}
+
+/* ============================================================
+   INSTITUTIONAL CO-HOSTING PARTNER STRIP (PATRICIAN + MATHS)
+   ============================================================ */
+.inst-partner-strip {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(11, 16, 12, 0.88);
+  border: 1px solid var(--steel-border);
+  border-radius: 4px;
+  padding: 6px 14px;
+  margin-bottom: 22px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.65);
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+}
+
+.inst-logo-patrician {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid var(--doom-green);
+  box-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+  flex-shrink: 0;
+}
+
+.inst-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.inst-details strong {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.inst-details span {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  color: var(--toxic-lime);
+  margin-top: 2px;
+}
+
+.inst-divider {
+  width: 1px;
+  height: 26px;
+  background: var(--line);
+  margin: 0 4px;
+}
+
+.inst-logo-dept {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(57, 255, 20, 0.5));
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   HERO RETICLE WITH OFFICIAL DOOMSDAY Q LOGO
+   ============================================================ */
+.doomsday-logo-core {
+  width: 146px !important;
+  height: 146px !important;
+  border-radius: 50% !important;
+  clip-path: none !important;
+  background: radial-gradient(circle at 50% 50%, #0d1e14 0%, #050a07 70%, #020403 100%) !important;
+  border: 2px solid var(--doom-green) !important;
+  box-shadow: 0 0 50px rgba(57, 255, 20, 0.55), 0 0 120px rgba(31, 138, 76, 0.35) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: visible !important;
+  padding: 0 !important;
+}
+
+.hero-doomsday-logo-img {
+  width: 156px;
+  height: 156px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 20px rgba(57, 255, 20, 0.85));
+  animation: logo-energy-pulse 3.5s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes logo-energy-pulse {
+  0% {
+    transform: scale(0.98);
+    filter: drop-shadow(0 0 16px rgba(57, 255, 20, 0.7));
+  }
+  100% {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 32px rgba(163, 255, 0, 0.95)) drop-shadow(0 0 8px #ffffff);
+  }
+}
+
+/* ============================================================
+   HACKATHON TRACKS & PROBLEM TOPICS
+   ============================================================ */
+.tracks-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+}
+
+@media (max-width: 860px) {
+  .tracks-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.track-card {
+  position: relative;
+  background: rgba(16, 24, 18, 0.75);
+  border: 1px solid rgba(57, 255, 20, 0.22);
+  border-radius: 4px;
+  padding: 30px 26px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+  overflow: hidden;
+}
+
+.track-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--doom-green);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.7), 0 0 24px rgba(57, 255, 20, 0.25);
+}
+
+.track-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.track-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--doom-green);
+  background: rgba(57, 255, 20, 0.1);
+  border: 1px solid rgba(57, 255, 20, 0.3);
+  padding: 4px 10px;
+  border-radius: 2px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.track-card-icon {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--toxic-lime);
+  text-shadow: 0 0 10px rgba(163, 255, 0, 0.4);
+}
+
+.track-title {
+  font-family: var(--font-heading);
+  font-size: 21px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 12px;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+}
+
+.track-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.track-subtopics-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--toxic-lime);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.track-subtopics-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.track-subtopics-list li {
+  font-size: 13px;
+  color: #e2e8f0;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.45;
+}
+
+.track-subtopics-list li span.bullet {
+  color: var(--doom-green);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.track-toolkits {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid rgba(57, 255, 20, 0.15);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.track-toolkits-label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--text-muted);
+  margin-right: 4px;
+  font-weight: 700;
+}
+
+.track-tool-pill {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--doom-green);
+  background: rgba(5, 7, 6, 0.85);
+  border: 1px solid rgba(57, 255, 20, 0.28);
+  padding: 2px 8px;
+  border-radius: 2px;
+}
+
+/* ============================================================
+   ORGANIZING DIRECTORATE / COMMITTEE CARDS
+   ============================================================ */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 36px;
+}
+
+@media (max-width: 1024px) {
+  .team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.team-card {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--steel-border);
+  padding: 30px 22px;
+  text-align: center;
+  transition: all 0.28s ease;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+
+.team-card:hover {
+  border-color: var(--doom-green);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 35px rgba(57, 255, 20, 0.25);
+  background: var(--panel-raised);
+}
+
+.team-avatar {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  border: 2px solid var(--doom-green);
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.4);
+  overflow: hidden;
+  background: rgba(57, 255, 20, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.team-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.team-name {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 4px;
+  letter-spacing: 0.05em;
+}
+
+.team-role {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--toxic-lime);
+  letter-spacing: 0.12em;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.team-contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+}
+
+.team-contact-link {
+  color: var(--silver);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: color 0.2s, transform 0.2s;
+  padding: 3px 0;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+.team-contact-link:hover {
+  color: var(--doom-green);
+  transform: translateX(2px);
+}
+
+.org-inst-logos-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.org-inst-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px rgba(57, 255, 20, 0.45));
+}
+
+.org-inst-divider {
+  font-size: 20px;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+}
+
+/* ============================================================
+   CARD HOVER SCANNER ANIMATION & INDUSTRIAL SURFACES
+   ============================================================ */
+.hud-panel, .rules-card, .fee-card, .stat-item, .protocol-card, .team-card, .metric-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.hud-panel::after, .rules-card::after, .fee-card::after, .stat-item::after, .protocol-card::after, .team-card::after, .metric-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(57, 255, 20, 0.1), rgba(163, 255, 0, 0.15), transparent);
+  transform: skewX(-25deg);
+  transition: left 0.75s ease;
+  pointer-events: none;
+}
+
+.hud-panel:hover::after, .rules-card:hover::after, .fee-card:hover::after, .stat-item:hover::after, .protocol-card:hover::after, .team-card:hover::after, .metric-card:hover::after {
+  left: 140%;
+}
+
+/* Easter Egg Tooltip */
+[data-egg] {
+  cursor: help;
+}
+
+.egg-tip {
+  position: fixed;
+  z-index: 10002;
+  max-width: 340px;
+  padding: 12px 16px;
+  background: #050706;
+  border: 1px solid var(--doom-green);
+  color: var(--silver);
+  font: 11px/1.55 var(--font-mono);
+  letter-spacing: 0.04em;
+  pointer-events: none;
+  box-shadow: 0 0 24px rgba(57, 255, 20, 0.45);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.egg-tip.on {
+  opacity: 1;
+}
+
+.egg-tip::before {
+  content: "// DOOMSDAY INTEL: ";
+  color: var(--doom-green);
+  font-weight: bold;
+}
+
+.qcore-flip {
+  animation: qflip 0.5s steps(3, end);
+}
+
+@keyframes qflip {
+  0% { filter: hue-rotate(0); }
+  50% { filter: hue-rotate(140deg) brightness(1.6); }
+  100% { filter: none; }
+}
+
+/* Konami Code: Quantum Realm Mode */
+body.quantum-realm {
+  --doom-green: #7cf0ff;
+  --toxic-lime: #00e5ff;
+  --panel: #09121a;
+  filter: saturate(1.3);
+  background: radial-gradient(ellipse at 50% -10%, #0d2838 0%, #030507 55%) fixed;
+}

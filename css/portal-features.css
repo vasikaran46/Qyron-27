@@ -1,0 +1,7 @@
+.file-review-link{display:block;margin:8px 0 0;padding:0;border:0;background:none;color:var(--doom-green);cursor:pointer;font:8px var(--mono);letter-spacing:.06em}
+.payment-reference-form{display:grid;grid-template-columns:minmax(130px,1fr) auto;gap:7px 9px;align-items:end;margin:5px 0 10px}
+.payment-reference-form label{color:#91a097;font:8px var(--mono);letter-spacing:.06em}
+.payment-reference-form input{display:block;width:100%;margin-top:4px;padding:7px 8px;background:#0a100c;color:var(--text);border:1px solid #34453a;font:11px var(--mono)}
+.payment-submit{border:1px solid rgba(46,204,113,.35);background:transparent;color:var(--doom-green);padding:8px 9px;cursor:pointer;font:7px var(--mono)}
+.payment-reference-notice{grid-column:1/-1;color:#829087;font:9px var(--body)}
+@media(max-width:500px){.payment-reference-form{grid-template-columns:1fr}.payment-reference-notice{grid-column:auto}.payment-submit{justify-self:start}}

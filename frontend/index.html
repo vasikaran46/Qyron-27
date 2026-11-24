@@ -1,0 +1,971 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#030504" />
+    <meta name="description" content="QYRON’27 — A 24-Hour National Quantum Computing & Mathematical Innovation Hackathon organized by the Department of Mathematics, Patrician College of Arts and Science, Chennai. Assemble your team. Formulate what comes next." />
+    <title>QYRON’27 — National Quantum Computing &amp; Mathematical Innovation Hackathon</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
+    <!-- Typography: Orbitron, Rajdhani, Space Mono, Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;600;700;800;900&family=Rajdhani:wght@500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/site-sections.css" />
+    <link rel="stylesheet" href="/css/feature-components.css" />
+    <link rel="stylesheet" href="/css/portal-features.css" />
+    <link rel="stylesheet" href="/css/animations.css" />
+    <link rel="stylesheet" href="/portal.css" />
+    <link rel="stylesheet" href="/css/doom-theme.css" />
+    <script src="/js/doom-cursor.js" defer></script>
+    <script src="/main.js" defer></script>
+    <script src="/js/doom-eggs.js" defer></script>
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen" aria-hidden="true">
+      <div class="loading-lockup">
+        PATRICIAN COLLEGE OF ARTS AND SCIENCE // DEPT. OF MATHEMATICS
+        <strong>QYRON’27</strong>
+        <span id="bootLine">INITIALIZING NATIONAL QUANTUM HACKATHON</span>
+      </div>
+    </div>
+
+    <!-- CRT Overlay & Cyber Grid -->
+    <div class="crt-overlay" aria-hidden="true"></div>
+    <div class="cyber-grid" aria-hidden="true"></div>
+    <div class="noise" aria-hidden="true"></div>
+
+    <!-- Top HUD Telemetry Bar (Aligned with Container) -->
+    <header class="hud-bar" id="hudTopBar">
+      <div class="container">
+        <div class="hud-telemetry-item">
+          <span class="pulse-led"></span>
+          <span class="mono-tag">
+            <span class="hud-status-full">QYRON TELEMETRY <b>ONLINE</b> // QUANTUM CORE SYNCHRONIZED</span>
+            <span class="hud-status-short">QYRON GRID <b>ACTIVE</b></span>
+          </span>
+        </div>
+        <div class="hud-telemetry-item">
+          <span class="mono-tag">DEPARTMENT OF MATHEMATICS <em>·</em> 2027</span>
+          <span class="mono-tag hud-coord" style="color:var(--gold);">[CHENNAI, INDIA // 13° 04′ N · 80° 16′ E]</span>
+        </div>
+        <div class="hud-telemetry-item">
+          <span class="audio-toggle">
+            <span class="sound-bars"><i></i><i></i><i></i><i></i></span>
+            QUANTUM COHERENCE <b>99.98%</b>
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Navigation Bar (Aligned with Container) -->
+    <nav class="term-navbar">
+      <div class="container">
+        <a class="term-logo-wrapper" href="#home" aria-label="QYRON home">
+          <div class="term-emblem" style="padding:2px; display:flex; align-items:center; justify-content:center;">
+            <img src="assets/qyron-logo-doomsday.png" alt="QYRON 27 Emblem" style="width:38px; height:38px; object-fit:contain; filter:drop-shadow(0 0 6px var(--doom-green));">
+          </div>
+          <div>
+            <div class="term-brand-name">QYRON<span>'27</span></div>
+            <div class="term-brand-sub">PATRICIAN COLLEGE · DEPT. OF MATHEMATICS</div>
+          </div>
+        </a>
+
+        <button class="mobile-nav-toggle" id="menuToggle" aria-label="Open navigation">☰</button>
+
+        <ul class="term-nav-links" id="mainNav">
+          <li><a href="#mission" class="term-nav-link">MISSION</a></li>
+          <li><a href="#tracks" class="term-nav-link">TRACKS</a></li>
+          <li><a href="#rules" class="term-nav-link">RULES</a></li>
+          <li><a href="#submission-guide" class="term-nav-link">SUBMIT</a></li>
+          <li><a href="#timeline" class="term-nav-link">TIMELINE</a></li>
+          <li><a href="#fees" class="term-nav-link">FEES</a></li>
+          <li><a href="#team" class="term-nav-link">DIRECTORATE</a></li>
+          <li><a href="#faq" class="term-nav-link">FAQ</a></li>
+          <li><a class="button button-outline" href="assets/qyron-proposal-outline.pptx" download style="border-color:var(--doom-green);color:var(--doom-green);height:38px;padding:0 12px;font-size:10px;">PPT TEMPLATE ↓</a></li>
+          <li><a href="/register" class="btn-register">REGISTER TEAM ↗</a></li>
+          <li><a href="/login" class="button button-ghost" style="height:38px;padding:0 14px;font-size:10px;">LOGIN ↗</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main>
+      <!-- ═══════ HERO SECTION ═══════ -->
+      <section class="hero" id="home">
+        <canvas class="ember-canvas" id="emberCanvas" aria-hidden="true"></canvas>
+        <div class="hero-grid" aria-hidden="true"></div>
+        <div class="orbit orbit-one" aria-hidden="true"></div>
+        <div class="orbit orbit-two" aria-hidden="true"></div>
+
+        <div class="container">
+          <!-- INSTITUTIONAL CO-HOSTING ACCREDITATION BADGE -->
+          <div class="inst-partner-strip">
+            <img src="assets/patrician-college-logo.jpg" alt="Patrician College of Arts and Science" class="inst-logo-patrician">
+            <div class="inst-details">
+              <strong>PATRICIAN COLLEGE OF ARTS AND SCIENCE</strong>
+              <span>DEPARTMENT OF MATHEMATICS // QUANTUM INNOVATION PROTOCOL</span>
+            </div>
+            <div class="inst-divider"></div>
+            <div class="inst-logo-iic-badge" title="Department of Mathematics Emblem">
+              <img src="assets/department-phoenix-logo.png" alt="Department of Mathematics" class="inst-logo-dept">
+            </div>
+          </div>
+
+          <div class="hero-two-col">
+            <!-- Left Column: Copy -->
+            <div class="hero-copy">
+              <div class="hero-badge-group">
+                <span class="term-badge term-badge-gold">NATIONAL LEVEL // 2027</span>
+                <span class="term-badge"><span class="pulse-led"></span>24-HOUR QUANTUM COMPUTING HACKATHON</span>
+                <span class="term-badge">12—13 FEB 2027</span>
+                <span class="term-badge">TEAMS OF 4—6 MINDS</span>
+              </div>
+
+              <h1 aria-label="QYRON '27"><span class="hero-name">QYRON</span><span class="hero-year-mark">'27</span></h1>
+
+              <div class="hero-tagline">24-HOUR NATIONAL QUANTUM COMPUTING &amp; MATHEMATICAL INNOVATION HACKATHON</div>
+
+              <p class="hero-lede">
+                Organized by the <strong>Department of Mathematics, Patrician College of Arts and Science, Chennai</strong>. A premier 24-hour national hackathon bridging abstract mathematical theory with quantum computational breakthroughs. Collegiate innovators formulate fault-tolerant quantum circuits, post-quantum cryptographic algorithms, error-corrected lattices, and complex topological models. Two rounds of competitive challenge. Top 30 collegiate squads advance to the on-campus finale.
+              </p>
+
+              <div class="hero-actions">
+                <a class="button button-primary" href="/register">ASSEMBLE YOUR TEAM <span>↗</span></a>
+                <a class="button button-ghost" href="/login">PARTICIPANT LOGIN <span>↗</span></a>
+                <a class="button button-outline" href="assets/qyron-proposal-outline.pptx" download style="border-color:var(--doom-green);color:var(--doom-green);">DOWNLOAD PPT OUTLINE <span>↓</span></a>
+              </div>
+
+              <!-- In-Hero Countdown Box -->
+              <div class="countdown-container">
+                <div class="hud-corner hud-corner-tl"></div>
+                <div class="hud-corner hud-corner-tr"></div>
+                <div class="hud-corner hud-corner-bl"></div>
+                <div class="hud-corner hud-corner-br"></div>
+                <div class="countdown-header">
+                  <div class="countdown-title">
+                    <span class="pulse-led"></span>
+                    <span>COUNTDOWN TO REGISTRATION DEADLINE // ROUND 1 SUBMISSIONS</span>
+                  </div>
+                  <span class="term-badge term-badge-gold">CLOSES: 20 JAN 2027 // 23:59 IST</span>
+                </div>
+                <div class="countdown-digits" id="countdown">
+                  <div class="digit-card"><b>--</b><small>DAYS</small></div>
+                  <div class="digit-card"><b>--</b><small>HOURS</small></div>
+                  <div class="digit-card"><b>--</b><small>MINS</small></div>
+                  <div class="digit-card"><b>--</b><small>SECS</small></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Singularity Reticle with Official QYRON Doomsday Logo -->
+            <div class="hero-visual" aria-label="Official QYRON'27 Doomsday Emblem and quantum field">
+              <div class="hero-hud-visual">
+                <div class="hud-data-tag hud-data-tag-1">
+                  <span>COMPUTATIONAL MATRIX</span> <b>QUANTUM VECTOR ACTIVE</b>
+                </div>
+                <div class="singularity">
+                  <!-- Official Doomsday Q Logo Core -->
+                  <div class="singularity-core doomsday-logo-core" id="qCore" data-egg="QYRON'27: The future rises from mathematical rigor. Click to cycle quantum states.">
+                    <img src="assets/qyron-logo-doomsday.png" alt="QYRON'27 Official Doomsday Emblem" class="hero-doomsday-logo-img">
+                  </div>
+                  <div class="ring ring-a"></div>
+                  <div class="ring ring-b"></div>
+                  <div class="ring ring-c"></div>
+                  <div class="singularity-cross">✦</div>
+                </div>
+                <div class="hud-data-tag hud-data-tag-2">
+                  <span>COHERENCE STATE</span> <b>SUPERPOSITION |Ψ⟩ <i class="tiny-pulse"></i></b>
+                </div>
+              </div>
+            </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-bottom">
+            <span>SCROLL TO EXPLORE OPERATIONAL TRACKS</span>
+            <span class="scroll-mark">↓</span>
+            <span class="hero-bottom-right">// PATRICIAN COLLEGE OF ARTS AND SCIENCE // DEPT. OF MATHEMATICS</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ STATS STRIP ═══════ -->
+      <section class="stats-strip-section">
+        <div class="container">
+          <div class="stats-strip">
+            <div class="stat-item">
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+              <div class="stat-val">24<span>H</span></div>
+              <div class="stat-desc">NON-STOP IN-PERSON CODING MARATHON</div>
+            </div>
+            <div class="stat-item">
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+              <div class="stat-val">30</div>
+              <div class="stat-desc">TOP SQUADS ADVANCE TO ONSITE FINALE</div>
+            </div>
+            <div class="stat-item">
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+              <div class="stat-val">4—6</div>
+              <div class="stat-desc">MINDS PER SQUAD · STRICT SAME-COLLEGE TEAMS</div>
+            </div>
+            <div class="stat-item">
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+              <div class="stat-val" data-egg="4 Specialized Tracks: Superposition, Cryptography, Error Correction, and Mathematical Computing">4</div>
+              <div class="stat-desc">SPECIALIZED OPERATIONAL TRACKS</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ 01 — THE MISSION ═══════ -->
+      <section class="section section-alt content-section mission" id="mission">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-eyebrow">// 01 — HACKATHON CHARTER · MISSION DOSSIER</span>
+            <h2 class="section-title">ADVANCED MATHEMATICS<br /><span>MEETS QUANTUM HORIZONS.</span></h2>
+            <p class="section-desc">
+              Organized by the <strong>Department of Mathematics at Patrician College of Arts and Science</strong>, QYRON’27 is a premier national innovation arena challenging collegiate minds to bridge the gap between abstract mathematical theory and quantum computational execution. Teams model complex dynamical systems, formulate quantum circuit architectures, and synthesize fault-tolerant solutions to defend against catastrophic computational failure.
+            </p>
+          </div>
+
+          <div class="hud-panel mission-panel">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-tr"></div>
+            <div class="hud-corner hud-corner-bl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <div class="mission-panel-layout">
+              <div class="mission-symbol" data-egg="|Ψ⟩ = α|Math⟩ + β|Quantum⟩. Coherence guaranteed by mathematical rigor.">|Ψ⟩</div>
+              <div>
+                <h3>FOUR TRACKS. TWO INTENSIVE ROUNDS. ONE GRAND STAGE.</h3>
+                <p>
+                  Transform mathematical principles into operational quantum algorithms. Teams select one of four core domains, construct an initial 7-section proposal dossier, and compete for a spot in the elite Top 30 shortlisted squads invited to the 24-hour on-campus hackathon finale:
+                </p>
+                <div class="mission-meta">
+                  <span class="term-badge"><span class="pulse-led"></span>TRACK 01: QUANTUM SUPERPOSITION &amp; CIRCUIT MODELING</span>
+                  <span class="term-badge">TRACK 02: QUANTUM ALGORITHMS, CRYPTOGRAPHY &amp; SECURITY</span>
+                  <span class="term-badge">TRACK 03: QUANTUM ERROR CORRECTION &amp; OPTIMIZATION</span>
+                  <span class="term-badge term-badge-gold">TRACK 04: OPEN MATHEMATICAL &amp; POST-APOCALYPTIC COMPUTING</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ 02 — OPERATIONAL TRACKS & PROBLEM TOPICS ═══════ -->
+      <section class="section content-section tracks-section" id="tracks">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-eyebrow">// 02 — HACKATHON CHALLENGE DOMAINS &amp; PROBLEM TOPICS</span>
+            <h2 class="section-title">FOUR OPERATIONAL<br /><span>CHALLENGE TRACKS.</span></h2>
+            <p class="section-desc">
+              Select one specialized operational vector for your Round 1 Proposal Dossier. Each track offers concrete problem prompts spanning quantum simulation, post-quantum security, fault-tolerant error suppression, and open mathematical modeling.
+            </p>
+          </div>
+
+          <div class="tracks-grid">
+            <!-- Track 01 -->
+            <article class="track-card hud-panel">
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+              <div class="track-card-header">
+                <span class="track-badge"><span class="pulse-led"></span>TRACK 01 // QUANTUM GATES</span>
+                <span class="track-card-icon">⚛</span>
+              </div>
+              <h3 class="track-title">Quantum Superposition &amp; Circuit Modeling</h3>
+              <p class="track-desc">
+                Investigate state preparation, unitary operators, and quantum simulation of dynamical systems. Teams design efficient circuit topologies, minimize gate depth, and harness variational quantum algorithms.
+              </p>
+              <div class="track-subtopics-title">CORE PROBLEM TOPICS &amp; CHALLENGES</div>
+              <ul class="track-subtopics-list">
+                <li>
+                  <span class="bullet">▶</span>
+                  <span><strong>Hamiltonian State Evolution:</strong> Synthesize quantum circuits simulating time-dependent Schrödinger evolution under non-unitary environmental perturbations.</span>
+                </li>
+                <li>
+                  <span class="bullet">▶</span>
+                  <span><strong>Variational Circuit Optimization:</strong> Construct shallow-depth ansatz circuits for VQE molecular energy estimation with minimal CNOT gate overhead.</span>
+                </li>
+                <li>
+                  <span class="bullet">▶</span>
+                  <span><strong>Multi-Qubit Entanglement Distillation:</strong> Formulate state tomography and purification protocols for GHZ / Bell states across noisy quantum channels.</span>
+                </li>
+              </ul>
+              <div class="track-toolkits">
+                <span class="track-toolkits-label">TOOLKITS:</span>
+                <span class="track-tool-pill">Qiskit</span>
+                <span class="track-tool-pill">PennyLane</span>
+                <span class="track-tool-pill">Google Cirq</span>
+                <span class="track-tool-pill">QuTiP</span>
+                <span class="track-tool-pill">NumPy / SciPy</span>
+              </div>
+            </article>
+
+            <!-- Track 02 -->
+            <article class="track-card hud-panel">
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+              <div class="track-card-header">
+                <span class="track-badge"><span class="pulse-led"></span>TRACK 02 // CIPHERS &amp; DEFENSE</span>
+                <span class="track-card-icon">⛨</span>
+              </div>
+              <h3 class="track-title">Quantum Algorithms, Cryptography &amp; Security</h3>
+              <p class="track-desc">
+                Construct cryptographic shields against quantum cryptanalysis and simulate next-generation quantum communication networks, key distribution, and quantum zero-knowledge proofs.
+              </p>
+              <div class="track-subtopics-title">CORE PROBLEM TOPICS &amp; CHALLENGES</div>
+              <ul class="track-subtopics-list">
+                <li>
+                  <span class="bullet">▶</span>
+                  <span><strong>Post-Quantum Lattice Cryptography:</strong> Implement and benchmark ML-KEM (Kyber) and ML-DSA (Dilithium) against quantum Shor's and Grover's search algorithms.</span>
+                </li>
+                <li>
+                  <span class="bullet">▶</span>
+                  <span><strong>QKD Protocols Under Dephasing Attacks:</strong> Simulate BB84 / E91 key exchange across fiber-optic repeaters with real-time intercept-resend attack detection.</span>
+                </li>
+                <li>
+                  <span class="bullet">▶</span>
+                  <span><strong>Quantum Zero-Knowledge Arguments:</strong> Design non-interactive zero-knowledge proofs (ZK-SNARKs / STARKs) resilient to quantum polynomial-time adversaries.</span>
+                </li>
+              </ul>
+              <div class="track-toolkits">
+                <span class="track-toolkits-label">TOOLKITS:</span>
+                <span class="track-tool-pill">liboqs</span>
+                <span class="track-tool-pill">OpenSSL 3.0 PQC</span>
+                <span class="track-tool-pill">SymPy</span>
+                <span class="track-tool-pill">SageMath</span>
+                <span class="track-tool-pill">Python Cryptography</span>
+              </div>
+            </article>
+
+            <!-- Track 03 -->
+            <article class="track-card hud-panel">
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+              <div class="track-card-header">
+                <span class="track-badge"><span class="pulse-led"></span>TRACK 03 // ERROR CODES &amp; OPT</span>
+                <span class="track-card-icon">⨁</span>
+              </div>
+              <h3 class="track-title">Quantum Error Correction &amp; Optimization</h3>
+              <p class="track-desc">
+                Tackle decoherence and noise in NISQ devices. Develop topological surface codes, syndrome measurement decoders, and combinatorial optimization algorithms like QAOA.
+              </p>
+              <div class="track-subtopics-title">CORE PROBLEM TOPICS &amp; CHALLENGES</div>
+              <ul class="track-subtopics-list">
+                <li>
+                  <span class="bullet">▶</span>
+                  <span><strong>Surface Code Syndrome Decoding:</strong> Implement Minimum Weight Perfect Matching (MWPM) or Union-Find decoders on rotated surface codes under high measurement error.</span>
+                </li>
+                <li>
+                  <span class="bullet">▶</span>
+                  <span><strong>QAOA for Critical Resource Grids:</strong> Formulate QUBO / Ising models to solve NP-hard routing, emergency microgrid balancing, and supply-chain logistics.</span>
+                </li>
+                <li>
+                  <span class="bullet">▶</span>
+                  <span><strong>Dynamical Decoupling &amp; ZNE:</strong> Construct Zero-Noise Extrapolation and pulse sequences to mitigate thermal relaxation and dephasing on noisy backend emulators.</span>
+                </li>
+              </ul>
+              <div class="track-toolkits">
+                <span class="track-toolkits-label">TOOLKITS:</span>
+                <span class="track-tool-pill">Stim</span>
+                <span class="track-tool-pill">PyMatching</span>
+                <span class="track-tool-pill">Qiskit Aer</span>
+                <span class="track-tool-pill">Mitiq</span>
+                <span class="track-tool-pill">D-Wave Ocean SDK</span>
+              </div>
+            </article>
+
+            <!-- Track 04 -->
+            <article class="track-card hud-panel">
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+              <div class="track-card-header">
+                <span class="track-badge"><span class="pulse-led"></span>TRACK 04 // COMPLEX SYSTEMS</span>
+                <span class="track-card-icon">∑</span>
+              </div>
+              <h3 class="track-title">Open Mathematical &amp; Post-Apocalyptic Computing</h3>
+              <p class="track-desc">
+                Harness pure and applied mathematics to solve systemic post-apocalyptic crises. Explore topological data analysis, spectral graph theory, and nonlinear differential modeling.
+              </p>
+              <div class="track-subtopics-title">CORE PROBLEM TOPICS &amp; CHALLENGES</div>
+              <ul class="track-subtopics-list">
+                <li>
+                  <span class="bullet">▶</span>
+                  <span><strong>Topological Data Analysis (TDA):</strong> Apply persistent homology, Betti curves, and simplicial complexes to detect structural anomalies in high-dimensional datasets.</span>
+                </li>
+                <li>
+                  <span class="bullet">▶</span>
+                  <span><strong>Spectral Graph Resilience:</strong> Model algebraic connectivity and Fiedler vectors to design self-healing communication topologies resilient to targeted node decimation.</span>
+                </li>
+                <li>
+                  <span class="bullet">▶</span>
+                  <span><strong>Nonlinear Reaction-Diffusion Dynamics:</strong> Simulate atmospheric contaminant dispersal and epidemiological wave fronts using finite difference numerical solvers.</span>
+                </li>
+              </ul>
+              <div class="track-toolkits">
+                <span class="track-toolkits-label">TOOLKITS:</span>
+                <span class="track-tool-pill">GUDHI / Ripser</span>
+                <span class="track-tool-pill">NetworkX</span>
+                <span class="track-tool-pill">SciPy / NumPy</span>
+                <span class="track-tool-pill">Julia DifferentialEquations</span>
+                <span class="track-tool-pill">SymPy</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ 03 — RULES OF ENGAGEMENT ═══════ -->
+      <section class="section section-alt content-section rules-section" id="rules">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-eyebrow">// 03 — ACADEMIC STANDARDS · RULES OF ENGAGEMENT</span>
+            <h2 class="section-title">BUILD WITH<br /><span>RIGOR &amp; INTEGRITY.</span></h2>
+            <p class="section-desc">
+              Participation regulations, permitted computational tools, and the five-pillar evaluation rubric. The Department of Mathematics demands mathematical authenticity, scientific rigor, and academic integrity.
+            </p>
+          </div>
+
+          <div class="rules-review-note">
+            <span>⚑</span> ORGANIZING COMMITTEE DIRECTIVE
+            <span class="rules-note-copy">Official regulations approved and ratified by the Department of Mathematics Organizing Committee.</span>
+          </div>
+
+          <div class="rules-grid">
+            <article class="rules-card hud-panel">
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+              <span class="rules-card-index">A / ELIGIBILITY</span>
+              <h3>WHO CAN ENTER</h3>
+              <ul>
+                <li>Undergraduate and postgraduate students currently enrolled at any recognized college or university.</li>
+                <li><strong>Inter-college participation is strictly NOT allowed.</strong> All 4 to 6 members must belong to the exact same institution.</li>
+                <li>Squads must register 4–6 members together at the time of entry, led by one primary contact.</li>
+                <li>Each student may appear on one team roster only. Duplicate registrations are purged automatically.</li>
+              </ul>
+            </article>
+
+            <article class="rules-card hud-panel">
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+              <span class="rules-card-index">B / TECHNICAL SCOPE</span>
+              <h3>WHAT TO BUILD &amp; TOOLS</h3>
+              <ul>
+                <li>Round 1: Formulate a theoretical &amp; algorithmic proposal in one of the 4 designated tracks.</li>
+                <li>Round 2: Shortlisted squads build and simulate working circuits / models in a 24-hr onsite sprint.</li>
+                <li>Permitted Simulators: Qiskit Aer, Google Cirq, PennyLane, Stim, PyMatching, QuTiP, Julia Yao.</li>
+                <li>Show where mathematical formulation directly governs your circuit depth, error mitigation, or optimization.</li>
+                <li>All open-source libraries, pre-trained weights, and mathematical datasets must be strictly cited.</li>
+              </ul>
+            </article>
+
+            <article class="rules-card hud-panel">
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+              <span class="rules-card-index">C / INTEGRITY</span>
+              <h3>PLAY FAIR &amp; DEFEND</h3>
+              <ul>
+                <li>All code, proofs, and circuit architectures must be originally developed by the registered squad.</li>
+                <li>AI scaffolding &amp; coding assistants are permitted for syntax assistance, but mathematical logic must be defended live during jury viva.</li>
+                <li>Plagiarism, fabricated benchmark data, or copied repositories result in immediate disqualification.</li>
+                <li>Maintain collegiate respect toward peer innovators, student volunteers, and academic evaluators.</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="rubric-block">
+            <div>
+              <span class="rules-card-index">D / EVALUATION RUBRIC · 5 PILLARS</span>
+              <h3>FIVE LENSES.<br /><span>ONE DECISION.</span></h3>
+            </div>
+            <div class="rubric-list">
+              <div><span>Mathematical reasoning, proofs &amp; rigor</span><b>20%</b><i><u style="width:20%"></u></i></div>
+              <div><span>Quantum circuit / algorithmic innovation</span><b>20%</b><i><u style="width:20%"></u></i></div>
+              <div><span>Crisis mitigation &amp; practical impact</span><b>20%</b><i><u style="width:20%"></u></i></div>
+              <div><span>Simulation feasibility &amp; error analysis</span><b>20%</b><i><u style="width:20%"></u></i></div>
+              <div><span>Proposal clarity &amp; oral jury defense</span><b>20%</b><i><u style="width:20%"></u></i></div>
+            </div>
+          </div>
+          <p class="disqualification-note">
+            <b>Disqualification directive:</b> Disqualification applies for an incomplete roster, inter-college mixed rosters, duplicate membership, plagiarized models, false credentials, or late uploads. The Department of Mathematics Organizing Committee maintains final evaluation and review authority.
+          </p>
+        </div>
+      </section>
+
+      <!-- ═══════ 04 — SUBMISSION DOSSIER ═══════ -->
+      <section class="section section-alt content-section submission-guide" id="submission-guide">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-eyebrow">// 04 — SUBMISSION PROTOCOL // PROPOSAL DOSSIER</span>
+            <h2 class="section-title">MAKE THE<br /><span>CASE.</span></h2>
+            <p class="section-desc">
+              One concise proposal. A mathematical quantum idea worth backing. Upload your 7-section PPT, PPTX, or PDF dossier before January 25, 2027 at 11:59 PM IST.
+            </p>
+          </div>
+
+          <div class="submission-panel">
+            <div class="submission-outline hud-panel">
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-tr"></div>
+              <div class="hud-corner hud-corner-bl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+              <div class="submission-panel-head">
+                <span>OFFICIAL PROPOSAL FORMAT // 7 SECTIONS</span>
+                <span>10 MB MAX</span>
+              </div>
+              <ol>
+                <li><b>01</b><span><strong>Team &amp; project</strong><small>Project title, team name, member names, institution</small></span></li>
+                <li><b>02</b><span><strong>Problem statement</strong><small>Who is affected and why the problem matters</small></span></li>
+                <li><b>03</b><span><strong>Mathematical framing</strong><small>Model, assumptions, variables, Hamiltonian/operator framing</small></span></li>
+                <li><b>04</b><span><strong>Proposed solution</strong><small>Quantum circuit, algorithm, workflow, or prototype concept</small></span></li>
+                <li><b>05</b><span><strong>Validation &amp; feasibility</strong><small>Simulations, constraints, quantum tools, and risks</small></span></li>
+                <li><b>06</b><span><strong>Impact &amp; next steps</strong><small>Expected outcomes, scalability, and what comes next</small></span></li>
+                <li><b>07</b><span><strong>References &amp; acknowledgements</strong><small>Sources, data, tools, and external contributions</small></span></li>
+              </ol>
+              <div class="template-actions">
+                <a class="button button-outline" href="assets/qyron-proposal-outline.pptx" download>DOWNLOAD PPT OUTLINE <span>↓</span></a>
+                <span>Use the outline as a guide; export as PPT/PPTX or PDF.</span>
+              </div>
+            </div>
+
+            <div class="upload-check-card hud-panel">
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+              <div class="upload-icon">↑</div>
+              <h3>SUBMISSION CHECK</h3>
+              <p>Before upload, confirm that your file opens, stays within 10 MB, includes all seven sections, and credits every external source.</p>
+              <div class="upload-deadline">
+                <span>DEADLINE</span>
+                <b>25 JAN 2027 <small>· 11:59 PM IST</small></b>
+              </div>
+              <a class="button button-primary" href="/portal" style="width:100%; justify-content:space-between;">
+                <span>OPEN TEAM PORTAL</span> <span>↗</span>
+              </a>
+              <small>Upload receipt, timestamp, and evaluation status appear directly in your participant dashboard.</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ 05 — YOUR PROTOCOL ═══════ -->
+      <section class="section protocol content-section" id="protocol">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-eyebrow">// 05 — TWO-STAGE HACKATHON PROTOCOL</span>
+            <h2 class="section-title">FROM IDEA<br />TO <span>ENDGAME.</span></h2>
+            <p class="section-desc">A clear two-stage journey from your initial proposal to the 24-hour in-person hackathon.</p>
+          </div>
+
+          <div class="protocol-grid">
+            <article class="protocol-card hud-panel">
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-tr"></div>
+              <div class="hud-corner hud-corner-bl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+              <div class="protocol-number">01 <span>APPLICATION</span></div>
+              <div class="protocol-art art-team"><span>∴</span><i></i><i></i><i></i><i></i></div>
+              <h3>ASSEMBLE</h3>
+              <p>Register your complete squad of 4–6 members together. Pay the initial team entry fee and construct your proposal dossier.</p>
+              <div class="protocol-foot">TEAM REGISTRATION <b>₹150 / TEAM</b></div>
+            </article>
+
+            <div class="protocol-connector">··············· <span>›</span></div>
+
+            <article class="protocol-card hud-panel">
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-tr"></div>
+              <div class="hud-corner hud-corner-bl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+              <div class="protocol-number">02 <span>SELECTION</span></div>
+              <div class="protocol-art art-select"><span>30</span><i class="target t1"></i><i class="target t2"></i></div>
+              <h3>JURY EVALUATION &amp; SHORTLIST</h3>
+              <p>Submit your 7-section PPT or PDF proposal dossier by the cutoff. The academic jury panel evaluates and shortlists the top 30 collegiate squads.</p>
+              <div class="protocol-foot">SHORTLISTED TEAMS <b>30 MAX</b></div>
+            </article>
+
+            <div class="protocol-connector">··············· <span>›</span></div>
+
+            <article class="protocol-card hud-panel">
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-tr"></div>
+              <div class="hud-corner hud-corner-bl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+              <div class="protocol-number">03 <span>THE EVENT</span></div>
+              <div class="protocol-art art-event"><span>24</span><small>HRS</small><i></i></div>
+              <h3>24-HOUR CAMPUS FINALE</h3>
+              <p>Bring your shortlisted squad to the Patrician College campus for 24 hours of live non-stop hacking, circuit synthesis, and oral jury defense.</p>
+              <div class="protocol-foot">FINAL ROUND <b>₹350 / MEMBER</b></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ 06 — TIMELINE ═══════ -->
+      <section class="section section-alt timeline content-section" id="timeline">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-eyebrow">// 06 — CHRONO PIPELINE // HACKATHON SCHEDULE</span>
+            <h2 class="section-title" data-egg="Time is malleable in the Quantum Realm. In this one, the deadline is absolute.">THE CLOCK<br /><span>IS RUNNING.</span></h2>
+            <p class="section-desc">Key operational checkpoints from initial registration through the 24-hour on-campus hackathon.</p>
+          </div>
+
+          <div class="timeline-pipeline">
+            <article class="timeline-stage">
+              <div class="timeline-node"><span class="pulse-led"></span></div>
+              <div class="timeline-info">
+                <div class="timeline-date-badge">20 JANUARY 2027</div>
+                <h4 class="timeline-stage-title">Phase 01 // Registration Closes</h4>
+                <p>Complete squad registrations and the ₹150 team payment reference submission by 11:59 PM IST.</p>
+              </div>
+            </article>
+            <article class="timeline-stage">
+              <div class="timeline-node"><span class="pulse-led"></span></div>
+              <div class="timeline-info">
+                <div class="timeline-date-badge">25 JANUARY 2027</div>
+                <h4 class="timeline-stage-title">Phase 02 // Round 1 Proposal Dossier Deadline</h4>
+                <p>Upload your team’s final PPT, PPTX, or PDF proposal (up to 10 MB) via the participant portal by 11:59 PM IST.</p>
+              </div>
+            </article>
+            <article class="timeline-stage">
+              <div class="timeline-node"><span class="pulse-led"></span></div>
+              <div class="timeline-info">
+                <div class="timeline-date-badge">01 FEBRUARY 2027</div>
+                <h4 class="timeline-stage-title">Phase 03 // Top 30 Finalists Announced</h4>
+                <p>Shortlisted teams announced by the Department of Mathematics Organizing Committee. Check the participant portal from 6:00 PM IST.</p>
+              </div>
+            </article>
+            <article class="timeline-stage">
+              <div class="timeline-node"><span class="pulse-led"></span></div>
+              <div class="timeline-info">
+                <div class="timeline-date-badge">07 FEBRUARY 2027</div>
+                <h4 class="timeline-stage-title">Phase 04 // Final Clearance Due</h4>
+                <p>Shortlisted teams complete the ₹350 per member payment reference submission by this date.</p>
+              </div>
+            </article>
+            <article class="timeline-stage timeline-stage-final">
+              <div class="timeline-node"><span class="pulse-led"></span></div>
+              <div class="timeline-info">
+                <div class="timeline-date-badge" style="color:var(--doom-green);">12—13 FEBRUARY 2027</div>
+                <h4 class="timeline-stage-title">Phase 05 // 24-Hour National Grand Finale</h4>
+                <p>24 hours of continuous innovation. Thirty shortlisted teams. Live at Patrician College of Arts and Science, Chennai.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ 07 — ENTRY PROTOCOL / FEES ═══════ -->
+      <section class="section fees content-section" id="fees">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-eyebrow">// 07 — FINANCIAL DIRECTIVES // REGISTRATION TIERS</span>
+            <h2 class="section-title">TWO ROUNDS.<br /><span>ONE BIG IDEA.</span></h2>
+            <p class="section-desc">Start with your team’s initial application. If your proposal survives the jury review into the top 30, your final round begins.</p>
+          </div>
+
+          <div class="fee-grid">
+            <article class="fee-card hud-panel">
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+              <div class="term-badge" style="margin-bottom:16px;">TIER 01 // APPLICATION</div>
+              <div class="fee-price"><sup>₹</sup>150 <small>/ TEAM</small></div>
+              <p class="fee-desc">One entry fee for the entire team, paid during registration.</p>
+              <ul>
+                <li><span>✓</span> Complete team registration (4–6 members)</li>
+                <li><span>✓</span> Proposal dossier evaluation by the academic jury</li>
+                <li><span>✓</span> Eligibility for the top 30 on-campus finalists</li>
+                <li class="muted"><span>—</span> In-person 2-day hackathon access</li>
+              </ul>
+              <a class="button button-outline" href="/register">REGISTER YOUR TEAM <span>↗</span></a>
+            </article>
+
+            <article class="fee-card fee-card-featured hud-panel">
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-tr"></div>
+              <div class="hud-corner hud-corner-bl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+              <div class="fee-corner">SHORTLISTED ONLY</div>
+              <div class="term-badge term-badge-gold" style="margin-bottom:16px;">TIER 02 // FINAL ROUND</div>
+              <div class="fee-price"><sup>₹</sup>350 <small>/ MEMBER</small></div>
+              <p class="fee-desc">Paid per member after your squad is officially selected among the final 30.</p>
+              <ul>
+                <li><span>✓</span> 2-Day in-person campus hackathon access &amp; workspace</li>
+                <li><span>✓</span> Mentorship sessions, reviews, and industry juror pitches</li>
+                <li><span>✓</span> Due by February 7, 2027</li>
+                <li class="muted"><span>—</span> Pay only if shortlisted</li>
+              </ul>
+              <a class="button button-light" href="/portal">CHECK YOUR STATUS <span>↗</span></a>
+            </article>
+          </div>
+
+          <div class="hud-panel fee-notice-panel" style="margin-top:24px;">
+            <div class="hud-corner hud-corner-tl"></div>
+            <div class="hud-corner hud-corner-br"></div>
+            <p class="fee-note">
+              <span>ⓘ</span> <strong>CRITICAL PROTOCOL NOTICE:</strong> First-round registration fee (₹150/team) qualifies your submission for evaluation but does not guarantee finalist selection. Shortlisted payment references are verified through the participant portal.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ ORGANIZING DIRECTORATE ═══════ -->
+      <section class="section team-section" id="team">
+        <div class="container">
+          <div class="section-header" style="text-align:center; margin:0 auto 40px; max-width:820px;">
+            <div class="org-inst-logos-center">
+              <img src="assets/patrician-college-logo.jpg" alt="Patrician College Logo" class="org-inst-logo" title="Patrician College of Arts and Science">
+              <span class="org-inst-divider">&times;</span>
+              <img src="assets/department-phoenix-logo.png" alt="Department of Mathematics Logo" class="org-inst-logo" title="Department of Mathematics">
+            </div>
+            <span class="section-eyebrow">// COMMAND DIRECTORS // ORGANIZING COMMITTEE</span>
+            <h2 class="section-title">Organizing Directorate</h2>
+            <p class="section-desc" style="margin:0 auto;">
+              Department of Mathematics Core Committee at Patrician College of Arts and Science. Connect with our command controllers for technical queries, registration clearances, or assistance.
+            </p>
+          </div>
+
+          <div class="team-grid">
+            <!-- Vasikaran A -->
+            <div class="team-card hud-panel">
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+              <div class="team-avatar">
+                <img src="assets/vasikaran.jpg" alt="Vasikaran A - Event Organizer">
+              </div>
+              <h4 class="team-name">Vasikaran A</h4>
+              <div class="team-role">Event Organizer</div>
+              <div class="team-contact-list">
+                <a href="tel:9360531897" class="team-contact-link">
+                  <span>📞 9360531897</span>
+                </a>
+                <a href="mailto:karanvasi80@gmail.com" class="team-contact-link">
+                  <span>✉ karanvasi80@gmail.com</span>
+                </a>
+                <a href="https://www.linkedin.com/in/vasikaran-a-813b5531b" target="_blank" rel="noopener noreferrer" class="team-contact-link" style="color:var(--doom-green);">
+                  <span>LinkedIn Profile ↗</span>
+                </a>
+                <a href="https://www.instagram.com/vxsi93/" target="_blank" rel="noopener noreferrer" class="team-contact-link" style="color:var(--toxic-lime);">
+                  <span>◈ vxsi93 (Instagram)</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Jai Bharath A -->
+            <div class="team-card hud-panel">
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+              <div class="team-avatar">
+                <img src="assets/jai-bharath.jpg" alt="Jai Bharath A - Event Coordinator">
+              </div>
+              <h4 class="team-name">Jai Bharath A</h4>
+              <div class="team-role">Event Coordinator</div>
+              <div class="team-contact-list">
+                <a href="tel:8072039943" class="team-contact-link">
+                  <span>📞 8072039943</span>
+                </a>
+                <a href="mailto:jaib9943@gmail.com" class="team-contact-link">
+                  <span>✉ jaib9943@gmail.com</span>
+                </a>
+                <a href="https://www.linkedin.com/in/jai-bharath7/" target="_blank" rel="noopener noreferrer" class="team-contact-link" style="color:var(--doom-green);">
+                  <span>LinkedIn Profile ↗</span>
+                </a>
+                <a href="https://www.instagram.com/jaibharath.7?stkn=OGQ1ZGUwcDk3NzVu" target="_blank" rel="noopener noreferrer" class="team-contact-link" style="color:var(--toxic-lime);">
+                  <span>◈ jaibharath.7 (Instagram)</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Nethra S -->
+            <div class="team-card hud-panel">
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+              <div class="team-avatar">
+                <img src="assets/nethra.jpg" alt="Nethra S - Event Coordinator">
+              </div>
+              <h4 class="team-name">Nethra S</h4>
+              <div class="team-role">Event Coordinator</div>
+              <div class="team-contact-list">
+                <a href="tel:9962819163" class="team-contact-link">
+                  <span>📞 9962819163</span>
+                </a>
+                <a href="mailto:nethrasoundarrajan02@gmail.com" class="team-contact-link">
+                  <span>✉ nethrasoundarrajan02@gmail.com</span>
+                </a>
+                <a href="https://www.linkedin.com/in/nethra-soundarrajan-9602583a2/" target="_blank" rel="noopener noreferrer" class="team-contact-link" style="color:var(--doom-green);">
+                  <span>LinkedIn Profile ↗</span>
+                </a>
+                <a href="https://www.instagram.com/daisy_.31_?gwpx=MXR3OHE3d2IxdzJsMA==" target="_blank" rel="noopener noreferrer" class="team-contact-link" style="color:var(--toxic-lime);">
+                  <span>◈ daisy_.31_ (Instagram)</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Immanuel GM -->
+            <div class="team-card hud-panel">
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+              <div class="team-avatar">
+                <img src="assets/immanuel.jpg" alt="Immanuel GM - Event Coordinator">
+              </div>
+              <h4 class="team-name">Immanuel GM</h4>
+              <div class="team-role">Event Coordinator</div>
+              <div class="team-contact-list">
+                <a href="tel:7200481327" class="team-contact-link">
+                  <span>📞 7200481327</span>
+                </a>
+                <a href="mailto:gmimmanuel4@gmail.com" class="team-contact-link">
+                  <span>✉ gmimmanuel4@gmail.com</span>
+                </a>
+                <a href="https://www.linkedin.com/in/gm-immanuel-308b5531b" target="_blank" rel="noopener noreferrer" class="team-contact-link" style="color:var(--doom-green);">
+                  <span>LinkedIn Profile ↗</span>
+                </a>
+                <a href="https://www.instagram.com/imhanu.el?utm_source=ig_web_button_share_sheet&knvt=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" class="team-contact-link" style="color:var(--toxic-lime);">
+                  <span>◈ imhanu.el (Instagram)</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ 08 — FAQ ═══════ -->
+      <section class="section section-alt faq content-section" id="faq">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-eyebrow">// 08 — QUERY RESOLUTION // FREQUENTLY ASKED QUESTIONS</span>
+            <h2 class="section-title">QUESTIONS<br /><span>BEFORE THE<br />HACKATHON?</span></h2>
+            <p class="section-desc">Direct intelligence on technical tracks, eligibility, quantum simulators, evaluation rubrics, and event logistics.</p>
+          </div>
+
+          <div class="faq-accordion">
+            <div class="faq-item">
+              <button type="button" class="faq-trigger"><span>How many people can be on a team?</span><span class="faq-icon">+</span></button>
+              <div class="faq-content"><p>Each squad must consist of between 4 and 6 members. All members must belong to the exact same college or university. The complete team roster must be finalized during registration by the team leader.</p></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" class="faq-trigger"><span>Are inter-college teams allowed?</span><span class="faq-icon">+</span></button>
+              <div class="faq-content"><p><strong>No. Inter-college participation is strictly not permitted.</strong> All 4 to 6 members of your squad must be currently enrolled in the exact same institution. Cross-institutional rosters will be disqualified immediately.</p></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" class="faq-trigger"><span>Do we need access to physical quantum computers, or are simulators accepted?</span><span class="faq-icon">+</span></button>
+              <div class="faq-content"><p>Physical quantum hardware is <strong>not required</strong>. Standard open-source simulators such as <strong>Qiskit Aer, Google Cirq, PennyLane, Stim, and QuTiP</strong> are fully accepted and standard for both Round 1 proposals and Round 2 onsite execution.</p></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" class="faq-trigger"><span>What programming languages and software tools can we use?</span><span class="faq-icon">+</span></button>
+              <div class="faq-content"><p>Teams primarily build using <strong>Python 3.9+</strong>, <strong>Julia</strong>, or <strong>C++</strong>. Recommended quantum and mathematical libraries include Qiskit, Cirq, PennyLane, Stim, PyMatching, Mitiq, NetworkX, SciPy, NumPy, and GUDHI.</p></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" class="faq-trigger"><span>Can beginners in quantum computing participate if they have a math or CS background?</span><span class="faq-icon">+</span></button>
+              <div class="faq-content"><p><strong>Yes, absolutely.</strong> Strong foundations in linear algebra, probability, abstract algebra, graph theory, or algorithm design form the core of quantum mechanics. Track 4 is dedicated to mathematical computing, and beginner-friendly quantum simulators (Qiskit tutorials) make getting started approachable.</p></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" class="faq-trigger"><span>What do we submit for Round 1?</span><span class="faq-icon">+</span></button>
+              <div class="faq-content"><p>Submit your team's proposal dossier as a PPT, PPTX, or PDF document (max 10 MB) adhering to the official 7-section outline. The submission deadline is <strong>January 25, 2027 at 11:59 PM IST</strong> via your Participant Portal.</p></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" class="faq-trigger"><span>How does the two-tier payment structure work?</span><span class="faq-icon">+</span></button>
+              <div class="faq-content"><p><strong>Stage 1 (Application):</strong> Pay ₹150 flat per team during registration to cover jury review and dossier evaluation. <strong>Stage 2 (Final Round):</strong> Only if your squad is shortlisted among the top 30 on February 1, each team member pays ₹350 by February 7, 2027 to cover the 24-hour on-campus event access, food, and facilities.</p></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" class="faq-trigger"><span>What facilities are provided during the 24-hour on-campus finale?</span><span class="faq-icon">+</span></button>
+              <div class="faq-content"><p>The 24-hour grand finale is hosted at the Patrician College of Arts and Science campus in Chennai on <strong>12–13 February 2027</strong>. Finalists receive high-speed internet, dedicated workstation zones, uninterrupted power grids, meals, snacks, refreshments, rest areas, and interactive mentoring sessions.</p></div>
+            </div>
+            <div class="faq-item">
+              <button type="button" class="faq-trigger"><span>What is the vision and academic foundation of QYRON’27?</span><span class="faq-icon">+</span></button>
+              <div class="faq-content"><p>QYRON’27 is organized by the Department of Mathematics at Patrician College of Arts and Science, Chennai. It provides a premier platform where undergraduate and postgraduate students apply advanced mathematical principles (linear algebra, probability, abstract algebra, graph theory, differential equations) directly to quantum computing, error correction, and post-quantum cryptographic security.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ FINAL CALL TO ACTION ═══════ -->
+      <section class="section section-alt final-cta">
+        <div class="cta-grid" aria-hidden="true"></div>
+        <div class="container" style="text-align:center;position:relative;z-index:1;">
+          <span class="term-badge" style="margin-bottom:20px;display:inline-flex;">
+            <span class="pulse-led"></span>NATIONAL FINALE // 12—13 FEB 2027
+          </span>
+          <h2>THE FUTURE<br />IS <span>UNSOLVED.</span></h2>
+          <p>Bring your best collegiate minds. Formulate your quantum circuits and mathematical models. Solve what comes next.</p>
+          <div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;">
+            <a class="button button-primary" href="/register">ASSEMBLE YOUR TEAM <span>↗</span></a>
+            <a class="button button-ghost" href="/portal">ENTER PORTAL COMMAND <span>↗</span></a>
+          </div>
+          <div class="cta-stamp" data-egg="Patrician College Department of Mathematics welcomes you.">
+            QYRON<br /><small>'27</small>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ═══════ FOOTER ═══════ -->
+    <footer class="term-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-brand-header">
+              <img src="assets/qyron-logo-doomsday.png" alt="QYRON 27 Emblem" style="width:44px; height:44px; object-fit:contain; filter:drop-shadow(0 0 8px var(--doom-green));">
+              <div>
+                <div class="term-brand-name">QYRON<span>'27</span></div>
+                <p class="footer-tagline">PATRICIAN COLLEGE OF ARTS AND SCIENCE // DEPT. OF MATHEMATICS</p>
+              </div>
+            </div>
+            <p class="footer-brand-desc">A mathematics-powered quantum computing hackathon from the Department of Mathematics. Assemble your team. Solve what comes next.</p>
+          </div>
+          <div>
+            <h5>Direct Commands</h5>
+            <ul class="footer-links">
+              <li><a href="#mission">The Mission</a></li>
+              <li><a href="#tracks">Operational Tracks</a></li>
+              <li><a href="#rules">Rules &amp; Rubric</a></li>
+              <li><a href="#team">Organizing Directorate</a></li>
+              <li><a href="/register">Register Team ↗</a></li>
+              <li><a href="/login">Portal Login ↗</a></li>
+              <li><a href="/participant">Participant Dashboard ↗</a></li>
+              <li><a href="/admin">Admin Directorate ↗</a></li>
+              <li><a href="assets/qyron-proposal-outline.pptx" download style="color:var(--doom-green);">Download PPT Template</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5>Organized By</h5>
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+              <img src="assets/patrician-college-logo.jpg" alt="Patrician College" style="width:36px; height:36px; border-radius:50%; border:1px solid var(--doom-green);">
+              <img src="assets/department-phoenix-logo.png" alt="Dept of Maths" style="width:34px; height:34px;">
+            </div>
+            <p class="footer-org">
+              PATRICIAN COLLEGE OF ARTS AND SCIENCE<br />
+              <small>Department of Mathematics // Quantum Innovation Initiative</small>
+            </p>
+            <a href="#home" class="back-top">BACK TO TOP ↑</a>
+          </div>
+        </div>
+        <div class="footer-copy">
+          © 2027 QYRON · Department of Mathematics, Patrician College of Arts and Science, Chennai. All rights reserved.
+        </div>
+      </div>
+    </footer>
+
+    <!-- Modal System (for inline quick actions if needed) -->
+    <div class="modal-backdrop" id="modalBackdrop" hidden>
+      <section class="portal-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button class="modal-close" id="modalClose" aria-label="Close">×</button>
+        <div class="modal-kicker">QYRON’27 // PARTICIPANT ACCESS</div>
+        <div id="modalContent"></div>
+      </section>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

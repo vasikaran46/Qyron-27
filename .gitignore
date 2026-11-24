@@ -1,0 +1,26 @@
+# Python virtual environments & bytecode
+venv/
+env/
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Local Environment Variables & Secrets
+.env
+.env.local
+.env.*.local
+
+# Vercel Cache
+.vercel/
+
+# Uploaded Files
+uploads/ppt/*
+!uploads/ppt/.gitkeep
+uploads/payments/*
+!uploads/payments/.gitkeep
+
+# Operating System Files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,433 @@
+/* ============================================================
+   QYRON'27 - COMPONENTS & HUD DESIGN SYSTEM (ALIGNED ARCHITECTURE)
+   ============================================================ */
+
+/* CRT Overlay & Cyber Grid */
+.crt-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.065;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.45) 50%),
+              linear-gradient(90deg, rgba(61, 220, 132, 0.025), rgba(0, 0, 0, 0), rgba(124, 240, 255, 0.025));
+  background-size: 100% 3px, 6px 100%;
+}
+
+.cyber-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.035;
+  background-image: linear-gradient(var(--line) 1px, transparent 1px),
+                    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 52px 52px;
+}
+
+/* Pulsing LED Indicator */
+.pulse-led {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--doom-green);
+  box-shadow: 0 0 8px var(--doom-green);
+  animation: pulse-dot 1.8s ease-in-out infinite;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px var(--doom-green); }
+  50% { opacity: 0.4; transform: scale(0.85); box-shadow: 0 0 3px var(--doom-green); }
+}
+
+/* Top HUD Telemetry Bar (Perfect Container Alignment) */
+.hud-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--hud-height);
+  background: #040806;
+  border-bottom: 1px solid var(--steel-border);
+  z-index: 99;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+
+.hud-bar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.hud-telemetry-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mono-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mono-tag b {
+  color: var(--doom-green);
+  font-weight: 500;
+}
+
+.mono-tag em {
+  font-style: normal;
+  color: var(--gold);
+}
+
+.hud-status-short {
+  display: none;
+}
+
+.audio-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.audio-toggle b {
+  color: var(--doom-green);
+}
+
+.sound-bars {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  height: 12px;
+}
+
+.sound-bars i {
+  width: 2px;
+  height: 4px;
+  background: var(--doom-green);
+  display: block;
+}
+
+.sound-bars i:nth-child(2) { height: 10px; }
+.sound-bars i:nth-child(3) { height: 7px; }
+.sound-bars i:nth-child(4) { height: 11px; }
+
+/* Sticky Main Navigation Bar (Perfect Container Alignment) */
+.term-navbar {
+  position: sticky;
+  top: var(--hud-height);
+  z-index: 90;
+  height: var(--navbar-height);
+  background: rgba(4, 8, 6, 0.94);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--steel-border);
+}
+
+.term-navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.term-logo-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.term-emblem {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.term-emblem .brand-mark {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--doom-green);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--doom-green);
+  position: relative;
+  background: radial-gradient(circle, rgba(61, 220, 132, 0.16), transparent 70%);
+  box-shadow: 0 0 16px rgba(61, 220, 132, 0.28);
+  clip-path: polygon(10% 0, 90% 0, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0 90%, 0 10%);
+}
+
+.term-emblem .brand-mark span {
+  font-size: 10px;
+  color: var(--gold);
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+}
+
+.term-brand-name {
+  font-family: var(--font-display);
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #fff;
+  line-height: 1.1;
+  text-shadow: 0 0 18px rgba(61, 220, 132, 0.35);
+}
+
+.term-brand-name span {
+  color: var(--gold);
+  font-size: 15px;
+}
+
+.term-brand-sub {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-muted);
+  letter-spacing: 0.15em;
+  margin-top: 2px;
+}
+
+.term-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.term-nav-link {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--silver);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s, text-shadow 0.2s;
+  padding: 6px 0;
+}
+
+.term-nav-link:hover {
+  color: var(--doom-green);
+  text-shadow: 0 0 10px var(--doom-green);
+}
+
+.term-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  height: 2px;
+  background: var(--doom-green);
+  box-shadow: 0 0 8px var(--doom-green);
+  transition: right 0.25s ease;
+}
+
+.term-nav-link:hover::after {
+  right: 0;
+}
+
+.btn-register {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  background: transparent;
+  border: 1px solid var(--gold);
+  padding: 10px 18px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  transition: all 0.25s ease;
+}
+
+.btn-register:hover {
+  background: var(--doom-green);
+  border-color: var(--doom-green);
+  color: #030805;
+  box-shadow: 0 0 20px rgba(61, 220, 132, 0.45);
+}
+
+.mobile-nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--doom-green);
+  font-size: 26px;
+  cursor: pointer;
+}
+
+/* Tactical Term Badges & Latveria Seals */
+.term-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(10, 24, 16, 0.85);
+  border: 1px solid var(--steel-border);
+  color: var(--silver);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+}
+
+.term-badge-gold {
+  border-color: rgba(229, 193, 124, 0.4);
+  color: var(--gold);
+  background: rgba(26, 22, 12, 0.85);
+}
+
+.latveria-seal {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--gold);
+  background: rgba(16, 26, 18, 0.9);
+  padding: 6px 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+}
+
+/* HUD Panels & Brackets */
+.hud-panel {
+  position: relative;
+  background: linear-gradient(150deg, rgba(16, 28, 21, 0.75), rgba(6, 12, 9, 0.92));
+  border: 1px solid var(--steel-border);
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65);
+}
+
+.hud-corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--doom-green);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.hud-corner-tl { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+.hud-corner-tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
+.hud-corner-bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
+.hud-corner-br { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+
+/* Action Buttons (Perfect Height & Typography Alignment) */
+.button {
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 24px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+
+.button:hover {
+  transform: translateY(-2px);
+}
+
+.button-primary {
+  background: linear-gradient(135deg, #1f8a4c, #3ddc84);
+  border: 1px solid var(--doom-green);
+  color: #030a06;
+  box-shadow: 0 0 24px rgba(61, 220, 132, 0.35);
+}
+
+.button-primary:hover {
+  background: #68e79b;
+  box-shadow: 0 0 35px rgba(61, 220, 132, 0.6);
+}
+
+.button-ghost {
+  background: rgba(10, 18, 14, 0.65);
+  border: 1px solid var(--steel-border);
+  color: var(--text);
+}
+
+.button-ghost:hover {
+  border-color: var(--doom-green);
+  color: var(--doom-green);
+  box-shadow: 0 0 18px rgba(61, 220, 132, 0.25);
+}
+
+.button-outline {
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+}
+
+.button-outline:hover {
+  border-color: var(--doom-green);
+  color: var(--doom-green);
+  box-shadow: 0 0 18px rgba(61, 220, 132, 0.3);
+}
+
+.button-light {
+  background: var(--doom-green);
+  border: 1px solid var(--doom-green);
+  color: #030805;
+}
+
+.button-light:hover {
+  background: #68e79b;
+  box-shadow: 0 0 25px rgba(61, 220, 132, 0.5);
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translate(-50%, 20px);
+  background: #09150e;
+  border: 1px solid var(--doom-green);
+  color: #eff7f2;
+  padding: 12px 24px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  box-shadow: 0 0 25px rgba(61, 220, 132, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  z-index: 9999;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}

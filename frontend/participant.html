@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#050706" />
+    <meta name="description" content="QYRON’27 Participant Console — Manage your team roster, upload proposal dossiers, and track evaluation status." />
+    <title>PARTICIPANT CONSOLE // QYRON’27 — Department of Mathematics</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
+    <!-- Typography: Orbitron, Rajdhani, Space Mono, Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;600;700;800;900&family=Rajdhani:wght@500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/site-sections.css" />
+    <link rel="stylesheet" href="/portal.css" />
+    <link rel="stylesheet" href="/css/feature-components.css" />
+    <link rel="stylesheet" href="/css/portal-features.css" />
+    <link rel="stylesheet" href="/css/doom-theme.css" />
+    <script src="/js/doom-cursor.js" defer></script>
+    <script src="/js/portal.js" defer></script>
+  </head>
+  <body class="portal-page-body">
+    <!-- CRT Overlay & Cyber Grid -->
+    <div class="crt-overlay" aria-hidden="true"></div>
+    <div class="cyber-grid" aria-hidden="true"></div>
+    <div class="noise" aria-hidden="true"></div>
+
+    <!-- HUD Telemetry Top Bar -->
+    <header class="hud-bar" id="hudTopBar">
+      <div class="container">
+        <div class="hud-telemetry-item">
+          <span class="pulse-led"></span>
+          <span class="mono-tag">
+            <span>PARTICIPANT RELAY // QUANTUM INNOVATION CONSOLE</span>
+          </span>
+        </div>
+        <div class="hud-telemetry-item">
+          <span class="mono-tag" style="color:var(--toxic-lime);">[SECTOR 27 · QUANTUM INITIATIVE]</span>
+        </div>
+        <div class="hud-telemetry-item">
+          <span class="mono-tag" style="color:var(--doom-green);">ENCRYPTION: QUANTUM-COHERENT</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="portal-nav">
+      <a class="portal-brand" href="/" aria-label="Return to QYRON Home">
+        <div class="term-emblem" style="padding:2px; display:flex; align-items:center; justify-content:center;">
+          <img src="assets/qyron-logo-doomsday.png" alt="QYRON 27 Emblem" style="width:36px; height:36px; object-fit:contain; filter:drop-shadow(0 0 6px var(--doom-green));">
+        </div>
+        <div>
+          <div class="portal-brand-title">QYRON<span>'27</span> // PARTICIPANT CONSOLE</div>
+          <span class="portal-brand-badge">PATRICIAN COLLEGE · DEPT. OF MATHEMATICS</span>
+        </div>
+      </a>
+
+      <div style="display:flex; align-items:center; gap:16px;">
+        <span class="term-badge term-badge-gold">SQUAD REPOSITORY ACTIVE</span>
+        <a href="/" class="btn-back-home">← RETURN TO BASE // QYRON'27</a>
+      </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="portal-container" style="max-width:1100px;">
+      <div class="portal-master-card">
+        <!-- Managed dynamically by js/portal.js -->
+        <div id="participantApp">
+          <!-- Populated by js/portal.js loadParticipantDashboard -->
+        </div>
+      </div>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

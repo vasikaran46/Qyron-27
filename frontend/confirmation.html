@@ -1,0 +1,794 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#050706" />
+    <meta name="description" content="Official Confirmation Ticket & Invoice — QYRON'27 Hackathon." />
+    <title>Registration Confirmation — QYRON’27 (National Quantum Hackathon)</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
+    <!-- Typography: Orbitron, Rajdhani, Space Mono, Inter, Lato, Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lato:ital,wght@0,400;0,700;0,900;1,400&family=Orbitron:wght@500;600;700;800;900&family=Playfair+Display:wght@700;900&family=Rajdhani:wght@500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/site-sections.css" />
+    <link rel="stylesheet" href="/portal.css" />
+    <link rel="stylesheet" href="/css/doom-theme.css" />
+    <script src="/js/doom-cursor.js" defer></script>
+    <style>
+      /* ON-SCREEN STYLES: HIDE INVOICE SHEET ENTIRELY FROM SCREEN VIEW */
+      .official-invoice-sheet {
+        display: none !important;
+      }
+
+      /* PRINT STYLES: DISPLAY CRISP INSTITUTIONAL TAX INVOICE ON PAPER / PDF */
+      @media print {
+        .hud-bar,
+        .portal-nav,
+        .footer,
+        .crt-overlay,
+        .cyber-grid,
+        .noise,
+        .hud-corner,
+        .no-print,
+        .on-screen-card,
+        .btn-terminator,
+        .btn-cyber-outline,
+        button {
+          display: none !important;
+        }
+
+        @page {
+          size: A4 portrait;
+          margin: 8mm 10mm;
+        }
+
+        *, *::before, *::after {
+          box-shadow: none !important;
+          text-shadow: none !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+
+        html, body {
+          background: #ffffff !important;
+          color: #0f172a !important;
+          font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+          font-size: 10pt !important;
+          line-height: 1.35 !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          width: 100% !important;
+          max-width: 100% !important;
+        }
+
+        .content-wrapper, main, .section, .container {
+          padding: 0 !important;
+          margin: 0 !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          background: transparent !important;
+        }
+
+        /* Reveal only official invoice sheet */
+        .official-invoice-sheet {
+          display: block !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          margin: 0 !important;
+          padding: 16px 20px !important;
+          background: #ffffff !important;
+          color: #0f172a !important;
+          border: 1.5px solid #0f172a !important;
+          box-sizing: border-box !important;
+          page-break-inside: avoid !important;
+        }
+
+        .official-invoice-sheet * {
+          color: #0f172a !important;
+        }
+
+        .official-invoice-sheet .text-emerald {
+          color: #047857 !important;
+        }
+
+        .official-invoice-sheet .stamp-paid-badge {
+          color: #047857 !important;
+          border-color: #047857 !important;
+          background: #ecfdf5 !important;
+        }
+
+        .official-invoice-sheet .inv-table th {
+          background: #0f172a !important;
+          color: #ffffff !important;
+        }
+
+        .official-invoice-sheet .inv-table tr:nth-child(even) td {
+          background: #f8fafc !important;
+        }
+
+        .official-invoice-sheet .total-row td {
+          background: #f1f5f9 !important;
+        }
+      }
+
+      /* Print Sheet Layout */
+      .inv-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        border-bottom: 2px solid #0f172a;
+        padding-bottom: 14px;
+        margin-bottom: 16px;
+      }
+
+      .inv-crest {
+        width: 64px;
+        height: 64px;
+        object-fit: contain;
+      }
+
+      .inv-inst-name {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 18px;
+        font-weight: 900;
+        color: #0f172a;
+        letter-spacing: 0.02em;
+        margin: 0 0 2px 0;
+      }
+
+      .inv-inst-sub {
+        font-size: 11px;
+        color: #475569;
+        margin: 0 0 3px 0;
+      }
+
+      .inv-inst-dept {
+        font-size: 12px;
+        font-weight: 800;
+        color: #15803d;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin: 0;
+      }
+
+      .inv-title-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-left: 4px solid #0f172a;
+        padding: 9px 14px;
+        margin-bottom: 16px;
+      }
+
+      .inv-title-text {
+        font-size: 16px;
+        font-weight: 900;
+        color: #0f172a;
+        margin: 0;
+        text-transform: uppercase;
+      }
+
+      .stamp-paid-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #ecfdf5;
+        border: 1.5px solid #047857;
+        color: #047857;
+        font-weight: 900;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        padding: 3px 10px;
+        border-radius: 3px;
+        text-transform: uppercase;
+      }
+
+      .inv-grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+
+      .inv-meta-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        padding: 10px 12px;
+        font-size: 11.5px;
+      }
+
+      .inv-meta-card-title {
+        font-size: 10.5px;
+        font-weight: 800;
+        color: #0f172a;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        border-bottom: 1px solid #e2e8f0;
+        padding-bottom: 4px;
+        margin-bottom: 6px;
+      }
+
+      .inv-row {
+        display: flex;
+        margin-bottom: 4px;
+      }
+
+      .inv-col-label {
+        width: 100px;
+        flex-shrink: 0;
+        color: #64748b;
+        font-weight: 600;
+      }
+
+      .inv-col-val {
+        color: #0f172a;
+        font-weight: 600;
+        flex: 1;
+      }
+
+      .inv-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 18px;
+        font-size: 11px;
+      }
+
+      .inv-table th {
+        background: #0f172a;
+        color: #ffffff;
+        padding: 7px 9px;
+        font-weight: 700;
+        text-transform: uppercase;
+        border: 1px solid #0f172a;
+        text-align: left;
+      }
+
+      .inv-table td {
+        padding: 7px 9px;
+        border: 1px solid #e2e8f0;
+        color: #1e293b;
+      }
+
+      .inv-table .total-row td {
+        background: #f1f5f9;
+        font-weight: 800;
+        border-top: 2px solid #0f172a;
+        font-size: 12px;
+      }
+
+      @media (max-width: 600px) {
+        .on-screen-card {
+          padding: 22px 14px !important;
+        }
+        .no-print button,
+        .no-print a {
+          width: 100% !important;
+          justify-content: center !important;
+          text-align: center !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="portal-page-body">
+    <!-- CRT Overlay & Cyber Grid Background FX -->
+    <div class="crt-overlay" aria-hidden="true"></div>
+    <div class="cyber-grid" aria-hidden="true"></div>
+    <div class="noise" aria-hidden="true"></div>
+
+    <!-- HUD Telemetry Top Bar -->
+    <header class="hud-bar no-print" id="hudTopBar">
+      <div class="container">
+        <div class="hud-telemetry-item">
+          <span class="pulse-led" style="background:var(--doom-green); box-shadow:0 0 10px var(--doom-green);"></span>
+          <span class="mono-tag">
+            <span>REGISTRATION MANIFEST LOGGED // SECTOR 27</span>
+          </span>
+        </div>
+        <div class="hud-telemetry-item">
+          <span class="mono-tag" style="color:var(--doom-green);">PAYMENT AUTHORIZED: ₹150</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation Header -->
+    <nav class="portal-nav no-print">
+      <a class="portal-brand" href="/" aria-label="Return to QYRON Home">
+        <div class="term-emblem" style="padding:2px; display:flex; align-items:center; justify-content:center;">
+          <img src="assets/qyron-logo-doomsday.png" alt="QYRON 27 Emblem" style="width:36px; height:36px; object-fit:contain; filter:drop-shadow(0 0 6px var(--doom-green));">
+        </div>
+        <div>
+          <div class="portal-brand-title">QYRON<span>'27</span> // CONFIRMATION</div>
+          <span class="portal-brand-badge">PATRICIAN COLLEGE · DEPT. OF MATHEMATICS</span>
+        </div>
+      </a>
+
+      <div style="display:flex; align-items:center; gap:16px;">
+        <a href="/participant" class="btn-register" style="padding:8px 16px; font-size:11px;">PARTICIPANT DASHBOARD ↗</a>
+        <a href="/" class="btn-back-home">← RETURN TO BASE</a>
+      </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="container" style="max-width:880px; padding-top:40px; padding-bottom:70px;">
+      
+      <!-- ================= 1. ON-SCREEN TACTICAL HUD CONFIRMATION TICKET ================= -->
+      <div class="hud-panel on-screen-card" style="border-color:var(--doom-green); box-shadow:0 0 40px rgba(57,255,20,0.22); text-align:center; padding:36px 28px; margin-bottom:28px; width:100%; box-sizing:border-box;">
+        <div class="hud-corner hud-corner-tl" style="border-color:var(--doom-green);"></div>
+        <div class="hud-corner hud-corner-tr" style="border-color:var(--doom-green);"></div>
+        <div class="hud-corner hud-corner-bl" style="border-color:var(--doom-green);"></div>
+        <div class="hud-corner hud-corner-br" style="border-color:var(--doom-green);"></div>
+
+        <!-- SUCCESS CONFIRMATION TICK BADGE -->
+        <div style="display:flex; justify-content:center; align-items:center; margin-bottom:18px;">
+          <div style="width:72px; height:72px; border:3px solid var(--doom-green); border-radius:50%; display:grid; place-items:center; background:rgba(57,255,20,0.12); color:var(--doom-green); box-shadow:0 0 28px rgba(57,255,20,0.45); flex-shrink:0;">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+        </div>
+
+        <span class="term-badge" style="background:rgba(57,255,20,0.12); color:var(--doom-green); border-color:var(--doom-green); margin-bottom:12px;">APPLICATION CONFIRMED // PAYMENT RECORDED</span>
+        <h1 style="font-family:var(--font-display); font-size:clamp(22px, 5vw, 32px); color:#fff; margin-bottom:6px; letter-spacing:0.04em;">REGISTRATION SUCCESSFUL</h1>
+        <p style="color:var(--text-muted); font-size:15px; margin-bottom:22px; max-width:640px; margin-left:auto; margin-right:auto;">
+          Your squad application for <strong>QYRON’27</strong> has been securely logged into the <strong>Patrician College Department of Mathematics</strong> registry.
+        </p>
+
+        <!-- TEAM CODE DISPLAY -->
+        <div style="display:inline-block; background:rgba(5,7,6,0.95); border:1px solid rgba(57,255,20,0.4); padding:12px 28px; border-radius:4px; margin-bottom:26px;">
+          <span style="font-family:var(--font-mono); font-size:12px; color:var(--text-muted); display:block; margin-bottom:4px;">TEAM IDENTIFICATION CODE</span>
+          <span id="ticket-team-code" style="font-family:var(--font-mono); font-size:clamp(20px, 5vw, 26px); font-weight:900; color:var(--doom-green); letter-spacing:0.1em;">
+            QYRON-27-LOAD...
+          </span>
+        </div>
+
+        <!-- PARTICIPANT PORTAL ACCESS CREDENTIALS (DISPATCHED IMMEDIATELY UPON REGISTRATION) -->
+        <div id="credentials-box-active" style="background:linear-gradient(135deg, rgba(20,40,25,0.92), rgba(5,15,10,0.96)); border:2px solid var(--doom-green); border-radius:6px; padding:22px; margin-bottom:20px; box-shadow:0 0 25px rgba(57,255,20,0.22); text-align:left;">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; gap:10px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="pulse-led" style="background:var(--doom-green); box-shadow:0 0 10px var(--doom-green);"></span>
+              <strong style="color:var(--doom-green); font-family:var(--font-mono); font-size:12px; letter-spacing:0.1em;">PORTAL ACCESS CREDENTIALS (ACTIVE &amp; DISPATCHED)</strong>
+            </div>
+            <span class="term-badge" style="background:rgba(57,255,20,0.15); color:var(--doom-green); border-color:var(--doom-green); font-size:10px;">STAGE 2: PROPOSAL SUBMISSION</span>
+          </div>
+          <p style="color:#e2e8f0; font-size:13px; line-height:1.5; margin-bottom:16px;">
+            Your registration is confirmed and credentials have been dispatched to your email! Log in to the <strong>Participant Portal</strong> now to compose your <strong>Idea Title, Abstract, Technical Architecture</strong>, and upload your <strong>Presentation Slide Deck (.pptx / .pdf)</strong>.
+          </p>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:14px; margin-bottom:16px;">
+            <div style="background:rgba(0,0,0,0.5); padding:10px 14px; border:1px solid rgba(57,255,20,0.3); border-radius:4px;">
+              <span style="font-family:var(--font-mono); font-size:10px; color:var(--text-muted); display:block; margin-bottom:2px;">PORTAL USERNAME / EMAIL</span>
+              <span id="ticket-username" style="font-family:var(--font-mono); font-size:14px; color:#fff; font-weight:700; word-break:break-all;">-</span>
+            </div>
+            <div style="background:rgba(0,0,0,0.5); padding:10px 14px; border:1px solid rgba(57,255,20,0.3); border-radius:4px;">
+              <span style="font-family:var(--font-mono); font-size:10px; color:var(--text-muted); display:block; margin-bottom:2px;">PORTAL PASSWORD</span>
+              <span id="ticket-password" style="font-family:var(--font-mono); font-size:14px; color:var(--doom-green); font-weight:700; letter-spacing:0.08em;">-</span>
+            </div>
+          </div>
+          <div style="display:flex; justify-content:flex-end;">
+            <a href="/login" class="btn-terminator" style="padding:10px 22px; font-size:12px; text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
+              <span>PROCEED TO PORTAL LOGIN &amp; SUBMIT PROPOSAL</span>
+              <span style="font-size:14px;">➔</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- PAYMENT VERIFICATION STATUS CARD -->
+        <div id="credentials-box-pending" style="background:rgba(245,158,11,0.08); border:1.5px solid #f59e0b; border-left:5px solid #d97706; border-radius:6px; padding:18px 22px; margin-bottom:26px; text-align:left;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+            <span class="pulse-led" id="status-led" style="background:#f59e0b; box-shadow:0 0 10px #f59e0b;"></span>
+            <strong id="status-card-title" style="color:#f59e0b; font-family:var(--font-mono); font-size:12px; letter-spacing:0.06em;">// PAYMENT STATUS: UNDER DIRECTORATE VERIFICATION (₹150)</strong>
+          </div>
+          <p id="status-card-desc" style="color:#e2e8f0; font-size:13px; line-height:1.6; margin:0 0 10px;">
+            Your squad application and 12-digit UPI UTR Reference (<strong id="pending-utr-code" style="color:var(--doom-green); font-family:var(--font-mono);">-</strong>) have been securely logged. The <strong>Department of Mathematics Organizing Directorate</strong> is currently verifying this transfer against college bank accounts.
+          </p>
+          <div id="status-card-hint" style="background:rgba(0,0,0,0.5); padding:10px 14px; border-radius:4px; font-size:12px; color:#cbd5e1; border:1px solid rgba(245,158,11,0.25);">
+            ⏳ <strong>Follow-up:</strong> Once verified, an official <strong>Payment Verified Email</strong> will be delivered to <strong id="pending-leader-email" style="color:#fff;">-</strong>. You do NOT need to wait — you can log in with your credentials above and submit your proposal now!
+          </div>
+        </div>
+
+        <!-- Ticket Manifest Details -->
+        <div style="text-align:left; background:rgba(16,24,18,0.7); border:1px solid rgba(57,255,20,0.2); border-radius:4px; padding:22px 20px; margin-bottom:28px;">
+          <h4 style="font-family:var(--font-heading); font-size:16px; color:#fff; border-bottom:1px solid rgba(57,255,20,0.2); padding-bottom:10px; margin-bottom:16px;">
+            // SQUAD DOSSIER SUMMARY
+          </h4>
+          
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; font-size:14px; margin-bottom:20px;">
+            <div>
+              <span style="color:var(--text-muted); display:block; font-size:11px; font-family:var(--font-mono);">TEAM NAME</span>
+              <strong id="ticket-team-name" style="color:#fff;">-</strong>
+            </div>
+            <div>
+              <span style="color:var(--text-muted); display:block; font-size:11px; font-family:var(--font-mono);">OPERATIONAL TRACK</span>
+              <span id="ticket-track" style="color:var(--doom-green); word-break:break-word;">-</span>
+            </div>
+            <div>
+              <span style="color:var(--text-muted); display:block; font-size:11px; font-family:var(--font-mono);">SQUAD COMMANDER (LEAD)</span>
+              <strong id="ticket-leader" style="color:#fff;">-</strong>
+            </div>
+            <div>
+              <span style="color:var(--text-muted); display:block; font-size:11px; font-family:var(--font-mono);">COLLEGE / INSTITUTION</span>
+              <span id="ticket-college" style="color:var(--toxic-lime); word-break:break-word;">-</span>
+            </div>
+            <div>
+              <span style="color:var(--text-muted); display:block; font-size:11px; font-family:var(--font-mono);">SQUAD SIZE</span>
+              <span id="ticket-crew-size" style="color:#fff;">4 Units Total</span>
+            </div>
+            <div>
+              <span style="color:var(--text-muted); display:block; font-size:11px; font-family:var(--font-mono);">PAYMENT STATUS</span>
+              <span class="term-badge" id="ticket-status-badge" style="background:rgba(245,158,11,0.15); color:#f59e0b; border-color:#f59e0b;">⏳ PENDING VERIFICATION (&#8377;150)</span>
+            </div>
+          </div>
+
+          <!-- Idea Submission Dossier Preview -->
+          <div style="background:rgba(5,7,6,0.6); padding:16px; border-radius:4px; margin-bottom:20px; border-left:3px solid var(--doom-green);">
+            <span style="color:var(--doom-green); font-family:var(--font-mono); font-size:11px; display:block; margin-bottom:4px; font-weight:700;">
+              // SUBMITTED PROPOSAL DOSSIER
+            </span>
+            <h4 id="ticket-idea-title" style="color:#fff; font-size:16px; margin-bottom:8px; word-break:break-word;">-</h4>
+            <p id="ticket-idea-summary" style="color:var(--text-muted); font-size:13px; line-height:1.6; margin-bottom:12px; word-break:break-word;">
+              -
+            </p>
+            <div id="ticket-ppt-container" style="display:flex; align-items:center; gap:8px; font-size:12px; font-family:var(--font-mono); color:var(--doom-green); flex-wrap:wrap;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+              </svg>
+              <span id="ticket-ppt-filename">Presentation attached</span>
+            </div>
+          </div>
+
+          <!-- Members Breakdown -->
+          <h5 style="color:#fff; font-size:13px; font-family:var(--font-mono); margin-bottom:10px;">
+            ADDITIONAL CREW MEMBERS:
+          </h5>
+          <div id="ticket-members-list" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:10px; font-size:13px; color:var(--text-muted);">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+        <!-- Financial Transaction Data -->
+        <div style="text-align:left; font-family:var(--font-mono); font-size:12px; color:var(--text-muted); background:rgba(5,7,6,0.7); padding:14px; border-radius:4px; margin-bottom:28px; word-break:break-all;">
+          <div>PAYMENT MODE: <span style="color:var(--doom-green); font-weight:700;">INSTITUTIONAL DIRECT UPI QR (₹150)</span></div>
+          <div>UPI REFERENCE / UTR NO: <span id="ticket-txn-id" style="color:#fff; font-weight:700;">-</span></div>
+          <div>ORDER REFERENCE: <span id="ticket-order-id" style="color:#fff;">-</span></div>
+          <div>TIMESTAMP: <span id="ticket-timestamp" style="color:#fff;">-</span></div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="no-print" style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
+          <button type="button" class="btn-terminator" onclick="window.print()" style="padding:13px 28px; font-size:13px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 6 2 18 2 18 9"></polyline>
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+              <rect x="6" y="14" width="12" height="8"></rect>
+            </svg>
+            <span>PRINT OFFICIAL TAX INVOICE &amp; TICKET</span>
+          </button>
+          <a href="/participant" class="btn-cyber-outline" style="padding:12px 22px; font-size:12px; text-decoration:none;">
+            <span>ACCESS PARTICIPANT DASHBOARD &#8599;</span>
+          </a>
+          <a href="/" class="btn-cyber-outline" style="padding:12px 20px; font-size:12px; border-color:var(--text-muted); color:var(--text-muted); text-decoration:none;">
+            <span>RETURN TO HOME</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- ================= 2. OFFICIAL PRINTABLE TAX INVOICE SHEET (@media print) ================= -->
+      <div class="official-invoice-sheet" id="invoiceSheet">
+        <div class="inv-header">
+          <div style="display:flex; align-items:center; gap:14px;">
+            <img src="assets/patrician-college-logo.jpg" alt="Patrician College Logo" class="inv-crest">
+            <div>
+              <h2 class="inv-inst-name">PATRICIAN COLLEGE OF ARTS AND SCIENCE</h2>
+              <div class="inv-inst-sub">Affiliated to the University of Madras &bull; Re-Accredited 'A+' Grade by NAAC</div>
+              <div class="inv-inst-dept">DEPARTMENT OF MATHEMATICS &bull; QUANTUM INNOVATION INITIATIVE</div>
+              <div style="font-size:10px; color:#64748b;">Canal Bank Road, Gandhi Nagar, Adyar, Chennai - 600020, Tamil Nadu, India</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <img src="assets/qyron-logo-doomsday.png" alt="QYRON 27 Emblem" style="width:62px; height:48px; object-fit:contain;">
+            <img src="assets/department-phoenix-logo.png" alt="Dept Emblem" style="width:48px; height:48px; object-fit:contain;">
+          </div>
+        </div>
+
+        <div class="inv-title-bar">
+          <div>
+            <h3 class="inv-title-text">HACKATHON REGISTRATION RECEIPT &amp; TAX INVOICE</h3>
+            <span style="font-size:10.5px; color:#475569;">Event: QYRON'27 Quantum Hackathon &bull; Round 1 Idea Submission</span>
+          </div>
+          <div>
+            <span class="stamp-paid-badge">&#10004; PAID &amp; VERIFIED</span>
+          </div>
+        </div>
+
+        <div class="inv-grid-2">
+          <div class="inv-meta-card">
+            <div class="inv-meta-card-title">INVOICE &amp; TEAM IDENTIFIERS</div>
+            <div class="inv-row">
+              <span class="inv-col-label">Team ID / Code:</span>
+              <span class="inv-col-val" id="inv-team-code" style="font-family:'Space Mono', monospace; font-weight:800;">-</span>
+            </div>
+            <div class="inv-row">
+              <span class="inv-col-label">Team Name:</span>
+              <span class="inv-col-val" id="inv-team-name">-</span>
+            </div>
+            <div class="inv-row">
+              <span class="inv-col-label">Selected Track:</span>
+              <span class="inv-col-val" id="inv-track">-</span>
+            </div>
+            <div class="inv-row">
+              <span class="inv-col-label">Institution:</span>
+              <span class="inv-col-val" id="inv-college">-</span>
+            </div>
+          </div>
+
+          <div class="inv-meta-card">
+            <div class="inv-meta-card-title">PAYMENT &amp; LEADER METADATA</div>
+            <div class="inv-row">
+              <span class="inv-col-label">Team Leader:</span>
+              <span class="inv-col-val" id="inv-leader-name">-</span>
+            </div>
+            <div class="inv-row">
+              <span class="inv-col-label">Contact:</span>
+              <span class="inv-col-val" id="inv-leader-contact">-</span>
+            </div>
+            <div class="inv-row">
+              <span class="inv-col-label">Transaction Ref:</span>
+              <span class="inv-col-val" id="inv-txn-id" style="font-family:'Space Mono', monospace; font-size:10px;">-</span>
+            </div>
+            <div class="inv-row">
+              <span class="inv-col-label">Date Issued:</span>
+              <span class="inv-col-val" id="inv-date">-</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Itemized Fee Table -->
+        <table class="inv-table">
+          <thead>
+            <tr>
+              <th style="width:40px;">#</th>
+              <th>Description</th>
+              <th style="width:100px;">Units</th>
+              <th style="width:120px; text-align:right;">Amount (INR)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>
+                <strong>QYRON'27 Round 1 Team Registration &amp; Proposal Dossier Evaluation Fee</strong><br>
+                <span style="font-size:10px; color:#64748b;">Includes entry into jury evaluation for the 30 shortlisted finalist slots.</span>
+              </td>
+              <td>1 Team (4–6 Members)</td>
+              <td style="text-align:right; font-weight:700;">&#8377;150.00</td>
+            </tr>
+            <tr class="total-row">
+              <td colspan="3" style="text-align:right; font-weight:800;">TOTAL AMOUNT PAID:</td>
+              <td style="text-align:right; font-weight:900; font-size:13px; color:#0f172a;">&#8377;150.00</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Team Roster Summary for Gate Verification -->
+        <div style="margin-bottom:16px;">
+          <div style="font-size:11px; font-weight:800; text-transform:uppercase; margin-bottom:6px; border-bottom:1px solid #e2e8f0; padding-bottom:3px;">
+            VERIFIED TEAM SQUAD ROSTER (ALL FROM SAME INSTITUTION)
+          </div>
+          <div id="inv-roster-table" style="font-size:10.5px; color:#334155; line-height:1.4;">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+        <!-- Terms & Seal Block -->
+        <div style="display:grid; grid-template-columns:1.4fr 1fr; gap:16px; border-top:1px solid #e2e8f0; padding-top:10px;">
+          <div style="font-size:9.5px; color:#64748b; line-height:1.4;">
+            <strong>TERMS &amp; DIRECTIVES:</strong><br>
+            1. Inter-college participation is strictly prohibited. All members must carry their valid college student ID card.<br>
+            2. Shortlist results for the Top 30 teams will be announced on 1 February 2027.<br>
+            3. Shortlisted teams will remit ₹350 per member for the 24-hour campus finale on Feb 12–13, 2027.<br>
+            4. This electronic receipt serves as official proof of registration.
+          </div>
+          <div style="text-align:right; display:flex; flex-direction:column; align-items:flex-end; justify-content:flex-end;">
+            <div style="border:1.5px dashed #047857; background:#f0fdf4; padding:4px 10px; border-radius:3px; text-align:center; margin-bottom:4px;">
+              <div style="font-size:10px; font-weight:900; color:#047857; letter-spacing:0.06em;">DEPARTMENT OF MATHEMATICS</div>
+              <div style="font-size:8.5px; color:#065f46;">PATRICIAN COLLEGE &bull; CHENNAI</div>
+            </div>
+            <div style="font-size:11px; font-weight:800; color:#0f172a;">ORGANIZING DIRECTORATE</div>
+            <div style="font-size:9.5px; color:#64748b;">QYRON'27 Central Executive</div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer no-print" style="padding:28px 0; border-top:1px solid rgba(57,255,20,0.15); background:#050706; text-align:center;">
+      <div class="container">
+        <p style="color:var(--text-muted); font-size:12px; margin:0; font-family:var(--font-mono);">
+          © 2027 PATRICIAN COLLEGE OF ARTS AND SCIENCE &bull; DEPARTMENT OF MATHEMATICS &bull; QUANTUM INNOVATION INITIATIVE
+        </p>
+      </div>
+    </footer>
+
+    <!-- Client Script to Populate Data -->
+    <script>
+      (async function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        let teamCode = urlParams.get('team_code') || window.location.pathname.split('/').pop();
+        if (teamCode === 'confirmation' || teamCode === 'confirmation.html') {
+          teamCode = '';
+        }
+
+        let reg = null;
+
+        if (teamCode) {
+          try {
+            const res = await fetch(`/api/registration/${encodeURIComponent(teamCode)}`);
+            if (res.ok) {
+              const data = await res.json();
+              if (data.registration) reg = data.registration;
+            }
+          } catch (e) {
+            console.warn('API lookup failed, checking local state', e);
+          }
+        }
+
+        // Fallback to local session storage if available
+        if (!reg) {
+          try {
+            const saved = sessionStorage.getItem('last_qyron_reg');
+            if (saved) reg = JSON.parse(saved);
+          } catch (e) {}
+        }
+
+        if (!reg) {
+          // Sample dummy preview if opened directly
+          reg = {
+            team_code: teamCode || "QYRON-27-101-7F2A",
+            team_name: "Quantum Dynamics Cohort",
+            college_name: "Patrician College of Arts and Science",
+            track: "Track 1: Quantum Superposition & Circuit Modeling",
+            leader_name: "Vasikaran A",
+            leader_email: "lead@patrician.edu",
+            leader_phone: "9876543210",
+            leader_degree: "B.Sc",
+            leader_department: "Department of Mathematics",
+            leader_gender: "Male",
+            member_count: 4,
+            members: [
+              { name: "Jai Bharath A", phone: "8072039943", email: "jaib9943@gmail.com", degree: "B.Sc", department: "Department of Mathematics" },
+              { name: "Nethra S", phone: "9962819163", email: "nethrasoundarrajan02@gmail.com", degree: "B.Sc", department: "Department of Mathematics" },
+              { name: "Immanuel GM", phone: "7200481327", email: "gmimmanuel4@gmail.com", degree: "B.Sc", department: "Department of Mathematics" }
+            ],
+            idea_title: "Quantum State Reconstitution Across Dystopian Mesh Networks",
+            idea_summary: "A robust topological quantum error mitigation protocol designed for high-radiation, noisy post-apocalyptic sensor arrays.",
+            idea_ppt_filename: "QYRON27_Idea_Presentation.pptx",
+            razorpay_payment_id: "QYRON_PAY_90281_VERIFIED",
+            razorpay_order_id: "order_qyron_101",
+            amount_paid: 150,
+            payment_timestamp: new Date().toLocaleString()
+          };
+        }
+
+        // Populate On-Screen elements
+        document.getElementById('ticket-team-code').textContent = reg.team_code;
+        const isPaid = reg.payment_status === 'paid' || reg.payment_status === 'verified';
+        const pendingBox = document.getElementById('credentials-box-pending');
+        const activeBox = document.getElementById('credentials-box-active');
+        const statusBadge = document.getElementById('ticket-status-badge');
+        const statusCardTitle = document.getElementById('status-card-title');
+        const statusCardDesc = document.getElementById('status-card-desc');
+        const statusCardHint = document.getElementById('status-card-hint');
+        const statusLed = document.getElementById('status-led');
+        const utrVal = reg.utr_number || reg.razorpay_payment_id || reg.payment_reference || '-';
+
+        // Credentials are active and visible right after registration
+        if (activeBox) activeBox.style.display = 'block';
+        const uEl = document.getElementById('ticket-username');
+        if (uEl) uEl.textContent = reg.portal_username || reg.leader_email || '-';
+        const pEl = document.getElementById('ticket-password');
+        if (pEl) pEl.textContent = reg.portal_password || '(Dispatched via email)';
+
+        if (isPaid) {
+          if (statusBadge) {
+            statusBadge.textContent = 'PAID & VERIFIED (₹150)';
+            statusBadge.style.color = 'var(--doom-green)';
+            statusBadge.style.borderColor = 'var(--doom-green)';
+            statusBadge.style.background = 'rgba(57,255,20,0.12)';
+          }
+          if (pendingBox) {
+            pendingBox.style.background = 'rgba(57,255,20,0.06)';
+            pendingBox.style.borderColor = 'var(--doom-green)';
+            pendingBox.style.borderLeftColor = 'var(--doom-green)';
+          }
+          if (statusLed) {
+            statusLed.style.background = 'var(--doom-green)';
+            statusLed.style.boxShadow = '0 0 10px var(--doom-green)';
+          }
+          if (statusCardTitle) {
+            statusCardTitle.textContent = '// PAYMENT STATUS: VERIFIED & CONFIRMED (₹150)';
+            statusCardTitle.style.color = 'var(--doom-green)';
+          }
+          if (statusCardDesc) {
+            statusCardDesc.innerHTML = `Your ₹150 UPI transfer (UTR: <strong style="color:var(--doom-green); font-family:var(--font-mono);">${utrVal}</strong>) has been officially verified and confirmed by the Department of Mathematics Organizing Directorate.`;
+          }
+          if (statusCardHint) {
+            statusCardHint.innerHTML = `✅ <strong>Verified:</strong> An official confirmation email has been dispatched. You can log in and update your proposal dossier at any time before 25 January 2027.`;
+          }
+        } else {
+          if (statusBadge) {
+            statusBadge.textContent = '⏳ PENDING VERIFICATION (₹150)';
+            statusBadge.style.color = '#f59e0b';
+            statusBadge.style.borderColor = '#f59e0b';
+            statusBadge.style.background = 'rgba(245,158,11,0.15)';
+          }
+          const utrEl = document.getElementById('pending-utr-code');
+          if (utrEl) utrEl.textContent = utrVal;
+          const emailEl = document.getElementById('pending-leader-email');
+          if (emailEl) emailEl.textContent = reg.leader_email || 'your registered email';
+        }
+
+        document.getElementById('ticket-team-name').textContent = reg.team_name;
+        document.getElementById('ticket-track').textContent = reg.track;
+        document.getElementById('ticket-college').textContent = reg.college_name;
+        document.getElementById('ticket-leader').textContent = `${reg.leader_name} (${reg.leader_phone} | ${reg.leader_email})`;
+        document.getElementById('ticket-crew-size').textContent = `${reg.member_count || (1 + (reg.members || []).length)} Units Total`;
+        document.getElementById('ticket-idea-title').textContent = reg.idea_title || 'Idea Dossier Registered';
+        document.getElementById('ticket-idea-summary').textContent = reg.idea_summary || 'Executive summary registered in dossier.';
+        
+        if (reg.idea_ppt_filename) {
+          document.getElementById('ticket-ppt-filename').textContent = `PRESENTATION ATTACHED: ${reg.idea_ppt_filename}`;
+        } else {
+          document.getElementById('ticket-ppt-filename').textContent = 'Proposal document recorded.';
+        }
+
+        document.getElementById('ticket-txn-id').textContent = reg.utr_number || reg.razorpay_payment_id || 'UPI_TRANSFER_LOGGED';
+        document.getElementById('ticket-order-id').textContent = reg.razorpay_order_id || 'N/A';
+        document.getElementById('ticket-timestamp').textContent = reg.payment_timestamp || new Date().toLocaleString();
+
+        const membersListEl = document.getElementById('ticket-members-list');
+        if (membersListEl && reg.members) {
+          membersListEl.innerHTML = reg.members.map((m, idx) => `
+            <div style="background:rgba(5,7,6,0.6); padding:8px 12px; border-radius:2px; border-left:2px solid var(--doom-green);">
+              <strong style="color:#fff;">Member #${idx + 2}:</strong> ${m.name || 'Member'}<br>
+              <small style="color:var(--text-muted);">${m.degree || ''} ${m.department ? '&bull; ' + m.department : ''}</small><br>
+              <small style="color:var(--doom-green);">${m.phone || ''} &bull; ${m.email || ''}</small>
+            </div>
+          `).join('');
+        }
+
+        // Populate Printable Invoice Sheet elements
+        document.getElementById('inv-team-code').textContent = reg.team_code;
+        document.getElementById('inv-team-name').textContent = reg.team_name;
+        document.getElementById('inv-track').textContent = reg.track;
+        document.getElementById('inv-college').textContent = reg.college_name;
+        document.getElementById('inv-leader-name').textContent = reg.leader_name;
+        document.getElementById('inv-leader-contact').textContent = `${reg.leader_phone} | ${reg.leader_email}`;
+        document.getElementById('inv-txn-id').textContent = reg.utr_number || reg.razorpay_payment_id || 'UPI_AUTH_VERIFIED';
+        document.getElementById('inv-date').textContent = new Date().toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+
+        const rosterEl = document.getElementById('inv-roster-table');
+        if (rosterEl) {
+          let rosterHtml = `<div><strong>1. (Leader)</strong> ${reg.leader_name} (${reg.leader_degree || ''} - ${reg.leader_department || ''}) &bull; ${reg.leader_email}</div>`;
+          if (reg.members && reg.members.length > 0) {
+            reg.members.forEach((m, idx) => {
+              rosterHtml += `<div><strong>${idx + 2}.</strong> ${m.name} (${m.degree || ''} - ${m.department || ''}) &bull; ${m.email}</div>`;
+            });
+          }
+          rosterEl.innerHTML = rosterHtml;
+        }
+      })();
+    </script>
+  </body>
+</html>
