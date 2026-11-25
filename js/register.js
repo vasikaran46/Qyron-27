@@ -659,6 +659,13 @@ async function initiateRegistrationAndPayment() {
   // Members as JSON string
   formData.append('members', JSON.stringify(membersList));
 
+  // Atomic Registration: Pass UTR & Payment Screenshot directly in the single registration request
+  formData.append('utr_number', utrVal);
+  const screenshotInput = document.getElementById('upi_payment_screenshot');
+  if (screenshotInput && screenshotInput.files && screenshotInput.files[0]) {
+    formData.append('payment_screenshot', screenshotInput.files[0]);
+  }
+
   try {
     const res = await fetch('/api/register', {
       method: 'POST',
@@ -690,16 +697,48 @@ async function initiateRegistrationAndPayment() {
       return;
     }
 
-    const order = data.order || {};
     const teamCode = data.team_code;
 
-    // Verify UPI Payment with UTR and optional screenshot
+    // Single-Request Atomic Registration Success (No secondary roundtrip required!)
+    if (data.redirect_url) {
+      try {
+        const cached = {
+          team_code: teamCode,
+          portal_username: data.username || formData.get('leader_email'),
+          portal_password: data.password,
+          utr_number: utrVal,
+          payment_status: 'pending_verification',
+          leader_name: formData.get('leader_name'),
+          leader_email: formData.get('leader_email'),
+          leader_phone: formData.get('leader_phone'),
+          team_name: formData.get('team_name'),
+          track: formData.get('track'),
+          college_name: formData.get('college_name')
+        };
+        sessionStorage.setItem('last_qyron_reg', JSON.stringify(cached));
+      } catch(e) {}
+      window.location.href = data.redirect_url;
+      return;
+    }
+
+    const order = data.order || {};
+
+    // Fallback: Verify UPI Payment with UTR and fallback squad fields for serverless lambdas
     const verifyFormData = new FormData();
     verifyFormData.append('team_code', teamCode);
     verifyFormData.append('utr_number', utrVal);
     verifyFormData.append('order_id', order.order_id || `order_${teamCode}`);
+    verifyFormData.append('team_name', formData.get('team_name'));
+    verifyFormData.append('college_name', formData.get('college_name'));
+    verifyFormData.append('track', formData.get('track'));
+    verifyFormData.append('leader_name', formData.get('leader_name'));
+    verifyFormData.append('leader_email', formData.get('leader_email'));
+    verifyFormData.append('leader_phone', formData.get('leader_phone'));
+    verifyFormData.append('leader_degree', formData.get('leader_degree') || '');
+    verifyFormData.append('leader_department', formData.get('leader_department') || '');
+    verifyFormData.append('leader_gender', formData.get('leader_gender') || '');
+    verifyFormData.append('members', formData.get('members'));
 
-    const screenshotInput = document.getElementById('upi_payment_screenshot');
     if (screenshotInput && screenshotInput.files && screenshotInput.files[0]) {
       verifyFormData.append('payment_screenshot', screenshotInput.files[0]);
     }

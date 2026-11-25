@@ -391,11 +391,139 @@ async def api_submit_registration(request: Request):
     records.append(reg_record)
     _save_registrations(records)
 
+    # Check if UTR number was submitted directly in this request (Atomic registration)
+    utr_number = str(data.get("utr_number") or "").strip()
+    payment_screenshot_file = None
+    if "multipart/form-data" in content_type:
+        payment_screenshot_file = form.get("payment_screenshot")
+
+    if utr_number:
+        # Atomic registration: squad info + UPI payment recorded together
+        screenshot_url = None
+        if payment_screenshot_file and isinstance(payment_screenshot_file, UploadFile) and payment_screenshot_file.filename:
+            s_ext = Path(payment_screenshot_file.filename).suffix.lower() or ".jpg"
+            try:
+                s_bytes = await payment_screenshot_file.read()
+                from backend.services.gdrive import gdrive_service
+                if gdrive_service.is_configured():
+                    d_ok, d_res, _ = gdrive_service.upload_file(
+                        file_bytes=s_bytes,
+                        filename=f"{team_code}_payment_screenshot{s_ext}",
+                        mime_type=payment_screenshot_file.content_type
+                    )
+                    if d_ok:
+                        screenshot_url = d_res
+            except Exception as g_err:
+                logger.warning("Google Drive screenshot upload error in atomic register: %s", g_err)
+
+        reg_record["utr_number"] = utr_number
+        reg_record["razorpay_payment_id"] = utr_number
+        reg_record["payment_reference"] = utr_number
+        reg_record["payment_status"] = "pending_verification"
+        reg_record["payment_method"] = "upi_qr"
+        if screenshot_url:
+            reg_record["payment_screenshot_url"] = screenshot_url
+        reg_record["payment_timestamp"] = datetime.now(timezone.utc).isoformat()
+        reg_record["status"] = "pending_verification"
+        _save_registrations(records)
+
+        # Sync to Supabase
+        try:
+            from backend.db import service_client
+            sb = service_client()
+            sb.table("registrations").upsert({
+                "team_code": team_code,
+                "team_name": team_name,
+                "college_name": college_name,
+                "track": track,
+                "idea_title": idea_title,
+                "idea_summary": idea_summary,
+                "idea_description": idea_description,
+                "idea_ppt_filename": ppt_filename,
+                "idea_ppt_path": ppt_disk_path,
+                "leader_name": leader_name,
+                "leader_email": leader_email,
+                "leader_phone": leader_phone,
+                "leader_college": leader_college,
+                "leader_department": leader_department,
+                "leader_year": leader_year,
+                "leader_gender": leader_gender,
+                "member_count": total_team_size,
+                "members_data": json.dumps(cleaned_members),
+                "amount_paid": amount_inr,
+                "payment_status": "pending_verification",
+                "razorpay_order_id": order_id,
+                "razorpay_payment_id": utr_number,
+                "payment_timestamp": datetime.now(timezone.utc).isoformat(),
+                "status": "pending_verification"
+            }).execute()
+        except Exception as sb_err:
+            logger.debug("Supabase atomic register upsert skipped: %s", sb_err)
+
+        # Provision Supabase Auth User
+        try:
+            from backend.db import service_client
+            sb = service_client()
+            try:
+                sb.auth.admin.create_user({
+                    "email": leader_email,
+                    "password": portal_password,
+                    "email_confirm": True,
+                    "user_metadata": {
+                        "full_name": leader_name,
+                        "team_name": team_name,
+                        "team_code": team_code,
+                        "role": "participant"
+                    }
+                })
+            except Exception:
+                try:
+                    users = sb.auth.admin.list_users()
+                    matched = [u for u in users if u.email.lower() == leader_email.lower()]
+                    if matched:
+                        sb.auth.admin.update_user_by_id(matched[0].id, {"password": portal_password, "email_confirm": True})
+                except Exception:
+                    pass
+        except Exception as sb_err:
+            logger.debug("Supabase auth note in atomic register: %s", sb_err)
+
+        # Dispatch Email 1 with credentials immediately
+        portal_url = "https://qyron27.vercel.app/login" if "vercel.app" in str(request.base_url) else "http://127.0.0.1:8000/login"
+        try:
+            cfg = settings()
+            if cfg.has_smtp:
+                from backend.mailer import send_registration_confirmation
+                send_registration_confirmation(
+                    to_email=leader_email,
+                    team_code=team_code,
+                    team_name=team_name,
+                    track=track,
+                    utr_number=utr_number,
+                    leader_name=leader_name,
+                    username=leader_email,
+                    password=portal_password,
+                    portal_url=portal_url,
+                    college_name=college_name
+                )
+        except Exception as email_err:
+            logger.warning("SMTP confirmation email error in atomic register: %s", email_err)
+
+        return {
+            "success": True,
+            "message": "Registration successful! Your portal login credentials have been dispatched to your email.",
+            "team_code": team_code,
+            "username": leader_email,
+            "password": portal_password,
+            "portal_url": portal_url,
+            "payment_status": "pending_verification",
+            "redirect_url": f"/confirmation?team_code={team_code}"
+        }
+
     # Also sync to Supabase if available
     try:
         from backend.db import service_client
         sb = service_client()
-        sb.table("registrations").insert({
+        sb.table("registrations").upsert({
             "team_code": team_code,
             "team_name": team_name,
             "college_name": college_name,
@@ -433,12 +561,16 @@ async def api_submit_registration(request: Request):
 async def api_verify_payment(request: Request):
     content_type = request.headers.get("content-type", "")
     screenshot_file = None
-    if "multipart/form-data" in content_type:
+    data: Dict[str, Any] = {}
+    if "multipart/form-data" in content_type or "application/x-www-form-urlencoded" in content_type:
         form = await request.form()
         team_code = str(form.get("team_code", "")).strip()
         utr_number = str(form.get("utr_number", form.get("razorpay_payment_id", ""))).strip()
         order_id = str(form.get("order_id", form.get("razorpay_order_id", ""))).strip()
         screenshot_file = form.get("payment_screenshot")
+        for k, v in form.items():
+            if k != "payment_screenshot":
+                data[k] = v
     else:
         try:
             data = await request.json()
@@ -456,9 +588,60 @@ async def api_verify_payment(request: Request):
     records = _load_registrations()
     reg = None
     for r in records:
-        if r.get("team_code") == team_code:
+        if r.get("team_code", "").strip().upper() == team_code.strip().upper():
             reg = r
             break
+
+    # 1. Fallback: Query Supabase
+    if not reg:
+        try:
+            from backend.db import service_client
+            sb = service_client()
+            res = sb.table("registrations").select("*").eq("team_code", team_code.strip().upper()).limit(1).execute().data
+            if res:
+                reg = res[0]
+                if isinstance(reg.get("members_data"), str):
+                    try:
+                        reg["members"] = json.loads(reg["members_data"])
+                    except Exception:
+                        reg["members"] = []
+                records.append(reg)
+        except Exception as sb_err:
+            logger.debug("Supabase lookup note in verify_payment: %s", sb_err)
+
+    # 2. Fallback: Reconstruct from incoming form data if present (prevents Vercel serverless cross-instance 404)
+    if not reg:
+        leader_email = str(data.get("leader_email") or "").strip().lower()
+        if leader_email or team_code:
+            portal_pw = f"Qyron@{random.randint(1000, 9999)}"
+            members_raw = data.get("members", [])
+            if isinstance(members_raw, str):
+                try:
+                    members_raw = json.loads(members_raw)
+                except Exception:
+                    members_raw = []
+            reg = {
+                "team_code": team_code,
+                "team_name": str(data.get("team_name") or f"Squad-{team_code[-4:]}").strip(),
+                "college_name": str(data.get("college_name") or "Collegiate Squad").strip(),
+                "track": str(data.get("track") or "Quantum Computing").strip(),
+                "leader_name": str(data.get("leader_name") or "Squad Commander").strip(),
+                "leader_email": leader_email or "participant@qyron.org",
+                "leader_phone": str(data.get("leader_phone") or "").strip(),
+                "leader_degree": str(data.get("leader_degree") or "B.Sc").strip(),
+                "leader_department": str(data.get("leader_department") or "Department of Mathematics").strip(),
+                "leader_year": str(data.get("leader_year") or "3rd Year").strip(),
+                "leader_gender": str(data.get("leader_gender") or "Other").strip(),
+                "members": members_raw,
+                "member_count": 1 + len(members_raw),
+                "portal_username": leader_email or "participant@qyron.org",
+                "portal_password": portal_pw,
+                "amount_paid": 150,
+                "payment_status": "pending_verification",
+                "status": "pending_verification",
+                "created_at": datetime.now(timezone.utc).isoformat()
+            }
+            records.append(reg)
 
     if not reg:
         return JSONResponse(status_code=404, content={"success": False, "message": "Registration record not found."})
@@ -599,9 +782,20 @@ async def api_admin_verify_payment(team_code: str):
     records = _load_registrations()
     reg = None
     for r in records:
-        if r.get("team_code") == team_code:
+        if r.get("team_code", "").strip().upper() == team_code.strip().upper():
             reg = r
             break
+
+    if not reg:
+        try:
+            from backend.db import service_client
+            sb = service_client()
+            res = sb.table("registrations").select("*").eq("team_code", team_code.strip().upper()).limit(1).execute().data
+            if res:
+                reg = res[0]
+                records.append(reg)
+        except Exception:
+            pass
 
     if not reg:
         return JSONResponse(status_code=404, content={"success": False, "message": "Registration record not found."})
@@ -692,9 +886,19 @@ async def api_admin_reject_payment(team_code: str):
     records = _load_registrations()
     reg = None
     for r in records:
-        if r.get("team_code") == team_code:
+        if r.get("team_code", "").strip().upper() == team_code.strip().upper():
             reg = r
             break
+    if not reg:
+        try:
+            from backend.db import service_client
+            sb = service_client()
+            res = sb.table("registrations").select("*").eq("team_code", team_code.strip().upper()).limit(1).execute().data
+            if res:
+                reg = res[0]
+                records.append(reg)
+        except Exception:
+            pass
     if not reg:
         return JSONResponse(status_code=404, content={"success": False, "message": "Registration record not found."})
 

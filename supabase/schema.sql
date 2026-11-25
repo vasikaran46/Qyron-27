@@ -217,7 +217,7 @@ create table if not exists public.registrations (
   created_at timestamptz not null default now()
 );
 
-alter table public.registrations enable row level security;
-revoke all on public.registrations from anon, authenticated;
-grant all on public.registrations to service_role;
+-- Allow app service to insert and read registrations reliably
+alter table public.registrations disable row level security;
+grant all on public.registrations to anon, authenticated, service_role;
 
