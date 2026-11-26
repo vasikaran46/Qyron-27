@@ -406,7 +406,7 @@ async def api_submit_registration(request: Request):
                 s_bytes = await payment_screenshot_file.read()
                 from backend.services.gdrive import gdrive_service
                 if gdrive_service.is_configured():
-                    d_ok, d_res, _ = gdrive_service.upload_file(
+                    d_ok, d_res, _ = gdrive_service.upload_payment_screenshot(
                         file_bytes=s_bytes,
                         filename=f"{team_code}_payment_screenshot{s_ext}",
                         mime_type=payment_screenshot_file.content_type
@@ -657,7 +657,7 @@ async def api_verify_payment(request: Request):
         try:
             from backend.services.gdrive import gdrive_service
             if gdrive_service.is_configured():
-                d_ok, d_res, _ = gdrive_service.upload_file(
+                d_ok, d_res, _ = gdrive_service.upload_payment_screenshot(
                     file_bytes=s_bytes,
                     filename=f"{team_code}_payment_screenshot{s_ext}",
                     mime_type=screenshot_file.content_type

@@ -25,6 +25,12 @@ class Settings:
 
     # Google Drive Direct Storage Settings
     google_drive_folder_id = os.getenv("GOOGLE_DRIVE_FOLDER_ID", "").strip()
+    google_drive_payment_folder_id = (
+        os.getenv("GOOGLE_DRIVE_PAYMENT_FOLDER_ID", "").strip()
+        or os.getenv("GOOGLE_DRIVE_TRANSACTION_FOLDER_ID", "").strip()
+        or os.getenv("GDRIVE_PAYMENT_FOLDER_ID", "").strip()
+        or os.getenv("GDRIVE_TRANSACTION_FOLDER_ID", "").strip()
+    )
     google_drive_webhook_url = os.getenv("GOOGLE_DRIVE_WEBHOOK_URL", "").strip() or os.getenv("GOOGLE_DRIVE_SCRIPT_URL", "").strip()
     google_service_account_json = os.getenv("GOOGLE_SERVICE_ACCOUNT_JSON", "").strip()
     google_service_account_file = os.getenv("GOOGLE_SERVICE_ACCOUNT_FILE", "").strip()

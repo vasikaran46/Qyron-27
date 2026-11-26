@@ -53,6 +53,12 @@ class GoogleDriveService:
     def __init__(self):
         self.project_root = Path(__file__).resolve().parent.parent.parent
         self.folder_id = os.getenv("GOOGLE_DRIVE_FOLDER_ID", "").strip()
+        self.payment_folder_id = (
+            os.getenv("GOOGLE_DRIVE_PAYMENT_FOLDER_ID", "").strip()
+            or os.getenv("GOOGLE_DRIVE_TRANSACTION_FOLDER_ID", "").strip()
+            or os.getenv("GDRIVE_PAYMENT_FOLDER_ID", "").strip()
+            or os.getenv("GDRIVE_TRANSACTION_FOLDER_ID", "").strip()
+        )
         self.webhook_url = os.getenv("GOOGLE_DRIVE_WEBHOOK_URL", "").strip() or os.getenv("GOOGLE_DRIVE_SCRIPT_URL", "").strip()
         self.sa_json_raw = os.getenv("GOOGLE_SERVICE_ACCOUNT_JSON", "").strip()
         self.sa_file = os.getenv("GOOGLE_SERVICE_ACCOUNT_FILE", "").strip()
@@ -228,6 +234,36 @@ class GoogleDriveService:
             return False, f"Apps Script unexpected response: {res.text[:200]}", None
         except Exception as e:
             return False, f"Apps Script upload failed: {e}", None
+
+    def get_payment_folder_id(self) -> str:
+        """Returns the folder ID specifically configured for payment receipts, falling back to main folder."""
+        return (
+            os.getenv("GOOGLE_DRIVE_PAYMENT_FOLDER_ID", "").strip()
+            or os.getenv("GOOGLE_DRIVE_TRANSACTION_FOLDER_ID", "").strip()
+            or os.getenv("GDRIVE_PAYMENT_FOLDER_ID", "").strip()
+            or os.getenv("GDRIVE_TRANSACTION_FOLDER_ID", "").strip()
+            or self.payment_folder_id
+            or os.getenv("GOOGLE_DRIVE_FOLDER_ID", "").strip()
+            or self.folder_id
+        )
+
+    def upload_payment_screenshot(
+        self,
+        file_bytes: bytes,
+        filename: str,
+        mime_type: Optional[str] = None
+    ) -> Tuple[bool, str, Optional[str]]:
+        """
+        Uploads a transaction/payment receipt screenshot to the dedicated payment folder.
+        Falls back to the default Google Drive folder if payment folder is not configured.
+        """
+        target_folder = self.get_payment_folder_id()
+        return self.upload_file(
+            file_bytes=file_bytes,
+            filename=filename,
+            mime_type=mime_type,
+            folder_id=target_folder
+        )
 
     def upload_file(
         self,
