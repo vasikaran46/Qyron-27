@@ -1,19 +1,15 @@
 /**
- * QYRON'27 - TACTICAL REGISTRATION WIZARD (DOOMSDAY PROTOCOL)
- * 3-Step Flow:
- * Step 1: Team & Crew Assembly (Callsign, College, Operational Track, Leader, Dynamic Crew 4-6)
- * Step 2: Idea Submission Dossier (Title <=100, Summary <=10,000, Description <=50,000, PPT <=10MB)
- * Step 3: Review Manifest & Payment Authorization (₹150 Team Registration Fee)
+ * QYRON'27 - REGISTRATION WIZARD
+ * Multi-step client controller: Team specification, member roster validation,
+ * UPI payment integration, and participant portal redirection.
  */
 
 let currentStep = 1;
 const totalSteps = 3;
 
-// Crew Member Management (Min 3 crew + 1 leader = 4 units minimum; max 5 crew + 1 leader = 6 units)
+// Team Member Management (Min 1 member + 1 leader = 2 members minimum; max 3 members + 1 leader = 4 members)
 let membersList = [
-  { id: 2, name: '', phone: '', email: '', gender: '', degree: '', department: '', year: '3rd Year' },
-  { id: 3, name: '', phone: '', email: '', gender: '', degree: '', department: '', year: '3rd Year' },
-  { id: 4, name: '', phone: '', email: '', gender: '', degree: '', department: '', year: '3rd Year' }
+  { id: 2, name: '', phone: '', email: '', gender: '', degree: '', department: '', year: '3rd Year' }
 ];
 
 let selectedPptFile = null;
@@ -26,15 +22,15 @@ function renderMembersContainer() {
 
   membersList.forEach((m, idx) => {
     const memberNum = idx + 2;
-    const isOptional = memberNum > 4; // Member 5 and 6 are optional additions
+    const isOptional = memberNum > 2; // Member 3 and 4 are optional additions (min team is 2)
     const card = document.createElement('div');
     card.className = 'member-card';
     card.id = `member-card-${memberNum}`;
     
     card.innerHTML = `
       <div class="member-card-header">
-        <span class="member-badge-title">CREW MEMBER #${memberNum} ${isOptional ? '(OPTIONAL UNIT)' : '(REQUIRED UNIT)'}</span>
-        ${membersList.length > 3 ? `
+        <span class="member-badge-title">TEAM MEMBER #${memberNum} ${isOptional ? '(OPTIONAL)' : '(REQUIRED)'}</span>
+        ${membersList.length > 1 ? `
           <button type="button" class="btn-remove-member" onclick="removeMember(${idx})">
             ✕ REMOVE
           </button>
@@ -44,7 +40,7 @@ function renderMembersContainer() {
         <div class="form-group">
           <label class="form-label">Member Full Name <span class="required">*</span></label>
           <input type="text" class="form-control" data-idx="${idx}" data-field="name" value="${escapeHtml(m.name || '')}" placeholder="Full Name" required>
-          <span class="form-hint">Crew member #${memberNum} full legal name.</span>
+          <span class="form-hint">Team member #${memberNum} full name.</span>
         </div>
         <div class="form-group">
           <label class="form-label">Member Mobile Number <span class="required">*</span></label>
@@ -54,7 +50,7 @@ function renderMembersContainer() {
         <div class="form-group">
           <label class="form-label">Member Email ID <span class="required">*</span></label>
           <input type="email" class="form-control" data-idx="${idx}" data-field="email" value="${escapeHtml(m.email || '')}" placeholder="Email Address" required>
-          <span class="form-hint">Official email address.</span>
+          <span class="form-hint">Email address.</span>
         </div>
         <div class="form-group">
           <label class="form-label">Gender <span class="required">*</span></label>
@@ -119,22 +115,22 @@ function renderMembersContainer() {
   // Update counter badges
   const totalCrew = 1 + membersList.length;
   const countEl = document.getElementById('total-crew-count');
-  if (countEl) countEl.textContent = `${totalCrew} / 6 UNITS`;
+  if (countEl) countEl.textContent = `${totalCrew} / 4 MEMBERS`;
 
   const dynamicCountEl = document.getElementById('members-dynamic-count');
   if (dynamicCountEl) dynamicCountEl.textContent = membersList.length;
 
   const totalUnitsEl = document.getElementById('total-units-badge');
-  if (totalUnitsEl) totalUnitsEl.textContent = `${totalCrew} Units`;
+  if (totalUnitsEl) totalUnitsEl.textContent = `${totalCrew} Members`;
 
   const addBtn = document.getElementById('btn-add-member');
   if (addBtn) {
-    if (membersList.length >= 5) {
+    if (membersList.length >= 3) {
       addBtn.disabled = true;
-      addBtn.textContent = 'MAX TEAM CAPACITY REACHED (6)';
+      addBtn.textContent = 'MAX TEAM CAPACITY REACHED (4)';
     } else {
       addBtn.disabled = false;
-      addBtn.textContent = '+ ADD TEAM MEMBER (UP TO 6)';
+      addBtn.textContent = '+ ADD TEAM MEMBER (UP TO 4)';
     }
   }
 }
@@ -150,8 +146,8 @@ function escapeHtml(text) {
 }
 
 function addMember() {
-  if (membersList.length >= 5) {
-    alert('Maximum squad size is 6 members (1 Leader + 5 Crew Members).');
+  if (membersList.length >= 3) {
+    alert('Maximum team size is 4 members (1 Leader + 3 Members).');
     return;
   }
   membersList.push({
@@ -168,15 +164,15 @@ function addMember() {
 }
 
 function removeMember(idx) {
-  if (membersList.length <= 3) {
-    alert('Minimum squad size is 4 members (1 Leader + 3 Crew Members).');
+  if (membersList.length <= 1) {
+    alert('Minimum team size is 2 members (1 Leader + 1 Member).');
     return;
   }
   membersList.splice(idx, 1);
   renderMembersContainer();
 }
 
-// Step navigation & Callsign uniqueness check
+// Step navigation & Team Name uniqueness check
 let teamNameAvailability = {
   checkedName: '',
   isChecking: false,
@@ -215,7 +211,7 @@ async function verifyTeamName(name, silent = false) {
     if (badgeEl) {
       badgeEl.style.display = 'inline-block';
       badgeEl.style.color = '#ffd000';
-      badgeEl.textContent = '[CHECKING CALLSIGN...]';
+      badgeEl.textContent = '[CHECKING NAME...]';
     }
     if (iconEl) {
       iconEl.style.display = 'block';
@@ -240,7 +236,7 @@ async function verifyTeamName(name, silent = false) {
     if (data.available) {
       if (badgeEl) {
         badgeEl.style.color = 'var(--doom-green)';
-        badgeEl.textContent = '[CALLSIGN AVAILABLE]';
+        badgeEl.textContent = '[NAME AVAILABLE]';
       }
       if (iconEl) {
         iconEl.style.color = 'var(--doom-green)';
@@ -248,7 +244,7 @@ async function verifyTeamName(name, silent = false) {
       }
       if (feedbackEl) {
         feedbackEl.style.color = 'var(--doom-green)';
-        feedbackEl.innerHTML = `&#10004; Callsign <strong>${escapeHtml(cleanName)}</strong> is available for deployment.`;
+        feedbackEl.innerHTML = `&#10004; Team Name <strong>${escapeHtml(cleanName)}</strong> is available.`;
       }
       if (inputEl) {
         inputEl.style.borderColor = 'var(--doom-green)';
@@ -258,7 +254,7 @@ async function verifyTeamName(name, silent = false) {
     } else {
       if (badgeEl) {
         badgeEl.style.color = '#ff4444';
-        badgeEl.textContent = '[CALLSIGN TAKEN]';
+        badgeEl.textContent = '[NAME TAKEN]';
       }
       if (iconEl) {
         iconEl.style.color = '#ff4444';
@@ -266,7 +262,7 @@ async function verifyTeamName(name, silent = false) {
       }
       if (feedbackEl) {
         feedbackEl.style.color = '#ff4444';
-        feedbackEl.innerHTML = `&#10006; Callsign <strong>${escapeHtml(cleanName)}</strong> is already registered. Team names are unique &amp; case-insensitive. Please choose another callsign.`;
+        feedbackEl.innerHTML = `&#10006; Team Name <strong>${escapeHtml(cleanName)}</strong> is already registered. Team names are unique &amp; case-insensitive. Please choose another name.`;
       }
       if (inputEl) {
         inputEl.style.borderColor = '#ff4444';
@@ -275,7 +271,7 @@ async function verifyTeamName(name, silent = false) {
       return false;
     }
   } catch (err) {
-    console.error('Error verifying callsign:', err);
+    console.error('Error verifying team name:', err);
     teamNameAvailability.isChecking = false;
     return true; // Fallback to server validation
   }
@@ -350,7 +346,7 @@ async function validateCurrentStep(step) {
     const leaderEmail = document.getElementById('leader_email')?.value.trim();
 
     if (!teamName) {
-      alert('Please enter your Squad / Team Callsign.');
+      alert('Please enter your Team Name.');
       teamNameInput?.focus();
       return false;
     }
@@ -358,7 +354,7 @@ async function validateCurrentStep(step) {
     // Verify team name uniqueness
     const isAvailable = await verifyTeamName(teamName);
     if (!isAvailable) {
-      alert(`Team callsign "${teamName}" is already reserved by another squad.\n\nSquad names must be strictly unique (case-insensitive). Please enter a different team callsign.`);
+      alert(`Team name "${teamName}" is already taken.\n\nTeam names must be unique (case-insensitive). Please enter a different team name.`);
       teamNameInput?.focus();
       return false;
     }
@@ -369,7 +365,7 @@ async function validateCurrentStep(step) {
       return false;
     }
     if (!track) {
-      alert('Please select an Operational Quantum Track.');
+      alert('Please select a Hackathon Track.');
       document.getElementById('track')?.focus();
       return false;
     }
@@ -416,15 +412,15 @@ async function validateCurrentStep(step) {
       const m = membersList[i];
       const memberNum = i + 2;
       if (!m.name) {
-        alert(`Please enter Full Name for Crew Member #${memberNum}.`);
+        alert(`Please enter Full Name for Team Member #${memberNum}.`);
         return false;
       }
       if (!m.phone || m.phone.length < 10) {
-        alert(`Please enter a valid 10-digit Mobile Number for Crew Member #${memberNum}.`);
+        alert(`Please enter a valid 10-digit Mobile Number for Team Member #${memberNum}.`);
         return false;
       }
       if (!m.email || !m.email.includes('@')) {
-        alert(`Please enter a valid Email ID for Crew Member #${memberNum}.`);
+        alert(`Please enter a valid Email ID for Team Member #${memberNum}.`);
         return false;
       }
       if (allEmails.includes(m.email.toLowerCase())) {
@@ -434,15 +430,15 @@ async function validateCurrentStep(step) {
       allEmails.push(m.email.toLowerCase());
 
       if (!m.gender) {
-        alert(`Please select Gender for Crew Member #${memberNum}.`);
+        alert(`Please select Gender for Team Member #${memberNum}.`);
         return false;
       }
       if (!m.degree) {
-        alert(`Please select Degree for Crew Member #${memberNum}.`);
+        alert(`Please select Degree for Team Member #${memberNum}.`);
         return false;
       }
       if (!m.department) {
-        alert(`Please enter Department / Branch for Crew Member #${memberNum}.`);
+        alert(`Please enter Department / Branch for Team Member #${memberNum}.`);
         return false;
       }
     }
@@ -589,7 +585,7 @@ function populateReviewSummary() {
     leaderDetails += ` (${[leaderPhone, leaderEmail].filter(Boolean).join(' | ')})`;
   }
   document.getElementById('sum-leader').textContent = leaderDetails;
-  document.getElementById('sum-crew-size').textContent = `${1 + membersList.length} Units (Leader + ${membersList.length} Crew)`;
+  document.getElementById('sum-crew-size').textContent = `${1 + membersList.length} Members (Leader + ${membersList.length} Members)`;
 
   // Update dynamic UPI payment mobile deep link
   const teamName = document.getElementById('team_name')?.value || 'TEAM';
@@ -640,7 +636,7 @@ async function initiateRegistrationAndPayment() {
 
   const payBtn = document.getElementById('btn-proceed-pay');
   payBtn.disabled = true;
-  payBtn.textContent = 'VERIFYING UPI PAYMENT & DISPATCHING CREDENTIALS...';
+  payBtn.textContent = 'SUBMITTING REGISTRATION & VERIFYING PAYMENT...';
 
   const formData = new FormData();
   formData.append('team_name', document.getElementById('team_name').value.trim());
@@ -678,14 +674,14 @@ async function initiateRegistrationAndPayment() {
     } catch (parseErr) {
       alert(`Server transmission error (${res.status}). Please check network or try again.`);
       payBtn.disabled = false;
-      payBtn.textContent = 'CONFIRM UPI PAYMENT & RECEIVE CREDENTIALS ►';
+      payBtn.textContent = 'SUBMIT REGISTRATION & GET LOGIN CREDENTIALS ►';
       return;
     }
 
     if (!res.ok || !data.success) {
       alert(data.message || 'Registration failed. Please check form data.');
       payBtn.disabled = false;
-      payBtn.textContent = 'CONFIRM UPI PAYMENT & RECEIVE CREDENTIALS ►';
+      payBtn.textContent = 'SUBMIT REGISTRATION & GET LOGIN CREDENTIALS ►';
       if (data.message && (data.message.toLowerCase().includes('callsign') || data.message.toLowerCase().includes('team name'))) {
         goToStep(1);
         const nameInput = document.getElementById('team_name');
@@ -776,14 +772,14 @@ async function initiateRegistrationAndPayment() {
     } else {
       alert(verifyData.message || 'Payment verification could not be recorded.');
       payBtn.disabled = false;
-      payBtn.textContent = 'CONFIRM UPI PAYMENT & RECEIVE CREDENTIALS ►';
+      payBtn.textContent = 'SUBMIT REGISTRATION & GET LOGIN CREDENTIALS ►';
     }
 
   } catch (err) {
     console.error(err);
     alert('Network error connecting to verification gateway. Please try again.');
     payBtn.disabled = false;
-    payBtn.textContent = 'CONFIRM UPI PAYMENT & RECEIVE CREDENTIALS ►';
+    payBtn.textContent = 'SUBMIT REGISTRATION & GET LOGIN CREDENTIALS ►';
   }
 }
 

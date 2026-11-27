@@ -292,11 +292,11 @@
         <div class="hud-telemetry-item">
           <span class="pulse-led" style="background:var(--doom-green); box-shadow:0 0 10px var(--doom-green);"></span>
           <span class="mono-tag">
-            <span>REGISTRATION MANIFEST LOGGED // SECTOR 27</span>
+            <span>REGISTRATION CONFIRMED // DEPARTMENT OF MATHEMATICS</span>
           </span>
         </div>
         <div class="hud-telemetry-item">
-          <span class="mono-tag" style="color:var(--doom-green);">PAYMENT AUTHORIZED: ₹150</span>
+          <span class="mono-tag" style="color:var(--doom-green);">PAYMENT RECORDED: ₹150</span>
         </div>
       </div>
     </header>
@@ -304,8 +304,9 @@
     <!-- Navigation Header -->
     <nav class="portal-nav no-print">
       <a class="portal-brand" href="/" aria-label="Return to QYRON Home">
-        <div class="term-emblem" style="padding:2px; display:flex; align-items:center; justify-content:center;">
-          <img src="assets/qyron-logo-doomsday.png" alt="QYRON 27 Emblem" style="width:36px; height:36px; object-fit:contain; filter:drop-shadow(0 0 6px var(--doom-green));">
+        <div class="term-emblem" style="padding:2px; display:flex; align-items:center; gap:6px; justify-content:center;">
+          <img src="assets/qyron-logo-doomsday.png" alt="QYRON 27 Emblem" style="width:34px; height:34px; object-fit:contain; filter:drop-shadow(0 0 6px var(--doom-green));">
+          <img src="assets/department-ramanujan-logo.png" alt="Department of Mathematics - Ramanujan Association" style="width:32px; height:32px; object-fit:contain; border-radius:50%;">
         </div>
         <div>
           <div class="portal-brand-title">QYRON<span>'27</span> // CONFIRMATION</div>
@@ -315,14 +316,14 @@
 
       <div style="display:flex; align-items:center; gap:16px;">
         <a href="/participant" class="btn-register" style="padding:8px 16px; font-size:11px;">PARTICIPANT DASHBOARD ↗</a>
-        <a href="/" class="btn-back-home">← RETURN TO BASE</a>
+        <a href="/" class="btn-back-home">← RETURN TO HOME</a>
       </div>
     </nav>
 
     <!-- Main Content Container -->
     <main class="container" style="max-width:880px; padding-top:40px; padding-bottom:70px;">
       
-      <!-- ================= 1. ON-SCREEN TACTICAL HUD CONFIRMATION TICKET ================= -->
+      <!-- ================= 1. ON-SCREEN CONFIRMATION CARD ================= -->
       <div class="hud-panel on-screen-card" style="border-color:var(--doom-green); box-shadow:0 0 40px rgba(57,255,20,0.22); text-align:center; padding:36px 28px; margin-bottom:28px; width:100%; box-sizing:border-box;">
         <div class="hud-corner hud-corner-tl" style="border-color:var(--doom-green);"></div>
         <div class="hud-corner hud-corner-tr" style="border-color:var(--doom-green);"></div>
@@ -341,7 +342,7 @@
         <span class="term-badge" style="background:rgba(57,255,20,0.12); color:var(--doom-green); border-color:var(--doom-green); margin-bottom:12px;">APPLICATION CONFIRMED // PAYMENT RECORDED</span>
         <h1 style="font-family:var(--font-display); font-size:clamp(22px, 5vw, 32px); color:#fff; margin-bottom:6px; letter-spacing:0.04em;">REGISTRATION SUCCESSFUL</h1>
         <p style="color:var(--text-muted); font-size:15px; margin-bottom:22px; max-width:640px; margin-left:auto; margin-right:auto;">
-          Your squad application for <strong>QYRON’27</strong> has been securely logged into the <strong>Patrician College Department of Mathematics</strong> registry.
+          Your team registration for <strong>QYRON’27</strong> has been successfully received by the <strong>Department of Mathematics, Patrician College</strong>.
         </p>
 
         <!-- TEAM CODE DISPLAY -->
@@ -362,7 +363,7 @@
             <span class="term-badge" style="background:rgba(57,255,20,0.15); color:var(--doom-green); border-color:var(--doom-green); font-size:10px;">STAGE 2: PROPOSAL SUBMISSION</span>
           </div>
           <p style="color:#e2e8f0; font-size:13px; line-height:1.5; margin-bottom:16px;">
-            Your registration is confirmed and credentials have been dispatched to your email! Log in to the <strong>Participant Portal</strong> now to compose your <strong>Idea Title, Abstract, Technical Architecture</strong>, and upload your <strong>Presentation Slide Deck (.pptx / .pdf)</strong>.
+            Your registration is confirmed and credentials have been dispatched to your email! Log in to the <strong>Participant Portal</strong> now to compose your <strong>Idea Title, Abstract, Technical Details</strong>, and upload your <strong>Presentation Slide Deck (.pptx / .pdf)</strong>.
           </p>
           <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:14px; margin-bottom:16px;">
             <div style="background:rgba(0,0,0,0.5); padding:10px 14px; border:1px solid rgba(57,255,20,0.3); border-radius:4px;">
@@ -386,10 +387,10 @@
         <div id="credentials-box-pending" style="background:rgba(245,158,11,0.08); border:1.5px solid #f59e0b; border-left:5px solid #d97706; border-radius:6px; padding:18px 22px; margin-bottom:26px; text-align:left;">
           <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
             <span class="pulse-led" id="status-led" style="background:#f59e0b; box-shadow:0 0 10px #f59e0b;"></span>
-            <strong id="status-card-title" style="color:#f59e0b; font-family:var(--font-mono); font-size:12px; letter-spacing:0.06em;">// PAYMENT STATUS: UNDER DIRECTORATE VERIFICATION (₹150)</strong>
+            <strong id="status-card-title" style="color:#f59e0b; font-family:var(--font-mono); font-size:12px; letter-spacing:0.06em;">// PAYMENT STATUS: UNDER VERIFICATION (₹150)</strong>
           </div>
           <p id="status-card-desc" style="color:#e2e8f0; font-size:13px; line-height:1.6; margin:0 0 10px;">
-            Your squad application and 12-digit UPI UTR Reference (<strong id="pending-utr-code" style="color:var(--doom-green); font-family:var(--font-mono);">-</strong>) have been securely logged. The <strong>Department of Mathematics Organizing Directorate</strong> is currently verifying this transfer against college bank accounts.
+            Your registration and 12-digit UPI UTR Reference (<strong id="pending-utr-code" style="color:var(--doom-green); font-family:var(--font-mono);">-</strong>) have been submitted. The <strong>Department of Mathematics Organizing Committee</strong> is currently verifying this transfer against college bank accounts.
           </p>
           <div id="status-card-hint" style="background:rgba(0,0,0,0.5); padding:10px 14px; border-radius:4px; font-size:12px; color:#cbd5e1; border:1px solid rgba(245,158,11,0.25);">
             ⏳ <strong>Follow-up:</strong> Once verified, an official <strong>Payment Verified Email</strong> will be delivered to <strong id="pending-leader-email" style="color:#fff;">-</strong>. You do NOT need to wait — you can log in with your credentials above and submit your proposal now!
@@ -399,7 +400,7 @@
         <!-- Ticket Manifest Details -->
         <div style="text-align:left; background:rgba(16,24,18,0.7); border:1px solid rgba(57,255,20,0.2); border-radius:4px; padding:22px 20px; margin-bottom:28px;">
           <h4 style="font-family:var(--font-heading); font-size:16px; color:#fff; border-bottom:1px solid rgba(57,255,20,0.2); padding-bottom:10px; margin-bottom:16px;">
-            // SQUAD DOSSIER SUMMARY
+            // TEAM REGISTRATION SUMMARY
           </h4>
           
           <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; font-size:14px; margin-bottom:20px;">
@@ -412,7 +413,7 @@
               <span id="ticket-track" style="color:var(--doom-green); word-break:break-word;">-</span>
             </div>
             <div>
-              <span style="color:var(--text-muted); display:block; font-size:11px; font-family:var(--font-mono);">SQUAD COMMANDER (LEAD)</span>
+              <span style="color:var(--text-muted); display:block; font-size:11px; font-family:var(--font-mono);">TEAM LEADER</span>
               <strong id="ticket-leader" style="color:#fff;">-</strong>
             </div>
             <div>
@@ -420,8 +421,8 @@
               <span id="ticket-college" style="color:var(--toxic-lime); word-break:break-word;">-</span>
             </div>
             <div>
-              <span style="color:var(--text-muted); display:block; font-size:11px; font-family:var(--font-mono);">SQUAD SIZE</span>
-              <span id="ticket-crew-size" style="color:#fff;">4 Units Total</span>
+              <span style="color:var(--text-muted); display:block; font-size:11px; font-family:var(--font-mono);">TEAM SIZE</span>
+              <span id="ticket-crew-size" style="color:#fff;">4 Members Total</span>
             </div>
             <div>
               <span style="color:var(--text-muted); display:block; font-size:11px; font-family:var(--font-mono);">PAYMENT STATUS</span>
@@ -429,10 +430,10 @@
             </div>
           </div>
 
-          <!-- Idea Submission Dossier Preview -->
+          <!-- Idea Submission Preview -->
           <div style="background:rgba(5,7,6,0.6); padding:16px; border-radius:4px; margin-bottom:20px; border-left:3px solid var(--doom-green);">
             <span style="color:var(--doom-green); font-family:var(--font-mono); font-size:11px; display:block; margin-bottom:4px; font-weight:700;">
-              // SUBMITTED PROPOSAL DOSSIER
+              // IDEA &amp; PRESENTATION STATUS
             </span>
             <h4 id="ticket-idea-title" style="color:#fff; font-size:16px; margin-bottom:8px; word-break:break-word;">-</h4>
             <p id="ticket-idea-summary" style="color:var(--text-muted); font-size:13px; line-height:1.6; margin-bottom:12px; word-break:break-word;">
@@ -491,13 +492,13 @@
             <div>
               <h2 class="inv-inst-name">PATRICIAN COLLEGE OF ARTS AND SCIENCE</h2>
               <div class="inv-inst-sub">Affiliated to the University of Madras &bull; Re-Accredited 'A+' Grade by NAAC</div>
-              <div class="inv-inst-dept">DEPARTMENT OF MATHEMATICS &bull; QUANTUM INNOVATION INITIATIVE</div>
+              <div class="inv-inst-dept">DEPARTMENT OF MATHEMATICS</div>
               <div style="font-size:10px; color:#64748b;">Canal Bank Road, Gandhi Nagar, Adyar, Chennai - 600020, Tamil Nadu, India</div>
             </div>
           </div>
           <div style="display:flex; align-items:center; gap:10px;">
             <img src="assets/qyron-logo-doomsday.png" alt="QYRON 27 Emblem" style="width:62px; height:48px; object-fit:contain;">
-            <img src="assets/department-phoenix-logo.png" alt="Dept Emblem" style="width:48px; height:48px; object-fit:contain;">
+            <img src="assets/department-ramanujan-logo.png" alt="Department of Mathematics - Ramanujan Association" style="width:48px; height:48px; object-fit:contain;">
           </div>
         </div>
 
@@ -559,7 +560,7 @@
             <tr>
               <th style="width:40px;">#</th>
               <th>Description</th>
-              <th style="width:100px;">Units</th>
+              <th style="width:100px;">Qty</th>
               <th style="width:120px; text-align:right;">Amount (INR)</th>
             </tr>
           </thead>
@@ -567,10 +568,10 @@
             <tr>
               <td>1</td>
               <td>
-                <strong>QYRON'27 Round 1 Team Registration &amp; Proposal Dossier Evaluation Fee</strong><br>
-                <span style="font-size:10px; color:#64748b;">Includes entry into jury evaluation for the 30 shortlisted finalist slots.</span>
+                <strong>QYRON'27 Round 1 Team Registration Fee</strong><br>
+                <span style="font-size:10px; color:#64748b;">Includes entry into jury evaluation for the 20 shortlisted finalist slots.</span>
               </td>
-              <td>1 Team (4–6 Members)</td>
+              <td>1 Team (2–4 Members)</td>
               <td style="text-align:right; font-weight:700;">&#8377;150.00</td>
             </tr>
             <tr class="total-row">
@@ -583,7 +584,7 @@
         <!-- Team Roster Summary for Gate Verification -->
         <div style="margin-bottom:16px;">
           <div style="font-size:11px; font-weight:800; text-transform:uppercase; margin-bottom:6px; border-bottom:1px solid #e2e8f0; padding-bottom:3px;">
-            VERIFIED TEAM SQUAD ROSTER (ALL FROM SAME INSTITUTION)
+            REGISTERED TEAM MEMBERS (SAME INSTITUTION)
           </div>
           <div id="inv-roster-table" style="font-size:10.5px; color:#334155; line-height:1.4;">
             <!-- Populated via JS -->
@@ -593,9 +594,9 @@
         <!-- Terms & Seal Block -->
         <div style="display:grid; grid-template-columns:1.4fr 1fr; gap:16px; border-top:1px solid #e2e8f0; padding-top:10px;">
           <div style="font-size:9.5px; color:#64748b; line-height:1.4;">
-            <strong>TERMS &amp; DIRECTIVES:</strong><br>
-            1. Inter-college participation is strictly prohibited. All members must carry their valid college student ID card.<br>
-            2. Shortlist results for the Top 30 teams will be announced on 1 February 2027.<br>
+            <strong>TERMS &amp; CONDITIONS:</strong><br>
+            1. All team members must belong to the same college or university. Valid student ID cards must be presented at the venue.<br>
+            2. Shortlist results for the Top 20 teams will be announced on 1 February 2027.<br>
             3. Shortlisted teams will remit ₹350 per member for the 24-hour campus finale on Feb 12–13, 2027.<br>
             4. This electronic receipt serves as official proof of registration.
           </div>
@@ -721,10 +722,10 @@
             statusCardTitle.style.color = 'var(--doom-green)';
           }
           if (statusCardDesc) {
-            statusCardDesc.innerHTML = `Your ₹150 UPI transfer (UTR: <strong style="color:var(--doom-green); font-family:var(--font-mono);">${utrVal}</strong>) has been officially verified and confirmed by the Department of Mathematics Organizing Directorate.`;
+            statusCardDesc.innerHTML = `Your ₹150 UPI transfer (UTR: <strong style="color:var(--doom-green); font-family:var(--font-mono);">${utrVal}</strong>) has been officially verified and confirmed by the Department of Mathematics Organizing Committee.`;
           }
           if (statusCardHint) {
-            statusCardHint.innerHTML = `✅ <strong>Verified:</strong> An official confirmation email has been dispatched. You can log in and update your proposal dossier at any time before 25 January 2027.`;
+            statusCardHint.innerHTML = `✅ <strong>Verified:</strong> An official confirmation email has been dispatched. You can log in and update your presentation slides at any time before 25 January 2027.`;
           }
         } else {
           if (statusBadge) {
@@ -743,9 +744,9 @@
         document.getElementById('ticket-track').textContent = reg.track;
         document.getElementById('ticket-college').textContent = reg.college_name;
         document.getElementById('ticket-leader').textContent = `${reg.leader_name} (${reg.leader_phone} | ${reg.leader_email})`;
-        document.getElementById('ticket-crew-size').textContent = `${reg.member_count || (1 + (reg.members || []).length)} Units Total`;
-        document.getElementById('ticket-idea-title').textContent = reg.idea_title || 'Idea Dossier Registered';
-        document.getElementById('ticket-idea-summary').textContent = reg.idea_summary || 'Executive summary registered in dossier.';
+        document.getElementById('ticket-crew-size').textContent = `${reg.member_count || (1 + (reg.members || []).length)} Members Total`;
+        document.getElementById('ticket-idea-title').textContent = reg.idea_title || 'Idea Registered';
+        document.getElementById('ticket-idea-summary').textContent = reg.idea_summary || 'Summary submitted.';
         
         if (reg.idea_ppt_filename) {
           document.getElementById('ticket-ppt-filename').textContent = `PRESENTATION ATTACHED: ${reg.idea_ppt_filename}`;

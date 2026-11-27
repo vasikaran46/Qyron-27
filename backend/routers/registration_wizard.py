@@ -92,14 +92,14 @@ def _find_registration_by_code(team_code: str) -> Optional[dict]:
 def api_check_team_name(name: str = Query("", description="Team name to verify")):
     clean_name = name.strip()
     if not clean_name:
-        return {"available": False, "message": "Team callsign cannot be empty."}
+        return {"available": False, "message": "Team name cannot be empty."}
 
     # Check local store first
     existing = _find_registration_by_team_name(clean_name)
     if existing:
         return {
             "available": False,
-            "message": f"Team callsign '{clean_name}' is already reserved by another squad (team names are unique & case-insensitive).",
+            "message": f"Team name '{clean_name}' is already taken (team names are unique & case-insensitive).",
             "existing_name": existing.get("team_name")
         }
 
@@ -112,7 +112,7 @@ def api_check_team_name(name: str = Query("", description="Team name to verify")
         if sb_team:
             return {
                 "available": False,
-                "message": f"Team callsign '{clean_name}' is already reserved in QYRON central registry.",
+                "message": f"Team name '{clean_name}' is already reserved in QYRON central registry.",
                 "existing_name": sb_team[0].get("name")
             }
     except Exception:
@@ -120,16 +120,16 @@ def api_check_team_name(name: str = Query("", description="Team name to verify")
 
     return {
         "available": True,
-        "message": f"Team callsign '{clean_name}' is available for deployment."
+        "message": f"Team name '{clean_name}' is available."
     }
 
 
 @router.post("/api/register")
 async def api_submit_registration(request: Request):
     """
-    Validates team data, idea dossier, presentation upload,
+    Validates team data, project proposal, presentation upload,
     and generates a ₹150 payment order.
-    Enforces squad size of 4 to 6 members.
+    Enforces team size of 2 to 4 members.
     """
     content_type = request.headers.get("content-type", "")
     data: Dict[str, Any] = {}
@@ -186,13 +186,13 @@ async def api_submit_registration(request: Request):
             content={"success": False, "message": "Please fill in Team Name, College Name, Track, Leader Degree, Gender, and contact credentials."}
         )
 
-    # Check case-insensitive unique callsign
+    # Check case-insensitive unique team name
     if _find_registration_by_team_name(team_name):
         return JSONResponse(
             status_code=422,
             content={
                 "success": False,
-                "message": f"Team callsign '{team_name}' is already reserved by another squad (team names are unique & case-insensitive). Please choose a different callsign."
+                "message": f"Team name '{team_name}' is already taken (team names are unique & case-insensitive). Please choose a different team name."
             }
         )
 
@@ -204,14 +204,14 @@ async def api_submit_registration(request: Request):
     if not idea_description:
         idea_description = "To be submitted by team in Participant Portal."
 
-    # Validate squad size (min 4, max 6 total units)
+    # Validate team size (min 2, max 4 total members)
     total_team_size = 1 + len(members_list)
-    if total_team_size < 4 or total_team_size > 6:
+    if total_team_size < 2 or total_team_size > 4:
         return JSONResponse(
             status_code=422,
             content={
                 "success": False,
-                "message": f"Squad size must be between 4 and 6 units (Leader + 3 to 5 crew members). Current total: {total_team_size}."
+                "message": f"Team size must be between 2 and 4 members (Leader + 1 to 3 members). Current total: {total_team_size}."
             }
         )
 
@@ -281,7 +281,7 @@ async def api_submit_registration(request: Request):
         if ext not in [".ppt", ".pptx", ".pdf"]:
             return JSONResponse(
                 status_code=422,
-                content={"success": False, "message": "Presentation dossier must be in .pptx, .ppt, or .pdf format."}
+                content={"success": False, "message": "Presentation slides must be in .pptx, .ppt, or .pdf format."}
             )
         file_bytes = await idea_ppt_file.read()
         if len(file_bytes) > 10 * 1024 * 1024:
@@ -295,7 +295,7 @@ async def api_submit_registration(request: Request):
         try:
             from backend.services.gdrive import gdrive_service
             if gdrive_service.is_configured():
-                logger.info("Uploading presentation to Google Drive for squad %s...", team_code)
+                logger.info("Uploading presentation to Google Drive for team %s...", team_code)
                 drive_success, drive_res, drive_id = gdrive_service.upload_file(
                     file_bytes=file_bytes,
                     filename=f"{team_code}_{filename}",
@@ -398,7 +398,7 @@ async def api_submit_registration(request: Request):
         payment_screenshot_file = form.get("payment_screenshot")
 
     if utr_number:
-        # Atomic registration: squad info + UPI payment recorded together
+        # Atomic registration: team info + UPI payment recorded together
         screenshot_url = None
         if payment_screenshot_file and isinstance(payment_screenshot_file, UploadFile) and payment_screenshot_file.filename:
             s_ext = Path(payment_screenshot_file.filename).suffix.lower() or ".jpg"
@@ -622,10 +622,10 @@ async def api_verify_payment(request: Request):
                     members_raw = []
             reg = {
                 "team_code": team_code,
-                "team_name": str(data.get("team_name") or f"Squad-{team_code[-4:]}").strip(),
-                "college_name": str(data.get("college_name") or "Collegiate Squad").strip(),
+                "team_name": str(data.get("team_name") or f"Team-{team_code[-4:]}").strip(),
+                "college_name": str(data.get("college_name") or "Collegiate Team").strip(),
                 "track": str(data.get("track") or "Quantum Computing").strip(),
-                "leader_name": str(data.get("leader_name") or "Squad Commander").strip(),
+                "leader_name": str(data.get("leader_name") or "Team Leader").strip(),
                 "leader_email": leader_email or "participant@qyron.org",
                 "leader_phone": str(data.get("leader_phone") or "").strip(),
                 "leader_degree": str(data.get("leader_degree") or "B.Sc").strip(),
@@ -871,7 +871,7 @@ async def api_admin_verify_payment(team_code: str):
 
     return {
         "success": True,
-        "message": f"Payment for squad {team_code} verified! Portal credentials email dispatched to {leader_email}.",
+        "message": f"Payment for team {team_code} verified! Portal credentials email dispatched to {leader_email}.",
         "team_code": team_code,
         "payment_status": "paid",
         "username": username
@@ -907,7 +907,7 @@ async def api_admin_reject_payment(team_code: str):
     _save_registrations(records)
     return {
         "success": True,
-        "message": f"Payment for squad {team_code} marked as REJECTED.",
+        "message": f"Payment for team {team_code} marked as REJECTED.",
         "team_code": team_code,
         "payment_status": "rejected"
     }
@@ -1014,7 +1014,7 @@ async def api_portal_submit_proposal(request: Request):
 
     return {
         "success": True,
-        "message": "Proposal dossier and presentation successfully submitted!",
+        "message": "Project presentation slides and details successfully submitted!",
         "team_code": effective_team_code,
         "drive_url": ppt_drive_url,
         "ppt_filename": ppt_filename

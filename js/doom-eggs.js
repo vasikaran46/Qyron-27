@@ -11,11 +11,11 @@
 
   // Boot lines on the loading screen
   const lines = [
-    'INITIALIZING THE DOOMSDAY PROTOCOL',
-    'CALIBRATING LATVERIAN MICRO-FUSION ARMOR',
-    'SYNCHRONIZING DOOM’S TIME PLATFORM',
-    'SCANNING FOR MULTIVERSE INCURSIONS',
-    'COLLAPSING THE WAVEFUNCTION BY DOOM’S DECREE'
+    'INITIALIZING QUANTUM HACKATHON ENVIRONMENT',
+    'LOADING MATHEMATICAL ALGORITHM MODULES',
+    'PREPARING CIRCUIT SIMULATION INTERFACE',
+    'CONNECTING TO PARTICIPANT REGISTRY',
+    'SYSTEM READY — WELCOME TO QYRON 27'
   ];
   const boot = $('#bootLine');
   let i = 0;
@@ -59,12 +59,12 @@
       core.classList.remove('qcore-flip');
       void core.offsetWidth;
       core.classList.add('qcore-flip');
-      const states = ['|0⟩ GROUND STATE', '|1⟩ TIME PLATFORM ENGAGED', '|+⟩ QUANTUM SUPERPOSITION'];
+      const states = ['|0⟩ GROUND STATE', '|1⟩ EXCITED STATE', '|+⟩ QUANTUM SUPERPOSITION'];
       if (clicks < 3) {
-        toast(`[STATE ${clicks}]: ${states[clicks % 3]} — Superposition holds under Doom's will.`);
+        toast(`[STATE ${clicks}]: ${states[clicks % 3]} — Coherence maintained.`);
       } else {
         clicks = 0;
-        toast('WAVEFUNCTION COLLAPSE: Entangled quantum pair dispatched into the multiverse!');
+        toast('WAVEFUNCTION MEASURED: Entangled quantum state observed!');
         const r = core.getBoundingClientRect();
         const mk = dx => {
           const d = document.createElement('i');
@@ -93,12 +93,12 @@
       pos = 0;
       const on = document.body.classList.toggle('quantum-realm');
       toast(on
-        ? 'QUANTUM REALM ENGAGED. Pym particles stabilized. Incursion frequencies dampened.'
-        : 'Return to Castle Doom. His Serene Highness Victor von Doom is pleased.');
+        ? 'QUANTUM COHERENCE MODE ACTIVATED'
+        : 'STANDARD MODE RESTORED');
     }
   });
 
   // Console easter egg
-  console.log('%cDOOM COMMANDS YOU, MATHEMATICIAN.', 'color:#3ddc84;font:700 20px monospace;text-shadow:0 0 8px #3ddc84');
-  console.log('%c|Ψ⟩ = α|Doom⟩ + β|Assemble⟩ // Measure wisely. Secret: ↑↑↓↓←→←→BA', 'color:#e5c17c;font:13px monospace');
+  console.log('%cWELCOME TO QYRON 27.', 'color:#3ddc84;font:700 20px monospace;text-shadow:0 0 8px #3ddc84');
+  console.log('%cDepartment of Mathematics — Patrician College of Arts and Science', 'color:#e5c17c;font:13px monospace');
 })();

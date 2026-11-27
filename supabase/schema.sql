@@ -66,11 +66,12 @@ create table if not exists public.team_reviews (
   id uuid primary key default gen_random_uuid(),
   team_id uuid not null references public.teams(id) on delete cascade,
   reviewer_id uuid not null references auth.users(id) on delete restrict,
-  math_rigor smallint not null check (math_rigor between 0 and 20),
-  originality smallint not null check (originality between 0 and 20),
-  impact smallint not null check (impact between 0 and 20),
-  feasibility smallint not null check (feasibility between 0 and 20),
-  presentation smallint not null check (presentation between 0 and 20),
+  problem_understanding smallint not null default 0 check (problem_understanding between 0 and 15),
+  quantum_implementation smallint not null default 0 check (quantum_implementation between 0 and 25),
+  originality smallint not null default 0 check (originality between 0 and 20),
+  technical_execution smallint not null default 0 check (technical_execution between 0 and 20),
+  impact_scalability smallint not null default 0 check (impact_scalability between 0 and 10),
+  presentation smallint not null default 0 check (presentation between 0 and 10),
   total_score smallint not null check (total_score between 0 and 100),
   notes text not null default '' check (char_length(notes) <= 5000),
   updated_at timestamptz not null default now(),
@@ -129,7 +130,7 @@ declare
   v_count integer;
 begin
   v_count := jsonb_array_length(p_members);
-  if v_count < 4 or v_count > 6 then raise exception 'team size must be 4 to 6'; end if;
+  if v_count < 2 or v_count > 4 then raise exception 'team size must be 2 to 4'; end if;
   if now() > timestamptz '2027-01-20 23:59:59+05:30' then raise exception 'registration is closed'; end if;
   if (select count(distinct lower(item.member->>'email')) from jsonb_array_elements(p_members) as item(member)) <> v_count then
     raise exception 'duplicate member email';
@@ -149,7 +150,7 @@ $$;
 revoke all on function public.register_complete_team(text, text, uuid, jsonb) from public, anon, authenticated;
 grant execute on function public.register_complete_team(text, text, uuid, jsonb) to service_role;
 
--- Serialize shortlist changes so two concurrent admins cannot exceed 30 teams.
+-- Serialize shortlist changes so two concurrent admins cannot exceed 20 teams.
 create or replace function public.set_team_shortlist(p_team_id uuid, p_selected boolean, p_decided_by uuid)
 returns integer
 language plpgsql
@@ -160,11 +161,11 @@ declare
   v_selected_count integer;
   v_was_selected boolean;
 begin
-  perform pg_advisory_xact_lock(27127, 30);
+  perform pg_advisory_xact_lock(27127, 20);
   if not exists (select 1 from public.teams where id = p_team_id) then raise exception 'team not found'; end if;
   select coalesce((select selected from public.shortlist_decisions where team_id = p_team_id), false) into v_was_selected;
   select count(*) into v_selected_count from public.shortlist_decisions where selected;
-  if p_selected and not v_was_selected and v_selected_count >= 30 then raise exception 'shortlist limit reached'; end if;
+  if p_selected and not v_was_selected and v_selected_count >= 20 then raise exception 'shortlist limit reached'; end if;
   insert into public.shortlist_decisions (team_id, selected, score, decided_by)
   values (p_team_id, p_selected, (select avg(total_score)::numeric(6,2) from public.team_reviews where team_id = p_team_id), p_decided_by)
   on conflict (team_id) do update set selected = excluded.selected, score = excluded.score, decided_by = excluded.decided_by, decided_at = now();

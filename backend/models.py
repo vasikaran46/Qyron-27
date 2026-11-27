@@ -1,4 +1,4 @@
-from typing import Annotated, Literal
+from typing import Annotated, Literal, Optional
 from uuid import UUID
 
 from pydantic import BaseModel, EmailStr, Field, StringConstraints, model_validator
@@ -31,7 +31,7 @@ class RegisterMember(BaseModel):
 class TeamRegistration(BaseModel):
     name: TeamName
     college: Institution
-    members: list[RegisterMember] = Field(min_length=4, max_length=6)
+    members: list[RegisterMember] = Field(min_length=2, max_length=4)
 
     @model_validator(mode="after")
     def validate_members(self):
@@ -42,16 +42,44 @@ class TeamRegistration(BaseModel):
 
 
 class ReviewInput(BaseModel):
-    math_rigor: int = Field(ge=0, le=20)
-    originality: int = Field(ge=0, le=20)
-    impact: int = Field(ge=0, le=20)
-    feasibility: int = Field(ge=0, le=20)
-    presentation: int = Field(ge=0, le=20)
+    problem_understanding: int = Field(default=0, ge=0, le=15, description="Problem understanding and relevance (15%)")
+    quantum_implementation: int = Field(default=0, ge=0, le=25, description="Quantum computing implementation (25%)")
+    originality: int = Field(default=0, ge=0, le=20, description="Innovation and originality (20%)")
+    technical_execution: int = Field(default=0, ge=0, le=20, description="Technical execution and working prototype (20%)")
+    impact_scalability: int = Field(default=0, ge=0, le=10, description="Practical impact and scalability (10%)")
+    presentation: int = Field(default=0, ge=0, le=10, description="Presentation and demonstration (10%)")
     notes: str = Field(default="", max_length=5000)
+
+    # Legacy field fallbacks for backwards compatibility
+    math_rigor: Optional[int] = Field(default=None, ge=0, le=25)
+    impact: Optional[int] = Field(default=None, ge=0, le=20)
+    feasibility: Optional[int] = Field(default=None, ge=0, le=20)
 
     @property
     def total_score(self) -> int:
-        return self.math_rigor + self.originality + self.impact + self.feasibility + self.presentation
+        if (
+            self.problem_understanding
+            or self.quantum_implementation
+            or self.technical_execution
+            or self.impact_scalability
+        ):
+            return (
+                self.problem_understanding
+                + self.quantum_implementation
+                + self.originality
+                + self.technical_execution
+                + self.impact_scalability
+                + self.presentation
+            )
+        # Legacy fallback
+        legacy_sum = (
+            (self.math_rigor or 0)
+            + (self.originality or 0)
+            + (self.impact or 0)
+            + (self.feasibility or 0)
+            + (self.presentation or 0)
+        )
+        return legacy_sum
 
 
 class ShortlistInput(BaseModel):

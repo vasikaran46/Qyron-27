@@ -23,7 +23,7 @@
 
 **QYRON’27** is an end-to-end, full-stack event and submission platform built for the **24-Hour National Quantum Computing & Mathematical Innovation Hackathon**. The platform integrates a terminal/cyberpunk aesthetic with academic rigor, powering:
 
-1. **Self-Service Squad Registration Wizard**: 3-step registration capturing Squad Details, Leader Contact, and Crew Roster (4–6 members).
+1. **Self-Service Team Registration Wizard**: 3-step registration capturing Team Details, Leader Contact, and Member Roster (2–4 members).
 2. **Institutional Direct UPI QR Payment**: Seamless payment collection (₹150 entry fee) via dynamic QR scanner, UPI deep-linking, 12-digit UTR logging, and receipt screenshot attachment.
 3. **Immediate Portal Credential Provisioning**: Team leader accounts are activated immediately in Supabase Auth upon registration, displaying credentials on-screen and dispatching them via automated email so teams can begin proposal submission without waiting.
 4. **Automated Google Drive Proposal Storage**: Presentation slide decks (`.pptx`, `.ppt`, `.pdf`) and payment receipts are uploaded automatically to a designated Google Drive folder via a Google Apps Script Webhook.
@@ -78,7 +78,8 @@ QYRON 27/
 ├── api/                             # Vercel serverless deployment entry point
 │   └── index.py                     # ASGI application handler for Vercel
 ├── assets/                          # Static brand imagery, logos, templates & headshots
-│   ├── department-phoenix-logo.png  # Department of Mathematics Phoenix crest
+│   ├── department-ramanujan-logo.png # Department of Mathematics Ramanujan Association emblem
+│   ├── department-phoenix-logo.png  # Department crest alias
 │   ├── patrician-college-logo.jpg   # Patrician College official crest
 │   ├── qyron-logo-doomsday.png      # QYRON'27 event brand mark
 │   ├── qyron-proposal-outline.pptx  # Standardized 7-slide proposal template
@@ -362,11 +363,27 @@ The platform is pre-configured for one-click serverless deployment on Vercel via
 
 ---
 
+## ⚖️ Official Judging Criteria & Evaluation Rubric
+
+All proposals and hackathon submissions are evaluated across 6 core criteria totaling **100%**:
+
+| Criterion | Weight | Focus Areas |
+| :--- | :---: | :--- |
+| **Problem understanding and relevance** | **15%** | Clarity of problem definition, relevance to quantum & mathematics, and justification of scope |
+| **Quantum computing implementation** | **25%** | Mathematical modeling, circuit architecture, gate synthesis, Hamiltonian formulations, and algorithmic rigor |
+| **Innovation and originality** | **20%** | Novelty of approach, creative problem solving, and uniqueness of the quantum/mathematical solution |
+| **Technical execution and working prototype** | **20%** | Simulation feasibility, Qiskit/Pennylane/SymPy execution, code cleanliness, and prototype viability |
+| **Practical impact and scalability** | **10%** | Real-world utility, scalability of the model, and future application potential |
+| **Presentation and demonstration** | **10%** | Slide presentation clarity, Q&A defense, and ability to communicate technical concepts |
+| **Total** | **100%** | **Comprehensive Jury Evaluation** |
+
+---
+
 ## 📅 Hackathon Key Dates & Milestones
 
 - **Registration Deadline**: 20 January 2027 · 11:59 PM IST
 - **Proposal Submission Deadline**: 25 January 2027 · 11:59 PM IST *(in Participant Portal)*
-- **Announcement of Top 30 Shortlisted Finalists**: 28 January 2027
+- **Announcement of Top 20 Shortlisted Finalists**: 28 January 2027
 - **Finalist Round Confirmation**: 07 February 2027 *(₹350 per member for shortlisted teams)*
 - **Grand 24-Hour On-Campus Hackathon**: 12–13 February 2027
 - **Venue**: Patrician College of Arts and Science, Adyar, Chennai – 600 020

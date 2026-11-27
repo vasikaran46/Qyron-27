@@ -13,7 +13,7 @@ def admin_dashboard(user: Principal = Depends(reviewer_user)):
     client = service_client()
     teams = client.table("teams").select("*").order("created_at", desc=True).limit(100).execute().data or []
     if not teams:
-        return {"teams": [], "shortlisted_count": 0, "shortlist_limit": 30}
+        return {"teams": [], "shortlisted_count": 0, "shortlist_limit": 20}
     team_ids = [team["id"] for team in teams]
     members = client.table("team_members").select("id,team_id,full_name,email,student_id,is_team_lead").in_("team_id", team_ids).order("created_at").execute().data or []
     reviews = client.table("team_reviews").select("*").in_("team_id", team_ids).execute().data or []
@@ -30,7 +30,7 @@ def admin_dashboard(user: Principal = Depends(reviewer_user)):
     for team in teams:
         tid = team["id"]
         result.append({**team, "members": member_map.get(tid, []), "reviews": review_map.get(tid, []), "payments": payment_map.get(tid, []), "submission": submission_map.get(tid), "shortlist": decision_map.get(tid)})
-    return {"teams": result, "shortlisted_count": sum(1 for item in result if item["shortlist"] and item["shortlist"]["selected"]), "shortlist_limit": 30}
+    return {"teams": result, "shortlisted_count": sum(1 for item in result if item["shortlist"] and item["shortlist"]["selected"]), "shortlist_limit": 20}
 
 
 def _group(rows, key):
@@ -46,9 +46,13 @@ def save_review(team_id: str, payload: ReviewInput, user: Principal = Depends(re
     try:
         result = client.table("team_reviews").upsert({
             "team_id": team_id, "reviewer_id": user.id,
-            "math_rigor": payload.math_rigor, "originality": payload.originality,
-            "impact": payload.impact, "feasibility": payload.feasibility,
-            "presentation": payload.presentation, "total_score": payload.total_score,
+            "problem_understanding": payload.problem_understanding,
+            "quantum_implementation": payload.quantum_implementation,
+            "originality": payload.originality,
+            "technical_execution": payload.technical_execution,
+            "impact_scalability": payload.impact_scalability,
+            "presentation": payload.presentation,
+            "total_score": payload.total_score,
             "notes": payload.notes,
         }, on_conflict="team_id,reviewer_id").execute()
     except Exception as exc:
@@ -87,7 +91,7 @@ def set_shortlist(team_id: str, payload: ShortlistInput, user: Principal = Depen
     except Exception as exc:
         detail = str(exc).lower()
         if "shortlist limit" in detail:
-            raise HTTPException(status_code=409, detail="The 30-team shortlist is full.") from exc
+            raise HTTPException(status_code=409, detail="The 20-team shortlist is full.") from exc
         raise HTTPException(status_code=400, detail="Shortlist decision could not be saved.") from exc
     return {"team_id": team_id, "selected": payload.selected, "shortlisted_count": response.data}
 

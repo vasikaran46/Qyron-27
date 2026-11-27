@@ -45,11 +45,11 @@ def health():
 def event_details():
     return {
         "name": "QYRON'27", "timezone": "Asia/Kolkata",
-        "team_size": {"minimum": 4, "maximum": 6},
+        "team_size": {"minimum": 2, "maximum": 4},
         "fees_inr": {"registration_per_team": 150, "shortlisted_per_member": 350},
         "registration_deadline": "2027-01-20T23:59:00+05:30",
         "proposal_deadline": "2027-01-25T23:59:00+05:30",
-        "shortlist_announcement": "2027-02-01T18:00:00+05:30", "shortlist_limit": 30,
+        "shortlist_announcement": "2027-02-01T18:00:00+05:30", "shortlist_limit": 20,
         "shortlisted_fee_deadline": "2027-02-07", "event_dates": ["2027-02-12", "2027-02-13"],
         "submission": {"formats": ["ppt", "pptx", "pdf"], "max_size_mb": 10},
     }

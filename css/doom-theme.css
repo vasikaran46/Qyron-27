@@ -507,7 +507,7 @@ a, button, input, select, textarea, label, summary, [data-egg], [data-open], .po
 }
 
 .egg-tip::before {
-  content: "// DOOMSDAY INTEL: ";
+  content: "// INFO: ";
   color: var(--doom-green);
   font-weight: bold;
 }

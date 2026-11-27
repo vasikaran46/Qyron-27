@@ -1,11 +1,11 @@
 """
 SMTP Email Service for QYRON'27
 Two-Phase Registration & Payment Email Workflow:
-1. send_registration_pending_email: Dispatched immediately upon squad registration with UPI UTR.
+1. send_registration_pending_email: Dispatched immediately upon team registration with UPI UTR.
    Notifies the team lead that registration & UTR reference are logged and currently under committee verification.
 2. send_payment_verified_email: Dispatched when an organizer marks the payment as VERIFIED in the Admin Panel.
-   Delivers the participant portal login credentials (username and temporary password) so the squad can log in
-   and submit their Proposal Dossier (Title, Abstract, Architecture) and Presentation Slide Deck (.pptx / .pdf).
+   Delivers the participant portal login credentials (username and temporary password) so the team can log in
+   and submit their Presentation Slides and Project Proposal details (.pptx / .pdf).
 
 Uses Gmail SMTP with App Password authentication.
 """
@@ -103,18 +103,18 @@ def _build_registration_confirmed_html(
   <div class="body-content">
     <p>Dear <strong>{leader_name}</strong>,</p>
     <p>Greetings from the <strong>Department of Mathematics, Patrician College of Arts and Science!</strong></p>
-    <p>Thank you for submitting your squad registration for <strong>QYRON'27 — 24-Hour National Quantum Computing &amp; Mathematical Innovation Hackathon</strong>.</p>
+    <p>Thank you for submitting your team registration for <strong>QYRON'27 — 24-Hour National Quantum Computing &amp; Mathematical Innovation Hackathon</strong>.</p>
     <p>Your team details and UPI payment transaction reference have been successfully recorded in our registration registry. Your participant portal account has been activated immediately so you can begin drafting your proposal.</p>
 
     <!-- Registration Details Table -->
-    <h3 style="color: #1a237e; border-bottom: 2px solid #e0e0e0; padding-bottom: 6px; margin-top: 24px;">Registration Application Dossier</h3>
+    <h3 style="color: #1a237e; border-bottom: 2px solid #e0e0e0; padding-bottom: 6px; margin-top: 24px;">Registration Summary</h3>
     <table class="details-table">
       <tr><td>Event</td><td><strong>QYRON'27 Hackathon</strong></td></tr>
       <tr><td>Registration ID</td><td><strong style="color:#00838f; font-size:15px;">{team_code}</strong></td></tr>
-      <tr><td>Team Callsign</td><td><strong>{team_name}</strong></td></tr>
+      <tr><td>Team Name</td><td><strong>{team_name}</strong></td></tr>
       <tr><td>Institution</td><td>{college_name or 'Patrician College / Collegiate Partner'}</td></tr>
       <tr><td>Operational Track</td><td><strong>{track}</strong></td></tr>
-      <tr><td>Initial Entry Fee</td><td>&#8377;150 per Squad</td></tr>
+      <tr><td>Initial Entry Fee</td><td>&#8377;150 per Team</td></tr>
       <tr><td>Submitted UPI UTR / Ref</td><td><code style="font-family:monospace; background:#f1f5f9; padding:2px 6px; border-radius:3px; color:#0f172a; font-weight:700;">{utr_number}</code></td></tr>
       <tr><td>Registration Status</td><td><span style="color: #2e7d32; font-weight: 700;">&#9989; Registered &amp; Credentials Dispatched</span></td></tr>
     </table>
@@ -155,13 +155,13 @@ def _build_registration_confirmed_html(
 
     <!-- PROPOSAL SUBMISSION NEXT STEPS -->
     <div class="info-box">
-      <strong>Action Required: Submit Your Proposal Dossier in Portal</strong>
+      <strong>Action Required: Submit Your Presentation Slides &amp; Proposal in Portal</strong>
       <ol>
         <li>Click the button above or visit <a href="{portal_url}" style="color:#2e7d32; font-weight:bold;">{portal_url}</a> and log in.</li>
         <li>Enter your <strong>Proposal / Project Title</strong>, <strong>Executive Abstract</strong>, and <strong>Technical Architecture &amp; Methodology</strong>.</li>
         <li>Upload your team's official <strong>Presentation Slide Deck (.pptx, .ppt, or .pdf)</strong>.</li>
         <li>Your presentation file is automatically stored securely in Google Drive for our academic jury review.</li>
-        <li><strong>Proposal Deadline:</strong> Ensure your dossier is submitted in the portal by <strong>25 January 2027 · 11:59 PM IST</strong>.</li>
+        <li><strong>Proposal Deadline:</strong> Ensure your presentation and proposal details are submitted in the portal by <strong>25 January 2027 · 11:59 PM IST</strong>.</li>
       </ol>
     </div>
 
@@ -170,7 +170,7 @@ def _build_registration_confirmed_html(
       <strong>Important Hackathon Dates &amp; Milestones</strong>
       <ul>
         <li><strong>Proposal Submission Deadline:</strong> 25 January 2027 (in Participant Portal)</li>
-        <li><strong>Announcement of Top 30 Shortlisted Finalists:</strong> 28 January 2027</li>
+        <li><strong>Announcement of Top 20 Shortlisted Finalists:</strong> 28 January 2027</li>
         <li><strong>Grand 24-Hour On-Campus Hackathon:</strong> 12–13 February 2027</li>
         <li><strong>Finalist Round Fee:</strong> &#8377;350 per member (applicable only to shortlisted teams)</li>
         <li><strong>Venue:</strong> Patrician College of Arts and Science, Adyar, Chennai &ndash; 600 020</li>
@@ -271,18 +271,18 @@ def _build_verified_html(
   <div class="body-content">
     <p>Dear <strong>{leader_name}</strong>,</p>
     <p>Greetings from the <strong>Department of Mathematics, Patrician College of Arts and Science!</strong></p>
-    <p>We are pleased to inform you that your registration payment of <strong>&#8377;150</strong> (UTR: <strong>{utr_number}</strong>) has been <strong>successfully verified and approved</strong> by the organizing directorate!</p>
-    <p>Your squad is officially active and provisioned with full access to the Participant Portal.</p>
+    <p>We are pleased to inform you that your registration payment of <strong>&#8377;150</strong> (UTR: <strong>{utr_number}</strong>) has been <strong>successfully verified and approved</strong> by the organizing committee!</p>
+    <p>Your team is officially active and provisioned with full access to the Participant Portal.</p>
 
     <!-- Registration Details Table -->
-    <h3 style="color: #1a237e; border-bottom: 2px solid #e0e0e0; padding-bottom: 6px; margin-top: 24px;">Verified Registration Manifest</h3>
+    <h3 style="color: #1a237e; border-bottom: 2px solid #e0e0e0; padding-bottom: 6px; margin-top: 24px;">Verified Registration Summary</h3>
     <table class="details-table">
       <tr><td>Event</td><td><strong>QYRON'27 Hackathon</strong></td></tr>
       <tr><td>Registration ID</td><td><strong style="color:#00838f; font-size:15px;">{team_code}</strong></td></tr>
-      <tr><td>Team Callsign</td><td><strong>{team_name}</strong></td></tr>
+      <tr><td>Team Name</td><td><strong>{team_name}</strong></td></tr>
       <tr><td>Institution</td><td>{college_name or 'Patrician College / Collegiate Partner'}</td></tr>
       <tr><td>Operational Track</td><td><strong>{track}</strong></td></tr>
-      <tr><td>Registration Fee</td><td>&#8377;150 per Squad (&#9989; Verified)</td></tr>
+      <tr><td>Registration Fee</td><td>&#8377;150 per Team (&#9989; Verified)</td></tr>
       <tr><td>Verified UTR Ref</td><td><code style="font-family:monospace; background:#f1f5f9; padding:2px 6px; border-radius:3px; color:#0f172a; font-weight:700;">{utr_number}</code></td></tr>
       <tr><td>Account Status</td><td><span style="color: #2e7d32; font-weight: 700;">&#9989; Active &amp; Credentials Dispatched</span></td></tr>
     </table>
@@ -312,13 +312,13 @@ def _build_verified_html(
 
     <!-- NEXT STEPS: PROPOSAL SUBMISSION INSTRUCTIONS -->
     <div class="info-box">
-      <strong>Action Required: Submit Your Proposal Dossier in Portal</strong>
+      <strong>Action Required: Submit Your Presentation Slides &amp; Proposal in Portal</strong>
       <ol>
         <li>Click the button above or visit <a href="{portal_url}" style="color:#2e7d32; font-weight:bold;">{portal_url}</a> and log in.</li>
         <li>Enter your <strong>Proposal / Project Title</strong>, <strong>Executive Abstract</strong>, and <strong>Technical Architecture &amp; Methodology</strong>.</li>
         <li>Upload your team's official <strong>Presentation Slide Deck (.pptx, .ppt, or .pdf)</strong>.</li>
         <li>Your presentation file will be automatically stored securely in Google Drive for our academic jury review.</li>
-        <li><strong>Proposal Deadline:</strong> Ensure your dossier is submitted in the portal by <strong>25 January 2027 · 11:59 PM IST</strong>.</li>
+        <li><strong>Proposal Deadline:</strong> Ensure your presentation and proposal details are submitted in the portal by <strong>25 January 2027 · 11:59 PM IST</strong>.</li>
       </ol>
     </div>
 
@@ -327,7 +327,7 @@ def _build_verified_html(
       <strong>Key Dates &amp; Finalist Information</strong>
       <ul>
         <li><strong>Proposal Submission Deadline:</strong> 25 January 2027 (11:59 PM IST)</li>
-        <li><strong>Announcement of Top 30 Shortlisted Finalists:</strong> 28 January 2027</li>
+        <li><strong>Announcement of Top 20 Shortlisted Finalists:</strong> 28 January 2027</li>
         <li><strong>Grand 24-Hour Final Hackathon:</strong> 12–13 February 2027 (On-Campus)</li>
         <li><strong>Finalist Participation Fee:</strong> &#8377;350 per member (applicable only to shortlisted teams)</li>
         <li><strong>Venue:</strong> Patrician College of Arts and Science, Adyar, Chennai &ndash; 600 020</li>
@@ -387,7 +387,7 @@ def send_registration_pending_email(
     college_name: str = ""
 ) -> bool:
     """
-    Sends Email 1: Acknowledges squad registration & logs payment UTR under pending verification.
+    Sends Email 1: Acknowledges team registration & logs payment UTR under pending verification.
     """
     cfg = settings()
     if not cfg.has_smtp:
@@ -412,7 +412,7 @@ REGISTRATION APPLICATION DETAILS:
 - Registration ID: {team_code}
 - Team Name: {team_name}
 - Track: {track}
-- Entry Fee: Rs. 150 per Squad
+- Entry Fee: Rs. 150 per Team
 - Submitted UPI UTR / Ref: {utr_number}
 - Status: Pending Committee Verification
 
@@ -441,7 +441,7 @@ Department of Mathematics, Patrician College of Arts and Science
             server.login(cfg.smtp_email, password_clean)
             server.sendmail(cfg.smtp_email, to_email, msg.as_string())
 
-        logger.info("Registration pending verification email sent to %s for squad %s", to_email, team_code)
+        logger.info("Registration pending verification email sent to %s for team %s", to_email, team_code)
         return True
 
     except Exception as e:
@@ -493,7 +493,7 @@ REGISTRATION APPLICATION DETAILS:
 - Registration ID: {team_code}
 - Team Name: {team_name}
 - Track: {track}
-- Initial Entry Fee: Rs. 150 per Squad
+- Initial Entry Fee: Rs. 150 per Team
 - Submitted UPI UTR / Ref: {utr_number}
 - Registration Status: Registered & Credentials Dispatched
 
@@ -530,7 +530,7 @@ Department of Mathematics, Patrician College of Arts and Science
             server.login(cfg.smtp_email, password_clean)
             server.sendmail(cfg.smtp_email, to_email, msg.as_string())
 
-        logger.info("Registration confirmation & credentials email sent to %s for squad %s", to_email, team_code)
+        logger.info("Registration confirmation & credentials email sent to %s for team %s", to_email, team_code)
         return True
 
     except Exception as e:
@@ -552,7 +552,7 @@ def send_payment_verified_email(
 ) -> bool:
     """
     Sends Email 2: Triggered by organizer in Admin Panel when payment is confirmed against bank statements.
-    Confirms payment verification and reminds squad of the proposal deadline.
+    Confirms payment verification and reminds team of the proposal deadline.
     """
     cfg = settings()
     if not cfg.has_smtp:
@@ -610,7 +610,7 @@ Department of Mathematics, Patrician College of Arts and Science
             server.login(cfg.smtp_email, password_clean)
             server.sendmail(cfg.smtp_email, to_email, msg.as_string())
 
-        logger.info("Payment verified email sent to %s for squad %s", to_email, team_code)
+        logger.info("Payment verified email sent to %s for team %s", to_email, team_code)
         return True
 
     except Exception as e:

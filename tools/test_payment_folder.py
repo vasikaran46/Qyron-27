@@ -11,6 +11,8 @@ from backend.config import settings
 
 def test_payment_folder_config():
     service = GoogleDriveService()
+    service.folder_id = ""
+    service.payment_folder_id = ""
     
     # 1. Fallback to main folder when payment folder is empty
     with patch.dict(os.environ, {"GOOGLE_DRIVE_FOLDER_ID": "main_folder_123", "GOOGLE_DRIVE_PAYMENT_FOLDER_ID": ""}):

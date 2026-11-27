@@ -73,13 +73,13 @@
       <div class="hud-corner hud-corner-bl"></div>
       <div class="hud-corner hud-corner-br"></div>
       <div class="portal-topline">
-        <span>LATVERIA SECURE ENCLAVE // ${isAdmin ? 'ADMIN ACCESS' : 'PARTICIPANT UPLINK'}</span>
+        <span>QYRON'27 SECURE GATEWAY // ${isAdmin ? 'ADMIN ACCESS' : 'PARTICIPANT UPLINK'}</span>
         <span class="mono-tag" style="color:var(--doom-green);">TLS 1.3 ENCRYPTED</span>
       </div>
       <h2>${isAdmin ? 'ADMIN' : 'PARTICIPANT'} <span>PORTAL.</span></h2>
       <p class="modal-subtitle">
         ${isAdmin
-          ? 'Enter your organizer credentials to evaluate submissions, verify payments, and manage the 30-team shortlist.'
+          ? 'Enter your organizer credentials to evaluate submissions, verify payments, and manage the 20-team shortlist.'
           : 'Sign in with your team lead email to access your team dashboard, submit proposals, and monitor selection status.'}
       </p>
 
@@ -160,7 +160,7 @@
       <div class="hud-corner hud-corner-bl"></div>
       <div class="hud-corner hud-corner-br"></div>
       <div class="portal-topline">
-        <span>ACCOUNT REGISTRATION // DOOMSDAY PROTOCOL</span>
+        <span>ACCOUNT REGISTRATION</span>
         <button type="button" id="backToSigninBtn">← Back to Sign In</button>
       </div>
       <h2>CREATE <span>ACCOUNT.</span></h2>
@@ -176,7 +176,7 @@
           <input id="signupPassword" type="password" required minlength="8" maxlength="128" autocomplete="new-password" placeholder="At least 8 characters" />
         </div>
         <button class="button button-primary form-submit" type="submit">CREATE PARTICIPANT ACCOUNT <span>↗</span></button>
-        <p class="form-notice" id="signupNotice" aria-live="polite">An account is required before registering your 4–6 member roster.</p>
+        <p class="form-notice" id="signupNotice" aria-live="polite">An account is required before registering your 2–4 member roster.</p>
         <button type="button" class="auth-switch" id="resendVerificationBtn" style="margin-top: 10px;">Didn't get the email? Resend verification link</button>
       </form>
     `;
@@ -234,7 +234,7 @@
       </div>
       <h2>ASSEMBLE YOUR <span>TEAM.</span></h2>
       <p class="modal-subtitle">
-        Register all 4–6 team members together. The ₹150 team registration fee qualifies your submission for jury review.
+        Register all 2–4 team members together. The ₹150 team registration fee qualifies your submission for jury review.
       </p>
 
       <form id="registrationForm">
@@ -277,7 +277,7 @@
     `;
 
     const rows = $('#memberRows');
-    let count = 4;
+    let count = 2;
     function drawRows() {
       rows.innerHTML = Array.from({ length: count }, (_, index) => `
         <div class="member-row">
@@ -287,13 +287,13 @@
         </div>
       `).join('');
       $('#memberCount').textContent = `${count} MEMBERS`;
-      $('#addMember').disabled = count >= 6;
-      $('#addMember').textContent = count >= 6 ? 'MAXIMUM TEAM SIZE REACHED (6)' : '＋ ADD MEMBER';
+      $('#addMember').disabled = count >= 4;
+      $('#addMember').textContent = count >= 4 ? 'MAXIMUM TEAM SIZE REACHED (4)' : '＋ ADD MEMBER';
     }
     drawRows();
 
     $('#addMember').addEventListener('click', () => {
-      if (count < 6) {
+      if (count < 4) {
         count++;
         drawRows();
       }
@@ -315,7 +315,7 @@
         return { full_name: inputs[0].value.trim(), email: inputs[1].value.trim(), student_id: inputs[2].value.trim() };
       });
 
-      $('#regNotice').textContent = 'Transmitting roster to Latveria Command…';
+      $('#regNotice').textContent = 'Submitting team roster…';
       try {
         await apiRequest('/api/participant/teams', {
           method: 'POST',
@@ -363,7 +363,7 @@
           <button data-signout>${preview ? 'Exit Preview' : 'Sign Out'}</button>
         </div>
         <h2>YOUR TEAM <span>IS NEXT.</span></h2>
-        <p class="modal-subtitle">No registered team is linked to this account yet. Assemble your 4–6 member squad and register.</p>
+        <p class="modal-subtitle">No registered team is linked to this account yet. Register your 2–4 member team to get started.</p>
         <button class="button button-primary" id="btnGoRegister">REGISTER TEAM ROSTER NOW <span>↗</span></button>
       `;
       $('#btnGoRegister').addEventListener('click', () => setTab('register'));
@@ -395,7 +395,7 @@
           <b>${escapeHTML(regPayment?.status || 'pending').toUpperCase()}</b>
         </div>
         <div>
-          <small>PROPOSAL DOSSIER</small>
+          <small>PROPOSAL PRESENTATION</small>
           <b>${data.submission ? 'RECEIVED' : 'NOT UPLOADED'}</b>
         </div>
         <div>
@@ -412,7 +412,7 @@
         <section class="dashboard-card">
           <div class="dashboard-card-title">
             <span>TEAM ROSTER</span>
-            <b>${data.members?.length || 0} / 6 MEMBERS</b>
+            <b>${data.members?.length || 0} / 4 MEMBERS</b>
           </div>
           <ul class="roster-list">
             ${(data.members || []).map(member => `
@@ -429,7 +429,7 @@
 
         <section class="dashboard-card" style="grid-column: 1 / -1;">
           <div class="dashboard-card-title">
-            <span>PROPOSAL DOSSIER &amp; PRESENTATION SUBMISSION</span>
+            <span>IDEA &amp; PRESENTATION SUBMISSION</span>
             <b>${data.submission ? 'SUBMITTED' : 'ACTION REQUIRED'}</b>
           </div>
           ${data.submission ? `
@@ -467,7 +467,7 @@
             </div>
 
             <button class="button button-outline" type="submit" ${preview ? 'disabled' : ''} style="width:100%; justify-content:center; padding:12px; font-weight:700; margin-top:6px;">
-              <span>${data.submission ? 'UPDATE PROPOSAL DOSSIER &amp; RE-UPLOAD SLIDES' : 'SUBMIT PROPOSAL DOSSIER &amp; SLIDES'}</span> <span style="margin-left:8px;">➔</span>
+              <span>${data.submission ? 'UPDATE PRESENTATION SLIDES &amp; DETAILS' : 'SUBMIT PRESENTATION &amp; DETAILS'}</span> <span style="margin-left:8px;">➔</span>
             </button>
             <p id="uploadNotice" class="form-notice" aria-live="polite" style="margin:4px 0 0;">Submission Deadline: 25 Jan 2027 · 11:59 PM IST</p>
           </form>
@@ -630,23 +630,23 @@
       <div class="hud-corner hud-corner-bl"></div>
       <div class="hud-corner hud-corner-br"></div>
       <div class="portal-topline">
-        <span>${preview ? 'DEMO PREVIEW · SIMULATED ADMIN CONSOLE' : 'LATVERIA JURY DIRECTORATE'}</span>
+        <span>${preview ? 'DEMO PREVIEW · SIMULATED ADMIN CONSOLE' : 'ACADEMIC JURY PANEL'}</span>
         <button data-signout>${preview ? 'Exit Preview' : 'Sign Out'}</button>
       </div>
-      <h2>REVIEW <span>DIRECTORATE.</span></h2>
+      <h2>REVIEW <span>PANEL.</span></h2>
       <p class="modal-subtitle">
-        Score candidate proposals across the 5 mathematical lenses, verify UPI/UTR transaction references, and publish the 30 shortlisted finalist teams.
+        Score candidate proposals across the 5 mathematical lenses, verify UPI/UTR transaction references, and publish the 20 shortlisted finalist teams.
       </p>
 
       <div class="admin-stats">
         <div><small>REGISTERED TEAMS</small><b>${counts.total}</b></div>
         <div><small>PROPOSALS RECEIVED</small><b>${counts.submissions}</b></div>
         <div><small>PENDING PAYMENTS</small><b>${counts.pending}</b></div>
-        <div><small>SHORTLISTED TEAMS</small><b>${counts.shortlisted}<span> / 30</span></b></div>
+        <div><small>SHORTLISTED TEAMS</small><b>${counts.shortlisted}<span> / 20</span></b></div>
       </div>
 
       <div class="shortlist-meter">
-        <div style="width:${Math.min(100, (counts.shortlisted / 30) * 100)}%"></div>
+        <div style="width:${Math.min(100, (counts.shortlisted / 20) * 100)}%"></div>
       </div>
 
       <!-- UPI REGISTRATION & PAYMENT VERIFICATION DESK -->
@@ -682,7 +682,7 @@
             <option value="shortlisted">Shortlisted (${counts.shortlisted})</option>
           </select>
         </label>
-        <span style="color:var(--gold);">RUBRIC: 5 CRITERIA · 20 POINTS EACH (100 TOTAL)</span>
+        <span style="color:var(--gold);">RUBRIC: 6 CRITERIA (100% TOTAL)</span>
       </div>
 
       <div class="admin-team-list">
@@ -700,7 +700,7 @@
       event.preventDefault();
       const tid = form.dataset.team;
       const payload = Object.fromEntries(new FormData(form).entries());
-      for (const k of ['math_rigor', 'originality', 'impact', 'feasibility', 'presentation']) payload[k] = Number(payload[k]);
+      for (const k of ['problem_understanding', 'quantum_implementation', 'originality', 'technical_execution', 'impact_scalability', 'presentation']) payload[k] = Number(payload[k] || 0);
       if (preview) {
         showToast('Sample review updated in preview');
         return;
@@ -721,8 +721,8 @@
       const tid = button.dataset.shortlist;
       const team = state.teams.find(t => t.id === tid);
       const isSelected = Boolean(team.shortlist?.selected);
-      if (!isSelected && counts.shortlisted >= 30) {
-        showToast('Shortlist is full (maximum 30 teams)');
+      if (!isSelected && counts.shortlisted >= 20) {
+        showToast('Shortlist is full (maximum 20 teams)');
         return;
       }
       if (preview) {
@@ -785,19 +785,19 @@
       const data = await res.json();
       const records = data.registrations || [];
       if (!records.length) {
-        container.innerHTML = '<p style="color:var(--text-muted); font-size:13px; padding:14px 0;">No squad registrations found in registry.</p>';
+        container.innerHTML = '<p style="color:var(--text-muted); font-size:13px; padding:14px 0;">No team registrations found in registry.</p>';
         return;
       }
       container.innerHTML = `
         <table style="width:100%; border-collapse:collapse; font-size:12px; text-align:left;">
           <thead>
             <tr style="border-bottom:2px solid var(--doom-green); color:var(--doom-green); font-family:var(--font-mono);">
-              <th style="padding:10px 8px;">REG ID &amp; SQUAD</th>
+              <th style="padding:10px 8px;">REG ID &amp; TEAM</th>
               <th style="padding:10px 8px;">LEADER &amp; COLLEGE</th>
               <th style="padding:10px 8px;">SUBMITTED UTR</th>
               <th style="padding:10px 8px;">SCREENSHOT</th>
               <th style="padding:10px 8px;">PAYMENT STATUS</th>
-              <th style="padding:10px 8px; text-align:right;">DIRECTORATE ACTION</th>
+              <th style="padding:10px 8px; text-align:right;">ADMIN ACTION</th>
             </tr>
           </thead>
           <tbody>
@@ -876,11 +876,11 @@
       container.querySelectorAll('.btn-reject-upi').forEach(btn => {
         btn.addEventListener('click', async () => {
           const code = btn.dataset.code;
-          if (!confirm(`Are you sure you want to REJECT payment for squad ${code}?`)) return;
+          if (!confirm(`Are you sure you want to REJECT payment for team ${code}?`)) return;
           try {
             const rRes = await fetch(`/api/admin/registrations/${encodeURIComponent(code)}/reject-payment`, { method: 'POST' });
             const rData = await rRes.json();
-            showToast(`Squad ${code} payment marked as rejected.`);
+            showToast(`Team ${code} payment marked as rejected.`);
             await loadUpiRegistrations();
           } catch (e) {
             alert('Failed to reject payment.');
@@ -895,7 +895,7 @@
 
   function renderAdminTeam(team, state, preview) {
     const selected = Boolean(team.shortlist?.selected);
-    const limitHit = (state.shortlisted_count ?? state.teams.filter(t => t.shortlist?.selected).length) >= 30;
+    const limitHit = (state.shortlisted_count ?? state.teams.filter(t => t.shortlist?.selected).length) >= 20;
     const review = team.reviews?.[0] || {};
     const submitted = Boolean(team.submission);
 
@@ -906,7 +906,7 @@
             <span class="team-id">${escapeHTML(team.id.slice(0, 8))} // ${escapeHTML(team.college)}</span>
             <h3>${escapeHTML(team.name)}</h3>
             <small>${team.members?.length || 0} members · ${submitted ? escapeHTML(team.submission.original_filename) : 'No proposal file uploaded'}</small>
-            ${submitted && !preview ? `<br><button class="file-review-link" type="button" data-submission-team="${escapeHTML(team.id)}">OPEN SECURE PROPOSAL DOSSIER ↗</button>` : ''}
+            ${submitted && !preview ? `<br><button class="file-review-link" type="button" data-submission-team="${escapeHTML(team.id)}">VIEW PRESENTATION SLIDES ↗</button>` : ''}
           </div>
           <span class="status-chip ${selected ? 'status-verified' : ''}">${selected ? 'SHORTLISTED' : escapeHTML(team.registration_status || 'under_review').replace('_', ' ').toUpperCase()}</span>
         </div>
@@ -921,15 +921,16 @@
         <form class="team-review-form" data-team="${escapeHTML(team.id)}">
           <div class="score-grid">
             ${[
-              ['math_rigor', 'MATH RIGOR'],
-              ['originality', 'ORIGINALITY'],
-              ['impact', 'IMPACT'],
-              ['feasibility', 'FEASIBILITY'],
-              ['presentation', 'PRESENTATION']
-            ].map(([k, label]) => `
+              ['problem_understanding', 'PROBLEM UNDERSTANDING (15%)', 15],
+              ['quantum_implementation', 'QUANTUM COMPUTING (25%)', 25],
+              ['originality', 'INNOVATION & ORIGINALITY (20%)', 20],
+              ['technical_execution', 'WORKING PROTOTYPE (20%)', 20],
+              ['impact_scalability', 'IMPACT & SCALABILITY (10%)', 10],
+              ['presentation', 'PRESENTATION & DEMO (10%)', 10]
+            ].map(([k, label, max]) => `
               <label>
                 ${label}
-                <input name="${k}" type="number" min="0" max="20" value="${Number(review[k] || 0)}" required />
+                <input name="${k}" type="number" min="0" max="${max}" value="${Number(review[k] || 0)}" required />
               </label>
             `).join('')}
           </div>
@@ -941,7 +942,7 @@
             <button class="button button-outline" type="submit" style="height:38px; padding:0 14px; font-size:9px;">SAVE EVALUATION</button>
             ${userCanShortlist ? `
               <button class="shortlist-toggle ${selected ? 'is-selected' : ''}" type="button" data-shortlist="${escapeHTML(team.id)}" ${!selected && limitHit ? 'disabled' : ''}>
-                ${selected ? 'REMOVE FROM SHORTLIST ✓' : 'SHORTLIST FOR FINAL 30 +'}
+                ${selected ? 'REMOVE FROM SHORTLIST ✓' : 'SHORTLIST FOR FINAL 20 +'}
               </button>
             ` : ''}
           </div>
@@ -1021,8 +1022,8 @@
 
   function sampleAdminData() {
     return {
-      shortlist_limit: 30,
-      shortlisted_count: 24,
+      shortlist_limit: 20,
+      shortlisted_count: 14,
       teams: [
         {
           id: 'team-demo-alpha',
@@ -1041,7 +1042,7 @@
             { id: 'p1', stage: 'registration', amount_inr: 150, status: 'verified', payment_reference: 'UPI-DEMO-991' },
             { id: 'p2', stage: 'shortlisted', amount_inr: 350, status: 'submitted', payment_reference: 'UTR-DEMO-FINAL-01' }
           ],
-          reviews: [{ reviewer_id: 'demo', math_rigor: 19, originality: 18, impact: 19, feasibility: 18, presentation: 18, total_score: 92, notes: 'Exceptional quantum tensor modeling. Clear mathematical foundation.' }]
+          reviews: [{ reviewer_id: 'demo', problem_understanding: 14, quantum_implementation: 23, originality: 19, technical_execution: 18, impact_scalability: 9, presentation: 9, total_score: 92, notes: 'Exceptional quantum tensor modeling. Clear mathematical foundation.' }]
         },
         {
           id: 'team-demo-beta',
