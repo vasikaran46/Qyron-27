@@ -550,9 +550,17 @@ async def api_submit_registration(request: Request):
     except Exception as sb_err:
         logger.debug("Supabase sync skipped: %s", sb_err)
 
+    # Always return redirect_url with credentials so the client never needs
+    # a second request to /api/payment/verify (prevents serverless cross-instance 404)
+    portal_url = "https://qyron27.vercel.app/login" if "vercel.app" in str(request.base_url) else "http://127.0.0.1:8000/login"
     return {
         "success": True,
         "team_code": team_code,
+        "username": leader_email,
+        "password": portal_password,
+        "portal_url": portal_url,
+        "payment_status": "pending",
+        "redirect_url": f"/confirmation?team_code={team_code}",
         "order": order_data
     }
 
@@ -741,7 +749,7 @@ async def api_verify_payment(request: Request):
         logger.warning("Supabase auth note: %s", sb_err)
 
     # Send confirmation email with portal login credentials immediately
-    portal_url = "http://127.0.0.1:8000/login"
+    portal_url = "https://qyron27.vercel.app/login" if "vercel.app" in str(request.base_url) else "http://127.0.0.1:8000/login"
     try:
         cfg = settings()
         if cfg.has_smtp:
@@ -851,7 +859,7 @@ async def api_admin_verify_payment(team_code: str):
         logger.warning("Supabase sync note on admin verify: %s", sb_err)
 
     # Dispatch Email 2: Payment Verified & Portal Access Activated
-    portal_url = "http://127.0.0.1:8000/login"
+    portal_url = "https://qyron27.vercel.app/login"
     try:
         from backend.mailer import send_payment_verified_email
         send_payment_verified_email(

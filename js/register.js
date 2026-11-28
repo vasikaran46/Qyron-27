@@ -717,63 +717,27 @@ async function initiateRegistrationAndPayment() {
       return;
     }
 
-    const order = data.order || {};
-
-    // Fallback: Verify UPI Payment with UTR and fallback squad fields for serverless lambdas
-    const verifyFormData = new FormData();
-    verifyFormData.append('team_code', teamCode);
-    verifyFormData.append('utr_number', utrVal);
-    verifyFormData.append('order_id', order.order_id || `order_${teamCode}`);
-    verifyFormData.append('team_name', formData.get('team_name'));
-    verifyFormData.append('college_name', formData.get('college_name'));
-    verifyFormData.append('track', formData.get('track'));
-    verifyFormData.append('leader_name', formData.get('leader_name'));
-    verifyFormData.append('leader_email', formData.get('leader_email'));
-    verifyFormData.append('leader_phone', formData.get('leader_phone'));
-    verifyFormData.append('leader_degree', formData.get('leader_degree') || '');
-    verifyFormData.append('leader_department', formData.get('leader_department') || '');
-    verifyFormData.append('leader_gender', formData.get('leader_gender') || '');
-    verifyFormData.append('members', formData.get('members'));
-
-    if (screenshotInput && screenshotInput.files && screenshotInput.files[0]) {
-      verifyFormData.append('payment_screenshot', screenshotInput.files[0]);
-    }
-
-    const verifyRes = await fetch('/api/payment/verify', {
-      method: 'POST',
-      body: verifyFormData
-    });
-
-    let verifyData;
+    // Registration succeeded but no redirect_url — the UTR was included so this
+    // shouldn't happen, but handle it gracefully by redirecting to confirmation.
+    // Do NOT call /api/payment/verify as a second request — on serverless platforms
+    // (Vercel) the second request hits a different instance that won't have the record.
     try {
-      verifyData = await verifyRes.json();
-    } catch (e) {
-      verifyData = { success: false, message: 'Invalid response from verification server.' };
-    }
-
-    if (verifyRes.ok && verifyData.success) {
-      try {
-        const cached = {
-          team_code: teamCode,
-          portal_username: verifyData.username || formData.get('leader_email'),
-          portal_password: verifyData.password,
-          utr_number: utrVal,
-          payment_status: 'pending_verification',
-          leader_name: formData.get('leader_name'),
-          leader_email: formData.get('leader_email'),
-          leader_phone: formData.get('leader_phone'),
-          team_name: formData.get('team_name'),
-          track: formData.get('track'),
-          college_name: formData.get('college_name')
-        };
-        sessionStorage.setItem('last_qyron_reg', JSON.stringify(cached));
-      } catch(e) {}
-      window.location.href = verifyData.redirect_url || `/confirmation?team_code=${teamCode}`;
-    } else {
-      alert(verifyData.message || 'Payment verification could not be recorded.');
-      payBtn.disabled = false;
-      payBtn.textContent = 'SUBMIT REGISTRATION & GET LOGIN CREDENTIALS ►';
-    }
+      const cached = {
+        team_code: teamCode,
+        portal_username: data.username || formData.get('leader_email'),
+        portal_password: data.password || '',
+        utr_number: utrVal,
+        payment_status: 'pending_verification',
+        leader_name: formData.get('leader_name'),
+        leader_email: formData.get('leader_email'),
+        leader_phone: formData.get('leader_phone'),
+        team_name: formData.get('team_name'),
+        track: formData.get('track'),
+        college_name: formData.get('college_name')
+      };
+      sessionStorage.setItem('last_qyron_reg', JSON.stringify(cached));
+    } catch(e) {}
+    window.location.href = `/confirmation?team_code=${teamCode}`;
 
   } catch (err) {
     console.error(err);
