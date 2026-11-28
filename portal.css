@@ -14,14 +14,19 @@
   position: sticky;
   top: var(--hud-height);
   z-index: 90;
-  height: var(--navbar-height);
+  min-height: var(--navbar-height);
   background: rgba(4, 8, 6, 0.94);
   backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--steel-border);
-  padding: 0 5%;
+  padding: 8px clamp(16px, 3vw, 48px);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .portal-brand {
@@ -74,9 +79,11 @@
 }
 
 .portal-container {
-  max-width: 1040px;
+  max-width: 1180px;
   margin: 40px auto 80px;
-  padding: 0 24px;
+  padding: 0 clamp(16px, 2.5vw, 32px);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Master Portal Card / Frame */
@@ -823,6 +830,13 @@
   .member-row {
     grid-template-columns: 1fr;
   }
+  .portal-tabs {
+    gap: 2px;
+  }
+  .portal-tabs button {
+    padding: 10px 12px;
+    font-size: 10px;
+  }
 }
 
 @media (max-width: 640px) {
@@ -844,10 +858,17 @@
     display: block;
   }
   .portal-master-card {
-    padding: 18px 12px;
+    padding: 16px 12px;
   }
   .btn-back-home {
     font-size: 10px;
     padding: 6px 10px;
+  }
+  .portal-container {
+    padding: 0 14px;
+    margin: 24px auto 50px;
+  }
+  .dashboard-summary, .admin-stats {
+    grid-template-columns: 1fr;
   }
 }

@@ -191,9 +191,10 @@ a, button, input, select, textarea, label, summary, [data-egg], [data-open], .po
   margin-top: 32px;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 1024px) {
   .tracks-grid {
     grid-template-columns: 1fr;
+    max-width: 640px;
   }
 }
 
@@ -259,8 +260,9 @@ a, button, input, select, textarea, label, summary, [data-egg], [data-open], .po
 .track-desc {
   font-size: 14px;
   color: var(--text-muted);
-  line-height: 1.6;
+  line-height: 1.65;
   margin-bottom: 18px;
+  margin-top: 0;
 }
 
 .track-subtopics-title {
@@ -423,11 +425,14 @@ a, button, input, select, textarea, label, summary, [data-egg], [data-open], .po
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
   transition: color 0.2s, transform 0.2s;
   padding: 3px 0;
+  overflow-wrap: anywhere;
   word-break: break-word;
   max-width: 100%;
+  font-size: clamp(10.5px, 0.95vw, 12px);
+  line-height: 1.4;
 }
 
 .team-contact-link:hover {

@@ -271,8 +271,131 @@ $('#modalClose').addEventListener('click', closeModal);
 backdrop.addEventListener('click', event => { if (event.target === backdrop) closeModal(); });
 document.addEventListener('keydown', event => { if (event.key === 'Escape' && !backdrop.hidden) closeModal(); });
 
-$('#menuToggle').addEventListener('click', () => $('#mainNav').classList.toggle('open'));
-$$('#mainNav a').forEach(link => link.addEventListener('click', () => $('#mainNav').classList.remove('open')));
+// ── Antrothon HUD Height Synchronization (Zero Gap Architecture) ──
+function syncHudHeight() {
+  const hud = document.getElementById('hudTopBar') || document.querySelector('.hud-bar');
+  if (!hud) return;
+  const h = hud.getBoundingClientRect().height;
+  document.documentElement.style.setProperty('--hud-height', Math.round(h) + 'px');
+}
+syncHudHeight();
+window.addEventListener('resize', syncHudHeight, { passive: true });
+window.addEventListener('orientationchange', syncHudHeight, { passive: true });
+
+// ── Live Telemetry Clock (IST & Real-Time Sync) ──
+function updateTelemetryClock() {
+  const clockEl = document.getElementById('hudLiveClock');
+  if (!clockEl) return;
+  const now = new Date();
+  const istTime = now.toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour12: false });
+  clockEl.textContent = `T-SYS: ${istTime} IST`;
+}
+setInterval(updateTelemetryClock, 1000);
+updateTelemetryClock();
+
+// ── Tactical Audio Synthesizer & HUD Sound Toggle ──
+class TacticalAudioEngine {
+  constructor() {
+    this.enabled = false;
+    this.ctx = null;
+  }
+  init() {
+    if (!this.ctx) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (AudioContext) this.ctx = new AudioContext();
+    }
+  }
+  playBeep(freq = 880, duration = 0.05, type = 'sine') {
+    if (!this.enabled || !this.ctx) return;
+    try {
+      if (this.ctx.state === 'suspended') this.ctx.resume();
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+      gain.gain.setValueAtTime(0.06, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start();
+      osc.stop(this.ctx.currentTime + duration);
+    } catch (_) {}
+  }
+  playLock() {
+    if (!this.enabled || !this.ctx) return;
+    this.playBeep(1200, 0.04, 'square');
+    setTimeout(() => this.playBeep(1600, 0.08, 'sawtooth'), 50);
+  }
+}
+const tacticalAudio = new TacticalAudioEngine();
+
+const soundToggle = document.getElementById('termSoundToggle');
+if (soundToggle) {
+  soundToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    tacticalAudio.init();
+    tacticalAudio.enabled = !tacticalAudio.enabled;
+    soundToggle.classList.toggle('active', tacticalAudio.enabled);
+    const textSpan = soundToggle.querySelector('.sound-state-text');
+    if (textSpan) {
+      textSpan.innerHTML = tacticalAudio.enabled ? 'HUD AUDIO: <b>ON</b>' : 'HUD AUDIO: <b>OFF</b>';
+    }
+    if (tacticalAudio.enabled) tacticalAudio.playLock();
+  });
+
+  document.querySelectorAll('.btn-terminator, .btn-cyber-outline, .track-card, .faq-trigger').forEach(el => {
+    el.addEventListener('mouseenter', () => tacticalAudio.playBeep(640, 0.03, 'sine'));
+    el.addEventListener('click', () => tacticalAudio.playLock());
+  });
+}
+
+// ── Mobile Navigation Drawer & Backdrop Synchronization ──
+const menuToggle = document.getElementById('menuToggle');
+const mainNav = document.getElementById('mainNav');
+const navBackdrop = document.getElementById('navBackdrop');
+
+function openNav() {
+  if (!mainNav) return;
+  mainNav.classList.add('open');
+  if (menuToggle) {
+    menuToggle.classList.add('open');
+    menuToggle.setAttribute('aria-expanded', 'true');
+    const burger = menuToggle.querySelector('.icon-hamburger');
+    const close = menuToggle.querySelector('.icon-close');
+    if (burger) burger.style.display = 'none';
+    if (close) close.style.display = 'block';
+  }
+  if (navBackdrop) navBackdrop.classList.add('active');
+}
+
+function closeNav() {
+  if (!mainNav) return;
+  mainNav.classList.remove('open');
+  if (menuToggle) {
+    menuToggle.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    const burger = menuToggle.querySelector('.icon-hamburger');
+    const close = menuToggle.querySelector('.icon-close');
+    if (burger) burger.style.display = 'block';
+    if (close) close.style.display = 'none';
+  }
+  if (navBackdrop) navBackdrop.classList.remove('active');
+}
+
+if (menuToggle && mainNav) {
+  menuToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    mainNav.classList.contains('open') ? closeNav() : openNav();
+  });
+  if (navBackdrop) navBackdrop.addEventListener('click', closeNav);
+  mainNav.querySelectorAll('a').forEach(link => link.addEventListener('click', closeNav));
+  document.addEventListener('click', (e) => {
+    if (!menuToggle.contains(e.target) && !mainNav.contains(e.target)) closeNav();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mainNav.classList.contains('open')) closeNav();
+  });
+}
 
 // FAQ Accordion
 $$('.faq-trigger').forEach(trigger => {
@@ -284,13 +407,46 @@ $$('.faq-trigger').forEach(trigger => {
   });
 });
 
+// ── In-Hero Countdown Engine ──
 const deadline = new Date('2027-01-20T23:59:59+05:30').getTime();
 function updateCountdown() {
   const difference = deadline - Date.now();
+  const cdDays = document.getElementById('cd-days');
+  const cdHours = document.getElementById('cd-hours');
+  const cdMins = document.getElementById('cd-mins');
+  const cdSecs = document.getElementById('cd-secs');
+  const statusBadge = document.getElementById('cd-status-badge');
+
+  if (difference <= 0) {
+    if (cdDays) cdDays.innerHTML = '<b>00</b>';
+    if (cdHours) cdHours.innerHTML = '<b>00</b>';
+    if (cdMins) cdMins.innerHTML = '<b>00</b>';
+    if (cdSecs) cdSecs.innerHTML = '<b>00</b>';
+    if (statusBadge) {
+      statusBadge.textContent = 'REGISTRATION CONCLUDED';
+      statusBadge.classList.add('term-badge-green');
+    }
+    return;
+  }
+
+  const days = String(Math.floor(difference / 86400000)).padStart(2, '0');
+  const hours = String(Math.floor(difference / 3600000) % 24).padStart(2, '0');
+  const mins = String(Math.floor(difference / 60000) % 60).padStart(2, '0');
+  const secs = String(Math.floor(difference / 1000) % 60).padStart(2, '0');
+
+  if (cdDays) cdDays.innerHTML = `<b>${days}</b>`;
+  if (cdHours) cdHours.innerHTML = `<b>${hours}</b>`;
+  if (cdMins) cdMins.innerHTML = `<b>${mins}</b>`;
+  if (cdSecs) cdSecs.innerHTML = `<b>${secs}</b>`;
+
+  // Fallback for b elements
   const items = $$('#countdown b');
-  if (!items.length) return;
-  const values = difference <= 0 ? ['00', '00', '00', '00'] : [Math.floor(difference / 86400000), Math.floor(difference / 3600000) % 24, Math.floor(difference / 60000) % 60, Math.floor(difference / 1000) % 60].map(value => String(value).padStart(2, '0'));
-  items.forEach((item, index) => item.textContent = values[index]);
+  if (items.length >= 4) {
+    items[0].textContent = days;
+    items[1].textContent = hours;
+    items[2].textContent = mins;
+    items[3].textContent = secs;
+  }
 }
 updateCountdown();
 setInterval(updateCountdown, 1000);

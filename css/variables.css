@@ -41,14 +41,27 @@
   --mono: 'Space Mono', 'Courier New', monospace;
   --space-mono: 'Space Mono', 'Courier New', monospace;
 
-  /* Aliases for compatibility */
+  /* Antrothon Theme Compatibility Aliases */
+  --font-tactical: var(--font-mono);
+  --term-red: var(--doom-green);
+  --term-red-bright: #39FF14;
+  --term-red-dim: rgba(57, 255, 20, 0.15);
+  --term-red-glow: 0 0 20px rgba(57, 255, 20, 0.45);
+  --term-red-laser: 0 0 35px rgba(57, 255, 20, 0.75);
   --term-green: var(--doom-green);
-  --term-gold: var(--toxic-lime);
-  --term-cyan: var(--doom-green);
+  --term-yellow: var(--gold);
+  --term-amber: var(--gold);
+  --term-cyan: #39FF14;
+  --term-chrome: #f1f5f9;
   --term-steel: var(--text-muted);
+  --term-border: rgba(57, 255, 20, 0.2);
+  --bg-card: rgba(14, 20, 16, 0.88);
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
 
-  --hud-height: 38px;
-  --navbar-height: 74px;
+  --hud-height: 33px;
+  --navbar-height: 58px;
 
   color-scheme: dark;
 }
